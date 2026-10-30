@@ -4,303 +4,634 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0e10">
-<title>Sign Up - Watcher</title>
+<title>Watcher</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:#0e0e10;
+    --white:#efeff1;
+    --purple:#bf94ff;
+    --sidebar:180px;
+    --muted:#a0a0a5;
+    --blue:#307aae;
+}
+html,body{
+    width:100%;min-height:100%;
+    background:var(--bg);color:var(--white);
+    font-family:Arial,Helvetica,sans-serif;
+}
+body{min-height:100vh;min-height:100dvh;overflow-x:hidden}
+main{min-height:100vh;min-height:100dvh;padding:20px 16px 85px}
+.header{height:45px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:23px;font-weight:800;letter-spacing:-1px}
+.page{display:none}
+.page.active{display:block}
+.page-heading{font-size:23px;font-weight:750;margin:20px 0 8px}
+.page-subtitle{font-size:13px;color:var(--muted);line-height:1.5}
+.empty-home{
+    min-height:65vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;padding:25px
+}
+.empty-icon{
+    width:65px;height:65px;border-radius:18px;background:#1c1c21;
+    display:grid;place-items:center;margin-bottom:18px;color:#a6a6ac
+}
+.empty-icon svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.empty-home h2{font-size:20px;margin-bottom:8px}
+.empty-home p{font-size:13px;color:var(--muted);max-width:260px;line-height:1.5}
+
+/* Navigation */
+.navigation{
+    position:fixed;z-index:10;bottom:0;left:0;right:0;
+    height:calc(55px + env(safe-area-inset-bottom));
+    padding:2px 6px env(safe-area-inset-bottom);
+    display:flex;align-items:center;justify-content:space-around;gap:2px;
+    background:var(--bg);border-top:1px solid #252529
+}
+.nav-item{
+    flex:1;min-width:0;height:100%;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:3px;color:var(--white);
+    background:transparent;border:none;font:inherit;cursor:pointer
+}
+.nav-icon{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-label{font-size:12px;line-height:14px;font-weight:600;white-space:nowrap}
+.nav-item.active{color:var(--purple)}
+.create-button{
+    flex:0 0 44px;width:44px;height:44px;display:flex;
+    align-items:center;justify-content:center;border:none;border-radius:50%;
+    background:var(--blue);color:white;cursor:pointer
+}
+.plus-icon{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:2}
+.activity-wrap{position:relative;width:24px;height:24px}
+.notification{
+    position:absolute;top:-5px;right:-9px;width:18px;height:18px;
+    border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:#e91916;color:white;font-size:11px;font-weight:700
+}
+.avatar{
+    width:27px;height:27px;border:2px solid var(--purple);border-radius:50%;
+    background:#38294c;display:flex;align-items:center;justify-content:center;
+    color:white;font-size:12px;font-weight:700;overflow:hidden
 }
 
-:root {
-    --bg: #0e0e10;
-    --white: #efeff1;
-    --muted: #a0a0a5;
-    --blue: #307aae;
+/* Profile */
+.profile-card{
+    margin-top:24px;background:#18181b;border:1px solid #303035;
+    border-radius:12px;padding:20px
 }
-
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    background: var(--bg);
-    color: var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
+.profile-top{display:flex;align-items:center;gap:15px;margin-bottom:20px}
+.profile-avatar{
+    width:65px;height:65px;border-radius:50%;background:#38294c;
+    border:2px solid var(--purple);display:grid;place-items:center;
+    color:white;font-size:24px;font-weight:700;flex-shrink:0
 }
-
-.header {
-    height: 65px;
-    padding: 0 22px;
-    display: flex;
-    align-items: center;
+.profile-name{font-size:19px;font-weight:700;overflow-wrap:anywhere}
+.profile-handle{font-size:12px;color:var(--muted);margin-top:5px}
+.profile-divider{height:1px;background:#303035;margin:16px 0}
+.info-label{font-size:11px;color:var(--muted);margin-bottom:6px}
+.info-value{font-size:14px;overflow-wrap:anywhere}
+.profile-actions{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.action-button{
+    width:100%;height:43px;border-radius:7px;border:1px solid #36363c;
+    background:#222226;color:white;font-weight:700;font-size:13px;cursor:pointer
 }
-
-.logo {
-    font-size: 23px;
-    font-weight: 800;
-    letter-spacing: -1px;
+.action-button.danger{border-color:#663232;background:#321a1a;color:#ff8585}
+.profile-loading{color:var(--muted);font-size:13px;margin-top:25px}
+.page-panel{
+    margin-top:22px;background:#18181b;border:1px solid #303035;
+    border-radius:10px;padding:20px
 }
+.page-panel h3{font-size:15px;margin-bottom:8px}
+.page-panel p{font-size:12px;line-height:1.5;color:var(--muted)}
+.small-note{font-size:11px;color:var(--muted);margin-top:15px}
 
-main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 25px 18px 50px;
+/* Create modal */
+.modal-overlay{
+    position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.75);
+    display:none;align-items:flex-end;justify-content:center;padding:12px
 }
-
-.signup-container {
-    width: 100%;
-    max-width: 390px;
+.modal-overlay.show{display:flex}
+.modal{
+    width:100%;max-width:470px;max-height:92dvh;overflow-y:auto;
+    background:#18181b;border:1px solid #303035;border-radius:15px;padding:19px;
+    animation:slideUp .2s ease
 }
-
-.heading {
-    margin-bottom: 25px;
+@keyframes slideUp{from{transform:translateY(25px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-header h2{font-size:19px}
+.close-button{width:30px;height:30px;border:0;background:#29292e;border-radius:7px;color:white;font-size:19px}
+.field-label{display:block;font-size:12px;color:#c5c5cb;font-weight:600;margin-bottom:8px}
+.field{
+    width:100%;height:43px;border:1px solid #36363c;border-radius:7px;
+    background:#101012;color:white;padding:0 12px;outline:none;
+    font-size:13px;margin-bottom:17px
 }
-
-.heading h1 {
-    font-size: 25px;
-    letter-spacing: -.7px;
-    margin-bottom: 8px;
+.field:focus{border-color:var(--blue)}
+select.field{color:white}
+.choice-title{font-size:12px;color:#c5c5cb;font-weight:600;margin-bottom:9px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.choice{
+    min-height:100px;background:#222226;border:1px solid #36363c;
+    border-radius:9px;color:white;padding:13px;text-align:left;cursor:pointer
 }
-
-.heading p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.5;
+.choice.selected{border:1.5px solid var(--blue);background:#1b2a35}
+.choice svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;margin-bottom:9px}
+.choice strong{display:block;font-size:13px;margin-bottom:4px}
+.choice span{font-size:10px;color:#a5a5ad;line-height:1.4}
+.preview{
+    position:relative;width:100%;aspect-ratio:16/9;border-radius:9px;
+    background:#09090b;overflow:hidden;margin-bottom:13px;
+    display:flex;align-items:center;justify-content:center
 }
-
-.field-label {
-    display: block;
-    font-size: 12px;
-    color: #c5c5cb;
-    font-weight: 600;
-    margin-bottom: 8px;
+.preview video{width:100%;height:100%;object-fit:contain;display:none;background:black}
+.preview-placeholder{color:#777780;text-align:center;font-size:12px}
+.preview-placeholder svg{display:block;width:30px;height:30px;margin:0 auto 9px;fill:none;stroke:currentColor;stroke-width:1.5}
+.preview-status{position:absolute;top:9px;left:9px;display:none;background:#d92222;border-radius:4px;font-size:10px;font-weight:700;padding:5px 7px}
+.status-message{font-size:11px;color:#a5a5ad;line-height:1.5;margin-bottom:13px}
+.start-button{width:100%;height:44px;border:0;border-radius:7px;background:var(--blue);color:white;font-size:13px;font-weight:700}
+.start-button:disabled{opacity:.5}
+.stop-button{
+    display:none;width:100%;height:44px;border:1px solid #a83232;
+    border-radius:7px;background:#321a1a;color:#ff7777;font-weight:700;margin-top:9px
 }
+.error{display:none;color:#ff8585;font-size:12px;margin-bottom:12px;line-height:1.5}
+.signout-message{font-size:12px;color:#ff8585;margin-top:12px;display:none}
 
-.field {
-    width: 100%;
-    height: 44px;
-    border: 1px solid #36363c;
-    border-radius: 7px;
-    background: #101012;
-    color: white;
-    padding: 0 12px;
-    outline: none;
-    font-size: 13px;
-    margin-bottom: 18px;
+@media(max-width:340px){
+    .nav-label{font-size:10px}
+    .create-button{flex-basis:38px;width:38px;height:38px}
+    .avatar{width:24px;height:24px}
 }
-
-.field::placeholder {
-    color: #707078;
+@media(min-width:760px){
+    main{margin-left:var(--sidebar);padding:25px 30px}
+    .navigation{
+        top:0;bottom:0;left:0;right:auto;width:var(--sidebar);height:100dvh;
+        padding:18px 10px;flex-direction:column;align-items:stretch;
+        justify-content:flex-start;gap:7px;border-top:0;border-right:1px solid #252529
+    }
+    .nav-item{
+        flex:0 0 42px;width:100%;height:42px;flex-direction:row;
+        justify-content:flex-start;gap:11px;padding:0 11px
+    }
+    .nav-icon{width:21px;height:21px}
+    .nav-label{font-size:13px}
+    .nav-item.active{background:#242127;border-radius:6px}
+    .create-button{flex:0 0 40px;width:100%;height:40px;border-radius:8px}
+    .modal-overlay{align-items:center}
 }
-
-.field:focus {
-    border-color: var(--blue);
-}
-
-.password-wrap {
-    position: relative;
-}
-
-.password-wrap .field {
-    padding-right: 55px;
-}
-
-.show-password {
-    position: absolute;
-    right: 12px;
-    top: 13px;
-    border: none;
-    background: transparent;
-    color: #a0a0a5;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.terms {
-    display: flex;
-    align-items: flex-start;
-    gap: 9px;
-    margin: 2px 0 19px;
-    color: #a0a0a5;
-    font-size: 11px;
-    line-height: 1.5;
-}
-
-.terms input {
-    accent-color: var(--blue);
-    margin-top: 2px;
-}
-
-.terms a {
-    color: #80b8df;
-    text-decoration: none;
-}
-
-.signup-button {
-    width: 100%;
-    height: 44px;
-    border: none;
-    border-radius: 7px;
-    background: var(--blue);
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.signup-button:active {
-    background: #28648e;
-}
-
-.message {
-    display: none;
-    padding: 11px;
-    margin-top: 14px;
-    border-radius: 6px;
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-.message.error {
-    display: block;
-    background: #321a1a;
-    color: #ff9292;
-    border: 1px solid #572626;
-}
-
-.message.success {
-    display: block;
-    background: #172c22;
-    color: #91d5a8;
-    border: 1px solid #28533a;
-}
-
-.login-text {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 24px;
-}
-
-.login-text a {
-    color: #80b8df;
-    font-weight: 600;
-    text-decoration: none;
-}
-
 </style>
 </head>
 
 <body>
 
-<header class="header">
-    <div class="logo">Watcher</div>
-</header>
-
 <main>
-<div class="signup-container">
+    <header class="header">
+        <div class="logo">Watcher</div>
+    </header>
 
-    <div class="heading">
-        <h1>Create your account</h1>
-        <p>Join Watcher and discover creators, watch live streams, and share your own content.</p>
-    </div>
-
-    <form id="signupForm">
-
-        <label class="field-label" for="username">Username</label>
-        <input class="field" id="username"
-            type="text"
-            maxlength="24"
-            placeholder="Choose a username"
-            autocomplete="username"
-            required>
-
-        <label class="field-label" for="password">Password</label>
-
-        <div class="password-wrap">
-            <input class="field" id="password"
-                type="password"
-                minlength="8"
-                placeholder="Create a password"
-                autocomplete="new-password"
-                required>
-
-            <button type="button" class="show-password"
-                onclick="togglePassword()">Show</button>
+    <!-- HOME -->
+    <section class="page active" id="homePage">
+        <div class="empty-home">
+            <div class="empty-icon">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <path d="m10 9 5 3-5 3z"/>
+                </svg>
+            </div>
+            <h2>No streams yet</h2>
+            <p>When creators go live, their streams will appear here. Be the first to start streaming.</p>
         </div>
+    </section>
 
-        <label class="terms">
-            <input type="checkbox" id="terms">
-            <span>I agree to Watcher's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
-        </label>
+    <!-- BROWSE -->
+    <section class="page" id="browsePage">
+        <h1 class="page-heading">Browse</h1>
+        <p class="page-subtitle">Discover creators and communities on Watcher.</p>
+        <div class="page-panel">
+            <h3>Nothing to discover yet</h3>
+            <p>Live channels and categories will appear here when creators start streaming.</p>
+            <p class="small-note">Stream discovery and search are not available yet.</p>
+        </div>
+    </section>
 
-        <button class="signup-button" type="submit">
-            Create account
-        </button>
+    <!-- ACTIVITY -->
+    <section class="page" id="activityPage">
+        <h1 class="page-heading">Activity</h1>
+        <p class="page-subtitle">Your notifications and recent updates.</p>
+        <div class="empty-home" style="min-height:48vh">
+            <div class="empty-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                    <path d="M10 21h4"/>
+                </svg>
+            </div>
+            <h2>You're all caught up</h2>
+            <p>When you receive notifications, they'll show up here.</p>
+        </div>
+    </section>
 
-        <div class="message" id="message"></div>
+    <!-- PROFILE -->
+    <section class="page" id="profilePage">
+        <h1 class="page-heading">Your profile</h1>
+        <p class="page-subtitle">Your Watcher account information.</p>
 
-    </form>
+        <div id="profileLoading" class="profile-loading">Loading your profile...</div>
 
-    <div class="login-text">
-        Already have an account? <a href="login.html">Sign in</a>
-    </div>
+        <div class="profile-card" id="profileCard" style="display:none">
+            <div class="profile-top">
+                <div class="profile-avatar" id="profileAvatar">?</div>
+                <div>
+                    <div class="profile-name" id="profileName">Username</div>
+                    <div class="profile-handle" id="profileHandle">@username</div>
+                </div>
+            </div>
 
-</div>
+            <div class="profile-divider"></div>
+
+            <div class="info-label">Username</div>
+            <div class="info-value" id="profileUsername">Loading...</div>
+
+            <div class="profile-divider"></div>
+
+            <div class="info-label">Email address</div>
+            <div class="info-value" id="profileEmail">Loading...</div>
+
+            <div class="profile-divider"></div>
+
+            <div class="info-label">Account created</div>
+            <div class="info-value" id="profileCreated">Loading...</div>
+
+            <div class="profile-actions">
+                <button class="action-button danger" onclick="signOut()">Sign out</button>
+            </div>
+            <div class="signout-message" id="signoutMessage"></div>
+        </div>
+    </section>
 </main>
 
+<nav class="navigation" aria-label="Main navigation">
+
+    <button class="nav-item active" data-page="homePage" onclick="showPage('homePage',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+            <path d="M3.5 10.5 12 3.5l8.5 7V21h-17z"/>
+            <path d="M9 21v-7h6v7"/>
+        </svg>
+        <span class="nav-label">Home</span>
+    </button>
+
+    <button class="nav-item" data-page="browsePage" onclick="showPage('browsePage',this)">
+        <svg class="nav-icon" viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="7.5"/>
+            <path d="m16 16 5 5"/>
+        </svg>
+        <span class="nav-label">Browse</span>
+    </button>
+
+    <button class="create-button" onclick="openCreate()" aria-label="Create stream">
+        <svg class="plus-icon" viewBox="0 0 24 24">
+            <path d="M12 4v16M4 12h16"/>
+        </svg>
+    </button>
+
+    <button class="nav-item" data-page="activityPage" onclick="showPage('activityPage',this)">
+        <span class="activity-wrap">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                <path d="M10 21h4"/>
+            </svg>
+        </span>
+        <span class="nav-label">Activity</span>
+    </button>
+
+    <button class="nav-item" data-page="profilePage" onclick="showPage('profilePage',this)">
+        <span class="avatar" id="navAvatar">?</span>
+        <span class="nav-label">Profile</span>
+    </button>
+</nav>
+
+<!-- CREATE STREAM MODAL -->
+<div class="modal-overlay" id="createModal" onclick="outsideClose(event)">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Create a stream</h2>
+            <button class="close-button" onclick="closeCreate()">×</button>
+        </div>
+
+        <label class="field-label" for="streamTitle">Stream title</label>
+        <input class="field" id="streamTitle" maxlength="100" placeholder="What are you streaming?">
+
+        <label class="field-label" for="streamCategory">Category</label>
+        <select class="field" id="streamCategory">
+            <option value="">Select a category</option>
+            <option>Gaming</option>
+            <option>Roblox</option>
+            <option>Minecraft</option>
+            <option>Just Chatting</option>
+            <option>Music</option>
+            <option>Technology</option>
+            <option>Other</option>
+        </select>
+
+        <div class="choice-title">Choose your streaming source</div>
+
+        <div class="choices">
+            <button class="choice selected" id="cameraChoice" onclick="selectSource('camera')">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="6" width="13" height="12" rx="2"/>
+                    <path d="m16 10 5-3v10l-5-3z"/>
+                </svg>
+                <strong>Camera</strong>
+                <span>Stream using your camera and microphone.</span>
+            </button>
+
+            <button class="choice" id="screenChoice" onclick="selectSource('screen')">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="18" height="14" rx="2"/>
+                    <path d="M8 21h8M12 17v4"/>
+                </svg>
+                <strong>Screen</strong>
+                <span>Share your screen, gameplay or apps.</span>
+            </button>
+        </div>
+
+        <div class="field-label">Preview</div>
+        <div class="preview">
+            <video id="previewVideo" autoplay muted playsinline></video>
+            <div class="preview-placeholder" id="previewPlaceholder">
+                <svg viewBox="0 0 24 24">
+                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                    <path d="m10 9 5 3-5 3z"/>
+                </svg>
+                Your preview will appear here
+            </div>
+            <div class="preview-status" id="previewStatus">PREVIEW ACTIVE</div>
+        </div>
+
+        <div class="error" id="errorMessage"></div>
+        <p class="status-message" id="statusMessage">
+            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
+        </p>
+        <button class="start-button" id="startButton" onclick="startPreview()">Start Preview</button>
+        <button class="stop-button" id="stopButton" onclick="stopPreview()">Stop Preview</button>
+    </div>
+</div>
+
 <script>
-function togglePassword() {
-    const input = document.getElementById("password");
-    const button = document.querySelector(".show-password");
+/* SUPABASE CONNECTION */
+const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
 
-    if (input.type === "password") {
-        input.type = "text";
-        button.textContent = "Hide";
-    } else {
-        input.type = "password";
-        button.textContent = "Show";
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let currentUser = null;
+let selectedSource = "camera";
+let activeStream = null;
+
+const modal = document.getElementById("createModal");
+const video = document.getElementById("previewVideo");
+const placeholder = document.getElementById("previewPlaceholder");
+const status = document.getElementById("statusMessage");
+const error = document.getElementById("errorMessage");
+const startButton = document.getElementById("startButton");
+const stopButton = document.getElementById("stopButton");
+const previewStatus = document.getElementById("previewStatus");
+
+/* PAGE NAVIGATION */
+function showPage(pageId, button) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    if (button) button.classList.add("active");
+
+    if (pageId === "profilePage") {
+        loadProfile();
+    }
+
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* LOAD REAL ACCOUNT INFORMATION */
+async function loadProfile() {
+    const loading = document.getElementById("profileLoading");
+    const card = document.getElementById("profileCard");
+
+    if (!currentUser) {
+        loading.textContent = "You are not signed in.";
+        card.style.display = "none";
+        return;
+    }
+
+    loading.style.display = "block";
+    loading.textContent = "Loading your profile...";
+    card.style.display = "none";
+
+    let username =
+        currentUser.user_metadata?.username ||
+        currentUser.user_metadata?.user_name ||
+        "";
+
+    // Try to retrieve the username from the profiles table.
+    const {data: profile, error: profileError} = await supabaseClient
+        .from("profiles")
+        .select("username,created_at")
+        .eq("id",currentUser.id)
+        .maybeSingle();
+
+    if (profile && profile.username) {
+        username = profile.username;
+    }
+
+    if (!username) {
+        username = currentUser.email
+            ? currentUser.email.split("@")[0]
+            : "Watcher User";
+    }
+
+    const initial = username.trim().charAt(0).toUpperCase() || "?";
+
+    document.getElementById("profileAvatar").textContent = initial;
+    document.getElementById("navAvatar").textContent = initial;
+    document.getElementById("profileName").textContent = username;
+    document.getElementById("profileHandle").textContent = "@" + username;
+    document.getElementById("profileUsername").textContent = username;
+    document.getElementById("profileEmail").textContent = currentUser.email || "Not available";
+
+    const created = profile?.created_at || currentUser.created_at;
+
+    document.getElementById("profileCreated").textContent = created
+        ? new Date(created).toLocaleDateString(undefined,{
+            year:"numeric",month:"long",day:"numeric"
+        })
+        : "Not available";
+
+    loading.style.display = "none";
+    card.style.display = "block";
+
+    if (profileError) {
+        console.warn("Could not load profile table:",profileError.message);
     }
 }
 
-function showMessage(text, type) {
-    const message = document.getElementById("message");
-    message.textContent = text;
-    message.className = "message " + type;
+/* AUTHENTICATION CHECK */
+async function checkLogin() {
+    const {data,error} = await supabaseClient.auth.getSession();
+
+    if (error || !data.session) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    currentUser = data.session.user;
+    loadProfile();
 }
 
-document.getElementById("signupForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+async function signOut() {
+    const message = document.getElementById("signoutMessage");
+    message.style.display = "block";
+    message.textContent = "Signing out...";
 
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-    const terms = document.getElementById("terms").checked;
+    const {error} = await supabaseClient.auth.signOut();
 
-    if (username.length < 3) {
-        showMessage("Your username must be at least 3 characters.", "error");
+    if (error) {
+        message.textContent = "Unable to sign out: " + error.message;
         return;
     }
 
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
-        showMessage("Username can only contain letters, numbers, and underscores.", "error");
-        return;
+    window.location.href = "login.html";
+}
+
+supabaseClient.auth.onAuthStateChange((event,session) => {
+    if (event === "SIGNED_OUT") {
+        window.location.href = "login.html";
+    }
+});
+
+checkLogin();
+
+/* CREATE PREVIEW */
+function openCreate() {
+    modal.classList.add("show");
+}
+
+function closeCreate() {
+    stopPreview();
+    modal.classList.remove("show");
+}
+
+function outsideClose(event) {
+    if (event.target === modal) closeCreate();
+}
+
+function selectSource(source) {
+    if (activeStream) stopPreview();
+
+    selectedSource = source;
+
+    document.getElementById("cameraChoice")
+        .classList.toggle("selected",source === "camera");
+
+    document.getElementById("screenChoice")
+        .classList.toggle("selected",source === "screen");
+
+    status.textContent = source === "camera"
+        ? "Camera mode selected. Your camera and microphone will be requested when you start the preview."
+        : "Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
+
+    error.style.display = "none";
+}
+
+async function startPreview() {
+    error.style.display = "none";
+
+    if (activeStream) stopPreview();
+
+    startButton.disabled = true;
+    startButton.textContent = "Starting...";
+
+    try {
+        if (selectedSource === "camera") {
+            activeStream = await navigator.mediaDevices.getUserMedia({
+                video:true,audio:true
+            });
+        } else {
+            if (!navigator.mediaDevices.getDisplayMedia) {
+                throw new Error("Screen sharing is not supported by this browser.");
+            }
+
+            activeStream = await navigator.mediaDevices.getDisplayMedia({
+                video:true,audio:true
+            });
+        }
+
+        video.srcObject = activeStream;
+        video.style.display = "block";
+        placeholder.style.display = "none";
+        previewStatus.style.display = "block";
+
+        await video.play();
+
+        status.textContent = selectedSource === "camera"
+            ? "Camera preview is active. Only you can see this preview."
+            : "Screen preview is active. Only you can see this preview.";
+
+        startButton.style.display = "none";
+        stopButton.style.display = "block";
+
+        const videoTrack = activeStream.getVideoTracks()[0];
+
+        if (videoTrack) {
+            videoTrack.addEventListener("ended",() => stopPreview());
+        }
+
+    } catch (err) {
+        error.textContent = err.name === "NotAllowedError"
+            ? "Permission was denied or sharing was cancelled."
+            : err.message || "Unable to start preview.";
+
+        error.style.display = "block";
+        status.textContent = "Please check your browser permissions and try again.";
+
+    } finally {
+        startButton.disabled = false;
+        startButton.textContent = "Start Preview";
+    }
+}
+
+function stopPreview() {
+    if (activeStream) {
+        activeStream.getTracks().forEach(track => track.stop());
+        activeStream = null;
     }
 
-    if (password.length < 8) {
-        showMessage("Your password must be at least 8 characters.", "error");
-        return;
-    }
+    video.srcObject = null;
+    video.style.display = "none";
+    placeholder.style.display = "block";
+    previewStatus.style.display = "none";
 
-    if (!terms) {
-        showMessage("Please agree to the Terms of Service and Privacy Policy.", "error");
-        return;
-    }
+    startButton.style.display = "block";
+    startButton.disabled = false;
+    startButton.textContent = "Start Preview";
 
-    showMessage("Your form is valid! Account creation will be available once authentication is connected.", "success");
+    stopButton.style.display = "none";
+
+    status.textContent = "Preview stopped. Choose a source to try again.";
+}
+
+document.addEventListener("keydown",event => {
+    if (event.key === "Escape") closeCreate();
 });
 </script>
 
