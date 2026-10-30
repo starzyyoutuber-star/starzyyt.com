@@ -1,36 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>HTML5 Games on GitHub</title>
-    <!-- Maintained by Kai Turner, repo: https://github.com/kaigani/HTML5-games-list --> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e0e10">
+<title>Sign Up - Watcher</title>
 
-    <style>
-        body {
-            padding:120px;
-        }
-    </style>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #0e0e10;
+    --white: #efeff1;
+    --muted: #a0a0a5;
+    --blue: #307aae;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    height: 65px;
+    padding: 0 22px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 18px 50px;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 390px;
+}
+
+.heading {
+    margin-bottom: 25px;
+}
+
+.heading h1 {
+    font-size: 25px;
+    letter-spacing: -.7px;
+    margin-bottom: 8px;
+}
+
+.heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.field-label {
+    display: block;
+    font-size: 12px;
+    color: #c5c5cb;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.field {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #36363c;
+    border-radius: 7px;
+    background: #101012;
+    color: white;
+    padding: 0 12px;
+    outline: none;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.field::placeholder {
+    color: #707078;
+}
+
+.field:focus {
+    border-color: var(--blue);
+}
+
+.password-wrap {
+    position: relative;
+}
+
+.password-wrap .field {
+    padding-right: 55px;
+}
+
+.show-password {
+    position: absolute;
+    right: 12px;
+    top: 13px;
+    border: none;
+    background: transparent;
+    color: #a0a0a5;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.terms {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    margin: 2px 0 19px;
+    color: #a0a0a5;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.terms input {
+    accent-color: var(--blue);
+    margin-top: 2px;
+}
+
+.terms a {
+    color: #80b8df;
+    text-decoration: none;
+}
+
+.signup-button {
+    width: 100%;
+    height: 44px;
+    border: none;
+    border-radius: 7px;
+    background: var(--blue);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.signup-button:active {
+    background: #28648e;
+}
+
+.message {
+    display: none;
+    padding: 11px;
+    margin-top: 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.message.error {
+    display: block;
+    background: #321a1a;
+    color: #ff9292;
+    border: 1px solid #572626;
+}
+
+.message.success {
+    display: block;
+    background: #172c22;
+    color: #91d5a8;
+    border: 1px solid #28533a;
+}
+
+.login-text {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 24px;
+}
+
+.login-text a {
+    color: #80b8df;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+</style>
 </head>
-<body>
- 
-    <div id="readme"></div>
- 
-    <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="js/Markdown.Converter.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function jQueryReady($) {
-            var converter = new Markdown.Converter(),
-                /* Alias the conversion method to make it easier to swap libraries in the future. */
-                markdownToHtml = converter.makeHtml;
- 
-            $.get("README.md").success(function (data) {
-                $("#readme").html(markdownToHtml(data));
-            });
-        });
-    </script>
 
-    <!-- GitHub Snippet -->
-    <a href="https://github.com/kaigani/HTML5-games-list"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
- 
+<body>
+
+<header class="header">
+    <div class="logo">Watcher</div>
+</header>
+
+<main>
+<div class="signup-container">
+
+    <div class="heading">
+        <h1>Create your account</h1>
+        <p>Join Watcher and discover creators, watch live streams, and share your own content.</p>
+    </div>
+
+    <form id="signupForm">
+
+        <label class="field-label" for="username">Username</label>
+        <input class="field" id="username"
+            type="text"
+            maxlength="24"
+            placeholder="Choose a username"
+            autocomplete="username"
+            required>
+
+        <label class="field-label" for="password">Password</label>
+
+        <div class="password-wrap">
+            <input class="field" id="password"
+                type="password"
+                minlength="8"
+                placeholder="Create a password"
+                autocomplete="new-password"
+                required>
+
+            <button type="button" class="show-password"
+                onclick="togglePassword()">Show</button>
+        </div>
+
+        <label class="terms">
+            <input type="checkbox" id="terms">
+            <span>I agree to Watcher's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+        </label>
+
+        <button class="signup-button" type="submit">
+            Create account
+        </button>
+
+        <div class="message" id="message"></div>
+
+    </form>
+
+    <div class="login-text">
+        Already have an account? <a href="login.html">Sign in</a>
+    </div>
+
+</div>
+</main>
+
+<script>
+function togglePassword() {
+    const input = document.getElementById("password");
+    const button = document.querySelector(".show-password");
+
+    if (input.type === "password") {
+        input.type = "text";
+        button.textContent = "Hide";
+    } else {
+        input.type = "password";
+        button.textContent = "Show";
+    }
+}
+
+function showMessage(text, type) {
+    const message = document.getElementById("message");
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+document.getElementById("signupForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const terms = document.getElementById("terms").checked;
+
+    if (username.length < 3) {
+        showMessage("Your username must be at least 3 characters.", "error");
+        return;
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+        showMessage("Username can only contain letters, numbers, and underscores.", "error");
+        return;
+    }
+
+    if (password.length < 8) {
+        showMessage("Your password must be at least 8 characters.", "error");
+        return;
+    }
+
+    if (!terms) {
+        showMessage("Please agree to the Terms of Service and Privacy Policy.", "error");
+        return;
+    }
+
+    showMessage("Your form is valid! Account creation will be available once authentication is connected.", "success");
+});
+</script>
+
 </body>
 </html>
