@@ -25,26 +25,29 @@
     --blue: #307aae;
     --panel: #18181b;
     --border: #303035;
+    --nav-height: 70px;
 }
 
-html, body {
+html {
     width: 100%;
     min-height: 100%;
+    background: var(--bg);
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
     background: var(--bg);
     color: var(--white);
     font-family: Arial, Helvetica, sans-serif;
 }
 
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
-}
-
 main {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 20px 16px 85px;
+    padding: 20px 16px calc(var(--nav-height) + 30px + env(safe-area-inset-bottom));
 }
 
 .header {
@@ -80,7 +83,7 @@ main {
     line-height: 1.5;
 }
 
-/* Home */
+/* HOME */
 
 .empty-home {
     min-height: 65vh;
@@ -125,22 +128,33 @@ main {
     line-height: 1.5;
 }
 
-/* Navigation */
+/* BOTTOM NAVIGATION */
 
 .navigation {
-    position: fixed;
-    z-index: 10;
-    bottom: 0;
+    position: fixed !important;
+    z-index: 100;
     left: 0;
     right: 0;
-    height: calc(55px + env(safe-area-inset-bottom));
-    padding: 2px 6px env(safe-area-inset-bottom);
+    bottom: 0 !important;
+    top: auto !important;
+
+    width: 100%;
+    height: calc(var(--nav-height) + env(safe-area-inset-bottom));
+
+    padding: 4px 6px env(safe-area-inset-bottom);
+
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 2px;
-    background: var(--bg);
+
+    background: #0e0e10;
     border-top: 1px solid #252529;
+
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .nav-item {
@@ -157,6 +171,7 @@ main {
     border: none;
     font: inherit;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-icon {
@@ -224,7 +239,7 @@ main {
     flex-shrink: 0;
 }
 
-/* Search */
+/* SEARCH */
 
 .search-box {
     width: 100%;
@@ -343,26 +358,35 @@ main {
     line-height: 1.6;
 }
 
-/* Profile */
+/* PROFILE BANNERS */
 
-.profile-cover {
-    height: 125px;
+.profile-cover,
+.public-profile-cover {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 150px;
+    min-height: 150px;
+    max-height: 180px;
     margin-top: 23px;
     border-radius: 11px;
-    background: linear-gradient(120deg, #28202f, #171c28);
     border: 1px solid #34303d;
+    background: linear-gradient(120deg, #28202f, #171c28);
+    overflow: hidden;
 }
 
 .profile-main {
     position: relative;
-    padding: 0 17px 18px;
+    padding: 0 17px 20px;
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 11px;
     margin-top: 0;
 }
 
-.profile-avatar {
+.profile-avatar,
+.public-profile-avatar {
+    position: relative;
     width: 82px;
     height: 82px;
     margin-top: -41px;
@@ -375,16 +399,20 @@ main {
     color: white;
     font-size: 30px;
     font-weight: 700;
+    flex-shrink: 0;
+    z-index: 2;
 }
 
-.profile-name {
+.profile-name,
+.public-profile-name {
     font-size: 21px;
     font-weight: 750;
     margin-top: 13px;
     overflow-wrap: anywhere;
 }
 
-.profile-handle {
+.profile-handle,
+.public-profile-handle {
     font-size: 13px;
     color: var(--muted);
     margin-top: 5px;
@@ -474,7 +502,7 @@ main {
     display: none;
 }
 
-/* Other profile */
+/* PUBLIC PROFILE */
 
 .back-button {
     border: none;
@@ -486,11 +514,8 @@ main {
 }
 
 .public-profile-cover {
-    height: 125px;
     margin-top: 10px;
-    border-radius: 11px;
     background: linear-gradient(120deg, #252332, #1c2734);
-    border: 1px solid #34303d;
 }
 
 .public-profile-card {
@@ -498,33 +523,6 @@ main {
     border: 1px solid var(--border);
     border-radius: 11px;
     padding: 0 17px 20px;
-}
-
-.public-profile-avatar {
-    width: 82px;
-    height: 82px;
-    margin-top: -41px;
-    border-radius: 50%;
-    border: 3px solid var(--bg);
-    outline: 2px solid var(--purple);
-    background: #38294c;
-    display: grid;
-    place-items: center;
-    font-size: 30px;
-    font-weight: 700;
-}
-
-.public-profile-name {
-    margin-top: 14px;
-    font-size: 21px;
-    font-weight: 750;
-    overflow-wrap: anywhere;
-}
-
-.public-profile-handle {
-    margin-top: 5px;
-    color: var(--muted);
-    font-size: 13px;
 }
 
 .public-profile-note {
@@ -538,7 +536,7 @@ main {
     line-height: 1.6;
 }
 
-/* General panels */
+/* GENERAL PANELS */
 
 .page-panel {
     margin-top: 22px;
@@ -565,12 +563,12 @@ main {
     margin-top: 15px;
 }
 
-/* Create modal */
+/* CREATE MODAL */
 
 .modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 30;
+    z-index: 200;
     background: rgba(0,0,0,.75);
     display: none;
     align-items: flex-end;
@@ -785,6 +783,7 @@ select.field {
     color: #ff7777;
     font-weight: 700;
     margin-top: 9px;
+    cursor: pointer;
 }
 
 .error {
@@ -813,12 +812,12 @@ select.field {
 @media(min-width:760px) {
     main {
         margin-left: var(--sidebar);
-        padding: 25px 30px;
+        padding: 25px 30px 30px;
     }
 
     .navigation {
-        top: 0;
-        bottom: 0;
+        top: 0 !important;
+        bottom: 0 !important;
         left: 0;
         right: auto;
         width: var(--sidebar);
@@ -900,7 +899,7 @@ select.field {
 
 </section>
 
-<!-- BROWSE / PEOPLE SEARCH -->
+<!-- BROWSE -->
 
 <section class="page" id="browsePage">
 
@@ -928,16 +927,12 @@ select.field {
 
     </div>
 
-    <div class="search-caption" id="searchCaption">
-        PEOPLE
-    </div>
+    <div class="search-caption" id="searchCaption">PEOPLE</div>
 
     <div class="search-results" id="searchResults">
-
         <div class="search-message">
             Search for a Watcher username to find people.
         </div>
-
     </div>
 
 </section>
@@ -993,13 +988,9 @@ select.field {
 
             <div class="profile-avatar" id="profileAvatar">?</div>
 
-            <div class="profile-name" id="profileName">
-                Username
-            </div>
+            <div class="profile-name" id="profileName">Username</div>
 
-            <div class="profile-handle" id="profileHandle">
-                @username
-            </div>
+            <div class="profile-handle" id="profileHandle">@username</div>
 
             <div class="profile-description">
                 Welcome to my Watcher profile.
@@ -1009,19 +1000,14 @@ select.field {
 
         <div class="profile-info-card">
 
-            <div class="section-title">
-                Account information
-            </div>
+            <div class="section-title">Account information</div>
 
             <div class="info-row">
                 <span class="info-label">Username</span>
                 <span class="info-value" id="profileUsername">-</span>
             </div>
 
-            <div class="info-row">
-                <span class="info-label">Email address</span>
-                <span class="info-value" id="profileEmail">-</span>
-            </div>
+            <!-- EMAIL REMOVED FOR PRIVACY -->
 
             <div class="info-row">
                 <span class="info-label">Member since</span>
@@ -1062,9 +1048,7 @@ select.field {
 
         <div class="public-profile-card">
 
-            <div class="public-profile-avatar" id="publicAvatar">
-                ?
-            </div>
+            <div class="public-profile-avatar" id="publicAvatar">?</div>
 
             <div class="public-profile-name" id="publicName">
                 Username
@@ -1130,12 +1114,10 @@ select.field {
         onclick="showPage('activityPage',this)">
 
         <span class="activity-wrap">
-
             <svg class="nav-icon" viewBox="0 0 24 24">
                 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
                 <path d="M10 21h4"/>
             </svg>
-
         </span>
 
         <span class="nav-label">Activity</span>
@@ -1161,28 +1143,19 @@ select.field {
     <div class="modal">
 
         <div class="modal-header">
-
             <h2>Create a stream</h2>
-
-            <button class="close-button"
-                onclick="closeCreate()">×</button>
-
+            <button class="close-button" onclick="closeCreate()">×</button>
         </div>
 
-        <label class="field-label" for="streamTitle">
-            Stream title
-        </label>
+        <label class="field-label" for="streamTitle">Stream title</label>
 
         <input class="field" id="streamTitle"
             maxlength="100"
             placeholder="What are you streaming?">
 
-        <label class="field-label" for="streamCategory">
-            Category
-        </label>
+        <label class="field-label" for="streamCategory">Category</label>
 
         <select class="field" id="streamCategory">
-
             <option value="">Select a category</option>
             <option>Gaming</option>
             <option>Roblox</option>
@@ -1191,12 +1164,9 @@ select.field {
             <option>Music</option>
             <option>Technology</option>
             <option>Other</option>
-
         </select>
 
-        <div class="choice-title">
-            Choose your streaming source
-        </div>
+        <div class="choice-title">Choose your streaming source</div>
 
         <div class="choices">
 
@@ -1211,9 +1181,7 @@ select.field {
 
                 <strong>Camera</strong>
 
-                <span>
-                    Stream using your camera and microphone.
-                </span>
+                <span>Stream using your camera and microphone.</span>
 
             </button>
 
@@ -1228,9 +1196,7 @@ select.field {
 
                 <strong>Screen</strong>
 
-                <span>
-                    Share your screen, gameplay or apps.
-                </span>
+                <span>Share your screen, gameplay or apps.</span>
 
             </button>
 
@@ -1240,23 +1206,17 @@ select.field {
 
         <div class="preview">
 
-            <video id="previewVideo"
-                autoplay muted playsinline></video>
+            <video id="previewVideo" autoplay muted playsinline></video>
 
-            <div class="preview-placeholder"
-                id="previewPlaceholder">
-
+            <div class="preview-placeholder" id="previewPlaceholder">
                 <svg viewBox="0 0 24 24">
                     <rect x="3" y="5" width="18" height="14" rx="2"/>
                     <path d="m10 9 5 3-5 3z"/>
                 </svg>
-
                 Your preview will appear here
-
             </div>
 
-            <div class="preview-status"
-                id="previewStatus">
+            <div class="preview-status" id="previewStatus">
                 PREVIEW ACTIVE
             </div>
 
@@ -1270,14 +1230,12 @@ select.field {
             you give permission.
         </p>
 
-        <button class="start-button"
-            id="startButton"
+        <button class="start-button" id="startButton"
             onclick="startPreview()">
             Start Preview
         </button>
 
-        <button class="stop-button"
-            id="stopButton"
+        <button class="stop-button" id="stopButton"
             onclick="stopPreview()">
             Stop Preview
         </button>
@@ -1342,6 +1300,12 @@ function showPage(pageId, button) {
         loadProfile();
     }
 
+    if (pageId === "browsePage") {
+        document.getElementById("peopleSearch").focus({
+            preventScroll: true
+        });
+    }
+
     window.scrollTo({
         top: 0,
         behavior: "smooth"
@@ -1386,18 +1350,21 @@ async function checkLogin() {
     updateNavigationAvatar();
 }
 
+function getUsername(user) {
+
+    return user?.user_metadata?.username ||
+           user?.user_metadata?.user_name ||
+           "Watcher User";
+}
+
 function updateNavigationAvatar() {
 
     if (!currentUser) return;
 
-    const username =
-        currentUser.user_metadata?.username ||
-        currentUser.user_metadata?.user_name ||
-        currentUser.email?.split("@")[0] ||
-        "U";
+    const username = getUsername(currentUser);
 
     document.getElementById("navAvatar").textContent =
-        username.charAt(0).toUpperCase();
+        username.trim().charAt(0).toUpperCase() || "?";
 }
 
 
@@ -1440,15 +1407,12 @@ async function loadProfile() {
 
     const username =
         profile?.username ||
-        currentUser.user_metadata?.username ||
-        currentUser.email?.split("@")[0] ||
-        "Watcher User";
+        getUsername(currentUser);
 
     const initial =
         username.trim().charAt(0).toUpperCase() || "?";
 
     document.getElementById("profileAvatar").textContent = initial;
-
     document.getElementById("profileName").textContent = username;
 
     document.getElementById("profileHandle").textContent =
@@ -1456,9 +1420,6 @@ async function loadProfile() {
 
     document.getElementById("profileUsername").textContent =
         username;
-
-    document.getElementById("profileEmail").textContent =
-        currentUser.email || "Not available";
 
     document.getElementById("profileCreated").textContent =
         formatDate(profile?.created_at || currentUser.created_at);
@@ -1521,9 +1482,7 @@ function handlePeopleSearch(value) {
     const requestNumber = searchRequestNumber;
 
     searchTimer = setTimeout(() => {
-
         searchPeople(query, requestNumber);
-
     }, 350);
 }
 
@@ -1533,10 +1492,14 @@ async function searchPeople(query, requestNumber) {
     const results =
         document.getElementById("searchResults");
 
-    /*
-       Usernames in the actual profiles table are restricted
-       to letters, numbers and underscores.
-    */
+    if (!currentUser) {
+        results.innerHTML = `
+            <div class="search-message">
+                Please sign in to search for people.
+            </div>
+        `;
+        return;
+    }
 
     const safeQuery = query.replace(
         /[^a-zA-Z0-9_]/g,
@@ -1567,7 +1530,6 @@ async function searchPeople(query, requestNumber) {
         .order("username", { ascending: true })
         .limit(25);
 
-    // Ignore old searches if the user has already typed again.
     if (requestNumber !== searchRequestNumber) {
         return;
     }
@@ -1579,7 +1541,7 @@ async function searchPeople(query, requestNumber) {
         results.innerHTML = `
             <div class="search-message">
                 Unable to search for people.
-                Please try again.
+                Please check your profile-table permissions.
             </div>
         `;
 
@@ -1605,7 +1567,7 @@ async function searchPeople(query, requestNumber) {
         const username = person.username || "Watcher User";
 
         const initial =
-            username.charAt(0).toUpperCase();
+            username.charAt(0).toUpperCase() || "?";
 
         const button = document.createElement("button");
 
@@ -1674,7 +1636,6 @@ async function openPublicProfile(person) {
     document.getElementById("publicProfilePage")
         .classList.add("active");
 
-    // Keep Browse highlighted.
     document.querySelectorAll(".nav-item").forEach(item => {
         item.classList.remove("active");
     });
@@ -1697,7 +1658,6 @@ async function openPublicProfile(person) {
     loading.textContent = "Loading profile...";
     content.style.display = "none";
 
-    // Retrieve the latest public profile information.
     const { data, error } = await supabaseClient
         .from("profiles")
         .select("id,username,created_at")
@@ -1717,7 +1677,7 @@ async function openPublicProfile(person) {
     const username = data.username || "Watcher User";
 
     document.getElementById("publicAvatar").textContent =
-        username.charAt(0).toUpperCase();
+        username.charAt(0).toUpperCase() || "?";
 
     document.getElementById("publicName").textContent =
         username;
@@ -1730,7 +1690,6 @@ async function openPublicProfile(person) {
 
     loading.style.display = "none";
     content.style.display = "block";
-
 }
 
 
@@ -1856,11 +1815,9 @@ async function startPreview() {
         } else {
 
             if (!navigator.mediaDevices.getDisplayMedia) {
-
                 throw new Error(
                     "Screen sharing is not supported by this browser."
                 );
-
             }
 
             activeStream =
