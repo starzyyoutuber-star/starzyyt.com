@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,29 +24,26 @@
     --blue: #307aae;
     --panel: #18181b;
     --border: #303035;
-    --nav-height: 70px;
 }
 
-html {
+html, body {
     width: 100%;
     min-height: 100%;
-    background: var(--bg);
-}
-
-body {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
     background: var(--bg);
     color: var(--white);
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
 main {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 20px 16px calc(var(--nav-height) + 30px + env(safe-area-inset-bottom));
+    padding: 20px 16px 85px;
 }
 
 .header {
@@ -128,33 +124,21 @@ main {
     line-height: 1.5;
 }
 
-/* BOTTOM NAVIGATION */
+/* NAVIGATION */
 
 .navigation {
-    position: fixed !important;
-    z-index: 100;
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0 !important;
-    top: auto !important;
-
-    width: 100%;
-    height: calc(var(--nav-height) + env(safe-area-inset-bottom));
-
-    padding: 4px 6px env(safe-area-inset-bottom);
-
+    height: calc(55px + env(safe-area-inset-bottom));
+    padding: 2px 6px env(safe-area-inset-bottom);
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 2px;
-
-    background: #0e0e10;
-    border-top: 1px solid #252529;
-
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
+    background: var(--bg);
 }
 
 .nav-item {
@@ -171,7 +155,6 @@ main {
     border: none;
     font: inherit;
     cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
 }
 
 .nav-icon {
@@ -204,7 +187,7 @@ main {
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: var(--blue);
+    background: #307aae;
     color: white;
     cursor: pointer;
 }
@@ -223,6 +206,22 @@ main {
     height: 24px;
 }
 
+.notification {
+    position: absolute;
+    top: -5px;
+    right: -9px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e91916;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+}
+
 .avatar {
     width: 27px;
     height: 27px;
@@ -237,6 +236,12 @@ main {
     font-weight: 700;
     overflow: hidden;
     flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* SEARCH */
@@ -326,6 +331,13 @@ main {
     font-size: 17px;
     font-weight: 700;
     flex-shrink: 0;
+    overflow: hidden;
+}
+
+.result-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .result-info {
@@ -358,35 +370,42 @@ main {
     line-height: 1.6;
 }
 
-/* PROFILE BANNERS */
+/* PROFILE */
 
 .profile-cover,
 .public-profile-cover {
     position: relative;
-    display: block;
     width: 100%;
-    height: 150px;
-    min-height: 150px;
-    max-height: 180px;
+    height: 145px;
     margin-top: 23px;
-    border-radius: 11px;
+    border-radius: 10px;
+    background: #25232d;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     border: 1px solid #34303d;
-    background: linear-gradient(120deg, #28202f, #171c28);
     overflow: hidden;
 }
 
-.profile-main {
+.profile-cover:not([style*="background-image"]) {
+    background: linear-gradient(120deg, #28202f, #171c28);
+}
+
+.public-profile-cover:not([style*="background-image"]) {
+    background: linear-gradient(120deg, #252332, #1c2734);
+}
+
+.profile-main,
+.public-profile-card {
     position: relative;
-    padding: 0 17px 20px;
+    padding: 0 17px 18px;
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 11px;
-    margin-top: 0;
 }
 
 .profile-avatar,
 .public-profile-avatar {
-    position: relative;
     width: 82px;
     height: 82px;
     margin-top: -41px;
@@ -399,8 +418,14 @@ main {
     color: white;
     font-size: 30px;
     font-weight: 700;
-    flex-shrink: 0;
-    z-index: 2;
+    overflow: hidden;
+}
+
+.profile-avatar img,
+.public-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-name,
@@ -417,6 +442,23 @@ main {
     color: var(--muted);
     margin-top: 5px;
     overflow-wrap: anywhere;
+}
+
+.name-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.follower-count {
+    font-size: 11px;
+    color: #b7b7be;
+    background: #252529;
+    border: 1px solid #36363c;
+    padding: 5px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
 }
 
 .profile-description {
@@ -473,7 +515,7 @@ main {
 
 .action-button {
     width: 100%;
-    height: 43px;
+    min-height: 43px;
     border-radius: 7px;
     border: 1px solid #36363c;
     background: #222226;
@@ -483,10 +525,23 @@ main {
     cursor: pointer;
 }
 
+.action-button:disabled {
+    opacity: .55;
+}
+
+.action-button.primary {
+    background: #307aae;
+    border-color: #307aae;
+}
+
 .action-button.danger {
     border-color: #663232;
     background: #321a1a;
     color: #ff8585;
+}
+
+.upload-input {
+    display: none;
 }
 
 .profile-loading {
@@ -502,6 +557,13 @@ main {
     display: none;
 }
 
+.upload-message {
+    font-size: 12px;
+    color: #b9b9c0;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
 /* PUBLIC PROFILE */
 
 .back-button {
@@ -515,14 +577,10 @@ main {
 
 .public-profile-cover {
     margin-top: 10px;
-    background: linear-gradient(120deg, #252332, #1c2734);
 }
 
 .public-profile-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 11px;
-    padding: 0 17px 20px;
+    padding-bottom: 20px;
 }
 
 .public-profile-note {
@@ -536,39 +594,12 @@ main {
     line-height: 1.6;
 }
 
-/* GENERAL PANELS */
-
-.page-panel {
-    margin-top: 22px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.page-panel h3 {
-    font-size: 15px;
-    margin-bottom: 8px;
-}
-
-.page-panel p {
-    font-size: 12px;
-    line-height: 1.5;
-    color: var(--muted);
-}
-
-.small-note {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 15px;
-}
-
-/* CREATE MODAL */
+/* CREATE STREAM */
 
 .modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: 30;
     background: rgba(0,0,0,.75);
     display: none;
     align-items: flex-end;
@@ -641,18 +672,7 @@ main {
 }
 
 .field:focus {
-    border-color: var(--blue);
-}
-
-select.field {
-    color: white;
-}
-
-.choice-title {
-    font-size: 12px;
-    color: #c5c5cb;
-    font-weight: 600;
-    margin-bottom: 9px;
+    border-color: #307aae;
 }
 
 .choices {
@@ -674,7 +694,7 @@ select.field {
 }
 
 .choice.selected {
-    border: 1.5px solid var(--blue);
+    border: 1.5px solid #307aae;
     background: #1b2a35;
 }
 
@@ -684,8 +704,6 @@ select.field {
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
     margin-bottom: 9px;
 }
 
@@ -699,6 +717,13 @@ select.field {
     font-size: 10px;
     color: #a5a5ad;
     line-height: 1.4;
+}
+
+.choice-title {
+    font-size: 12px;
+    color: #c5c5cb;
+    font-weight: 600;
+    margin-bottom: 9px;
 }
 
 .preview {
@@ -757,16 +782,20 @@ select.field {
     margin-bottom: 13px;
 }
 
-.start-button {
+.start-button,
+.stop-button {
     width: 100%;
     height: 44px;
-    border: 0;
     border-radius: 7px;
-    background: var(--blue);
-    color: white;
-    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
+}
+
+.start-button {
+    border: 0;
+    background: #307aae;
+    color: white;
+    font-size: 13px;
 }
 
 .start-button:disabled {
@@ -775,15 +804,10 @@ select.field {
 
 .stop-button {
     display: none;
-    width: 100%;
-    height: 44px;
     border: 1px solid #a83232;
-    border-radius: 7px;
     background: #321a1a;
     color: #ff7777;
-    font-weight: 700;
     margin-top: 9px;
-    cursor: pointer;
 }
 
 .error {
@@ -793,6 +817,8 @@ select.field {
     margin-bottom: 12px;
     line-height: 1.5;
 }
+
+/* RESPONSIVE */
 
 @media(max-width:340px) {
     .nav-label { font-size: 10px; }
@@ -812,12 +838,12 @@ select.field {
 @media(min-width:760px) {
     main {
         margin-left: var(--sidebar);
-        padding: 25px 30px 30px;
+        padding: 25px 30px;
     }
 
     .navigation {
-        top: 0 !important;
-        bottom: 0 !important;
+        top: 0;
+        bottom: 0;
         left: 0;
         right: auto;
         width: var(--sidebar);
@@ -827,7 +853,6 @@ select.field {
         align-items: stretch;
         justify-content: flex-start;
         gap: 7px;
-        border-top: 0;
         border-right: 1px solid #252529;
     }
 
@@ -910,7 +935,6 @@ select.field {
     </p>
 
     <div class="search-box">
-
         <svg viewBox="0 0 24 24">
             <circle cx="10.5" cy="10.5" r="7.5"/>
             <path d="m16 16 5 5"/>
@@ -924,10 +948,11 @@ select.field {
             maxlength="24"
             oninput="handlePeopleSearch(this.value)"
         >
-
     </div>
 
-    <div class="search-caption" id="searchCaption">PEOPLE</div>
+    <div class="search-caption" id="searchCaption">
+        PEOPLE
+    </div>
 
     <div class="search-results" id="searchResults">
         <div class="search-message">
@@ -982,15 +1007,25 @@ select.field {
 
     <div id="profileContent" style="display:none">
 
-        <div class="profile-cover"></div>
+        <div class="profile-cover" id="profileCover"></div>
 
         <div class="profile-main">
 
             <div class="profile-avatar" id="profileAvatar">?</div>
 
-            <div class="profile-name" id="profileName">Username</div>
+            <div class="name-line">
+                <div class="profile-name" id="profileName">
+                    Username
+                </div>
 
-            <div class="profile-handle" id="profileHandle">@username</div>
+                <span class="follower-count" id="myFollowerCount">
+                    0 followers
+                </span>
+            </div>
+
+            <div class="profile-handle" id="profileHandle">
+                @username
+            </div>
 
             <div class="profile-description">
                 Welcome to my Watcher profile.
@@ -1000,14 +1035,58 @@ select.field {
 
         <div class="profile-info-card">
 
-            <div class="section-title">Account information</div>
+            <div class="section-title">
+                Customize your profile
+            </div>
+
+            <button class="action-button primary"
+                onclick="document.getElementById('avatarInput').click()">
+                Change profile picture
+            </button>
+
+            <input
+                type="file"
+                id="avatarInput"
+                class="upload-input"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onchange="uploadProfileImage(this,'avatar_url')"
+            >
+
+            <button class="action-button"
+                style="margin-top:9px"
+                onclick="document.getElementById('bannerInput').click()">
+                Change profile banner
+            </button>
+
+            <input
+                type="file"
+                id="bannerInput"
+                class="upload-input"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                onchange="uploadProfileImage(this,'banner_url')"
+            >
+
+            <div class="upload-message" id="uploadMessage">
+                JPG, PNG, WEBP or GIF. Maximum 5 MB.
+            </div>
+
+        </div>
+
+        <div class="profile-info-card">
+
+            <div class="section-title">
+                Account information
+            </div>
 
             <div class="info-row">
                 <span class="info-label">Username</span>
                 <span class="info-value" id="profileUsername">-</span>
             </div>
 
-            <!-- EMAIL REMOVED FOR PRIVACY -->
+            <div class="info-row">
+                <span class="info-label">Email address</span>
+                <span class="info-value" id="profileEmail">-</span>
+            </div>
 
             <div class="info-row">
                 <span class="info-label">Member since</span>
@@ -1030,7 +1109,7 @@ select.field {
 
 </section>
 
-<!-- OTHER PERSON'S PROFILE -->
+<!-- PUBLIC PROFILE -->
 
 <section class="page" id="publicProfilePage">
 
@@ -1044,14 +1123,24 @@ select.field {
 
     <div id="publicProfileContent" style="display:none">
 
-        <div class="public-profile-cover"></div>
+        <div class="public-profile-cover" id="publicCover"></div>
 
         <div class="public-profile-card">
 
-            <div class="public-profile-avatar" id="publicAvatar">?</div>
+            <div class="public-profile-avatar" id="publicAvatar">
+                ?
+            </div>
 
-            <div class="public-profile-name" id="publicName">
-                Username
+            <div class="name-line">
+
+                <div class="public-profile-name" id="publicName">
+                    Username
+                </div>
+
+                <span class="follower-count" id="publicFollowerCount">
+                    0 followers
+                </span>
+
             </div>
 
             <div class="public-profile-handle" id="publicHandle">
@@ -1064,6 +1153,16 @@ select.field {
                 <span id="publicCreated">Member since: -</span>
             </div>
 
+            <div class="profile-actions">
+
+                <button class="action-button primary"
+                    id="followButton"
+                    onclick="toggleFollow()">
+                    Follow
+                </button>
+
+            </div>
+
         </div>
 
     </div>
@@ -1072,7 +1171,7 @@ select.field {
 
 </main>
 
-<!-- NAVIGATION -->
+<!-- BOTTOM NAVIGATION -->
 
 <nav class="navigation" aria-label="Main navigation">
 
@@ -1114,10 +1213,14 @@ select.field {
         onclick="showPage('activityPage',this)">
 
         <span class="activity-wrap">
+
             <svg class="nav-icon" viewBox="0 0 24 24">
                 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
                 <path d="M10 21h4"/>
             </svg>
+
+            <span class="notification">1</span>
+
         </span>
 
         <span class="nav-label">Activity</span>
@@ -1143,19 +1246,28 @@ select.field {
     <div class="modal">
 
         <div class="modal-header">
+
             <h2>Create a stream</h2>
-            <button class="close-button" onclick="closeCreate()">×</button>
+
+            <button class="close-button"
+                onclick="closeCreate()">×</button>
+
         </div>
 
-        <label class="field-label" for="streamTitle">Stream title</label>
+        <label class="field-label" for="streamTitle">
+            Stream title
+        </label>
 
         <input class="field" id="streamTitle"
             maxlength="100"
             placeholder="What are you streaming?">
 
-        <label class="field-label" for="streamCategory">Category</label>
+        <label class="field-label" for="streamCategory">
+            Category
+        </label>
 
         <select class="field" id="streamCategory">
+
             <option value="">Select a category</option>
             <option>Gaming</option>
             <option>Roblox</option>
@@ -1164,9 +1276,12 @@ select.field {
             <option>Music</option>
             <option>Technology</option>
             <option>Other</option>
+
         </select>
 
-        <div class="choice-title">Choose your streaming source</div>
+        <div class="choice-title">
+            Choose your streaming source
+        </div>
 
         <div class="choices">
 
@@ -1181,7 +1296,9 @@ select.field {
 
                 <strong>Camera</strong>
 
-                <span>Stream using your camera and microphone.</span>
+                <span>
+                    Stream using your camera and microphone.
+                </span>
 
             </button>
 
@@ -1196,7 +1313,9 @@ select.field {
 
                 <strong>Screen</strong>
 
-                <span>Share your screen, gameplay or apps.</span>
+                <span>
+                    Share your screen, gameplay or apps.
+                </span>
 
             </button>
 
@@ -1206,17 +1325,23 @@ select.field {
 
         <div class="preview">
 
-            <video id="previewVideo" autoplay muted playsinline></video>
+            <video id="previewVideo"
+                autoplay muted playsinline></video>
 
-            <div class="preview-placeholder" id="previewPlaceholder">
+            <div class="preview-placeholder"
+                id="previewPlaceholder">
+
                 <svg viewBox="0 0 24 24">
                     <rect x="3" y="5" width="18" height="14" rx="2"/>
                     <path d="m10 9 5 3-5 3z"/>
                 </svg>
+
                 Your preview will appear here
+
             </div>
 
-            <div class="preview-status" id="previewStatus">
+            <div class="preview-status"
+                id="previewStatus">
                 PREVIEW ACTIVE
             </div>
 
@@ -1230,12 +1355,14 @@ select.field {
             you give permission.
         </p>
 
-        <button class="start-button" id="startButton"
+        <button class="start-button"
+            id="startButton"
             onclick="startPreview()">
             Start Preview
         </button>
 
-        <button class="stop-button" id="stopButton"
+        <button class="stop-button"
+            id="stopButton"
             onclick="stopPreview()">
             Stop Preview
         </button>
@@ -1246,7 +1373,7 @@ select.field {
 
 <script>
 
-/* SUPABASE CONNECTION */
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://sjtaagrvncysbrpwqdzf.supabase.co";
@@ -1261,12 +1388,12 @@ const supabaseClient = window.supabase.createClient(
 
 let currentUser = null;
 let selectedPublicProfile = null;
-
 let selectedSource = "camera";
 let activeStream = null;
-
 let searchTimer = null;
 let searchRequestNumber = 0;
+
+let currentProfile = null;
 
 const modal = document.getElementById("createModal");
 const video = document.getElementById("previewVideo");
@@ -1278,7 +1405,7 @@ const stopButton = document.getElementById("stopButton");
 const previewStatus = document.getElementById("previewStatus");
 
 
-/* PAGE NAVIGATION */
+/* NAVIGATION */
 
 function showPage(pageId, button) {
 
@@ -1292,18 +1419,10 @@ function showPage(pageId, button) {
         item.classList.remove("active");
     });
 
-    if (button) {
-        button.classList.add("active");
-    }
+    if (button) button.classList.add("active");
 
     if (pageId === "profilePage") {
         loadProfile();
-    }
-
-    if (pageId === "browsePage") {
-        document.getElementById("peopleSearch").focus({
-            preventScroll: true
-        });
     }
 
     window.scrollTo({
@@ -1313,7 +1432,7 @@ function showPage(pageId, button) {
 }
 
 
-/* DATE FORMATTING */
+/* DATE */
 
 function formatDate(date) {
 
@@ -1333,6 +1452,84 @@ function formatDate(date) {
 }
 
 
+/* HELPERS */
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, char => {
+
+        const replacements = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        };
+
+        return replacements[char];
+
+    });
+}
+
+
+function getUsername(profile) {
+
+    return profile?.username ||
+        currentUser?.user_metadata?.username ||
+        currentUser?.email?.split("@")[0] ||
+        "Watcher User";
+
+}
+
+
+function formatFollowers(count) {
+
+    const number = Number(count) || 0;
+
+    return number.toLocaleString() +
+        (number === 1 ? " follower" : " followers");
+
+}
+
+
+function setProfileImage(element, url, username) {
+
+    element.replaceChildren();
+
+    if (url) {
+
+        const image = document.createElement("img");
+
+        image.src = url;
+        image.alt = username + " profile picture";
+
+        image.onerror = () => {
+            image.remove();
+            element.textContent =
+                username.charAt(0).toUpperCase() || "?";
+        };
+
+        element.appendChild(image);
+
+    } else {
+
+        element.textContent =
+            username.charAt(0).toUpperCase() || "?";
+
+    }
+
+}
+
+
+function setBanner(element, url) {
+
+    element.style.backgroundImage = url
+        ? 'url("' + url.replace(/["\\]/g, "") + '")'
+        : "";
+
+}
+
+
 /* AUTHENTICATION */
 
 async function checkLogin() {
@@ -1348,23 +1545,78 @@ async function checkLogin() {
     currentUser = data.session.user;
 
     updateNavigationAvatar();
+
 }
 
-function getUsername(user) {
-
-    return user?.user_metadata?.username ||
-           user?.user_metadata?.user_name ||
-           "Watcher User";
-}
 
 function updateNavigationAvatar() {
 
     if (!currentUser) return;
 
-    const username = getUsername(currentUser);
+    const username =
+        currentUser.user_metadata?.username ||
+        currentUser.email?.split("@")[0] ||
+        "U";
 
-    document.getElementById("navAvatar").textContent =
-        username.trim().charAt(0).toUpperCase() || "?";
+    const avatar = document.getElementById("navAvatar");
+
+    if (currentProfile?.avatar_url) {
+
+        setProfileImage(
+            avatar,
+            currentProfile.avatar_url,
+            username
+        );
+
+    } else {
+
+        avatar.textContent =
+            username.charAt(0).toUpperCase();
+
+    }
+
+}
+
+
+/* FOLLOWER COUNT */
+
+async function getFollowerCount(userId) {
+
+    const { count, error } = await supabaseClient
+        .from("followers")
+        .select("*", {
+            count: "exact",
+            head: true
+        })
+        .eq("following_id", userId);
+
+    if (error) {
+
+        console.error("Follower count error:", error);
+
+        return 0;
+
+    }
+
+    return count || 0;
+
+}
+
+
+/* PROFILE DATA */
+
+async function getProfileData(userId) {
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("id,username,created_at,avatar_url,banner_url")
+        .eq("id", userId)
+        .maybeSingle();
+
+    if (error) throw error;
+
+    return data;
+
 }
 
 
@@ -1379,53 +1631,189 @@ async function loadProfile() {
         document.getElementById("profileContent");
 
     if (!currentUser) {
+
         loading.textContent = "You are not signed in.";
-        content.style.display = "none";
+
         return;
+
     }
 
     loading.style.display = "block";
     loading.textContent = "Loading your profile...";
     content.style.display = "none";
 
-    const { data: profile, error: profileError } =
-        await supabaseClient
-            .from("profiles")
-            .select("id,username,created_at")
-            .eq("id", currentUser.id)
-            .maybeSingle();
+    try {
 
-    if (profileError) {
+        const [profile, followers] = await Promise.all([
 
-        console.error(profileError);
+            getProfileData(currentUser.id),
+
+            getFollowerCount(currentUser.id)
+
+        ]);
+
+        currentProfile = profile || {};
+
+        const username = getUsername(profile);
+
+        setProfileImage(
+            document.getElementById("profileAvatar"),
+            profile?.avatar_url,
+            username
+        );
+
+        setBanner(
+            document.getElementById("profileCover"),
+            profile?.banner_url
+        );
+
+        document.getElementById("profileName").textContent =
+            username;
+
+        document.getElementById("profileHandle").textContent =
+            "@" + username;
+
+        document.getElementById("profileUsername").textContent =
+            username;
+
+        document.getElementById("profileEmail").textContent =
+            currentUser.email || "Not available";
+
+        document.getElementById("profileCreated").textContent =
+            formatDate(profile?.created_at || currentUser.created_at);
+
+        document.getElementById("myFollowerCount").textContent =
+            formatFollowers(followers);
+
+        updateNavigationAvatar();
+
+        loading.style.display = "none";
+        content.style.display = "block";
+
+    } catch (err) {
+
+        console.error(err);
 
         loading.textContent =
             "Unable to load your profile. Please try again.";
 
-        return;
     }
 
-    const username =
-        profile?.username ||
-        getUsername(currentUser);
+}
 
-    const initial =
-        username.trim().charAt(0).toUpperCase() || "?";
 
-    document.getElementById("profileAvatar").textContent = initial;
-    document.getElementById("profileName").textContent = username;
+/* PROFILE PICTURE AND BANNER UPLOAD */
 
-    document.getElementById("profileHandle").textContent =
-        "@" + username;
+async function uploadProfileImage(input, column) {
 
-    document.getElementById("profileUsername").textContent =
-        username;
+    const file = input.files?.[0];
 
-    document.getElementById("profileCreated").textContent =
-        formatDate(profile?.created_at || currentUser.created_at);
+    if (!file || !currentUser) return;
 
-    loading.style.display = "none";
-    content.style.display = "block";
+    const message =
+        document.getElementById("uploadMessage");
+
+    const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif"
+    ];
+
+    if (!validTypes.includes(file.type)) {
+
+        message.textContent =
+            "Please select a JPG, PNG, WEBP or GIF image.";
+
+        input.value = "";
+
+        return;
+
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        message.textContent =
+            "Image is too large. Maximum size is 5 MB.";
+
+        input.value = "";
+
+        return;
+
+    }
+
+    const isAvatar = column === "avatar_url";
+
+    message.textContent = isAvatar
+        ? "Uploading profile picture..."
+        : "Uploading profile banner...";
+
+    const extension = file.type.split("/")[1].replace("jpeg", "jpg");
+
+    const filePath =
+        currentUser.id + "/" +
+        (isAvatar ? "avatar" : "banner") +
+        "-" + Date.now() + "." + extension;
+
+    try {
+
+        const { error: uploadError } =
+            await supabaseClient.storage
+                .from("profile-media")
+                .upload(filePath, file, {
+                    cacheControl: "3600",
+                    upsert: false,
+                    contentType: file.type
+                });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicData } =
+            supabaseClient.storage
+                .from("profile-media")
+                .getPublicUrl(filePath);
+
+        const imageUrl = publicData.publicUrl;
+
+        const { error: updateError } =
+            await supabaseClient
+                .from("profiles")
+                .update({
+                    [column]: imageUrl
+                })
+                .eq("id", currentUser.id);
+
+        if (updateError) throw updateError;
+
+        message.textContent = isAvatar
+            ? "Profile picture updated successfully."
+            : "Profile banner updated successfully.";
+
+        currentProfile = {
+            ...currentProfile,
+            [column]: imageUrl
+        };
+
+        // Refresh all visible profile images.
+        await loadProfile();
+
+        if (selectedPublicProfile?.id === currentUser.id) {
+            await openPublicProfile(selectedPublicProfile);
+        }
+
+    } catch (err) {
+
+        console.error("Image upload error:", err);
+
+        message.textContent =
+            "Upload failed: " + err.message;
+
+    } finally {
+
+        input.value = "";
+
+    }
+
 }
 
 
@@ -1456,6 +1844,7 @@ function handlePeopleSearch(value) {
         `;
 
         return;
+
     }
 
     if (query.length < 2) {
@@ -1469,6 +1858,7 @@ function handlePeopleSearch(value) {
         `;
 
         return;
+
     }
 
     caption.textContent = "SEARCH RESULTS";
@@ -1482,8 +1872,11 @@ function handlePeopleSearch(value) {
     const requestNumber = searchRequestNumber;
 
     searchTimer = setTimeout(() => {
+
         searchPeople(query, requestNumber);
+
     }, 350);
+
 }
 
 
@@ -1491,15 +1884,6 @@ async function searchPeople(query, requestNumber) {
 
     const results =
         document.getElementById("searchResults");
-
-    if (!currentUser) {
-        results.innerHTML = `
-            <div class="search-message">
-                Please sign in to search for people.
-            </div>
-        `;
-        return;
-    }
 
     const safeQuery = query.replace(
         /[^a-zA-Z0-9_]/g,
@@ -1515,6 +1899,7 @@ async function searchPeople(query, requestNumber) {
         `;
 
         return;
+
     }
 
     const pattern = safeQuery.replace(
@@ -1524,28 +1909,27 @@ async function searchPeople(query, requestNumber) {
 
     const { data, error } = await supabaseClient
         .from("profiles")
-        .select("id,username,created_at")
+        .select("id,username,created_at,avatar_url")
         .ilike("username", "%" + pattern + "%")
         .neq("id", currentUser.id)
         .order("username", { ascending: true })
         .limit(25);
 
-    if (requestNumber !== searchRequestNumber) {
-        return;
-    }
+    if (requestNumber !== searchRequestNumber) return;
 
     if (error) {
 
-        console.error("People search error:", error);
+        console.error(error);
 
         results.innerHTML = `
             <div class="search-message">
                 Unable to search for people.
-                Please check your profile-table permissions.
+                Please try again.
             </div>
         `;
 
         return;
+
     }
 
     if (!data || data.length === 0) {
@@ -1558,6 +1942,7 @@ async function searchPeople(query, requestNumber) {
         `;
 
         return;
+
     }
 
     results.innerHTML = "";
@@ -1566,32 +1951,37 @@ async function searchPeople(query, requestNumber) {
 
         const username = person.username || "Watcher User";
 
-        const initial =
-            username.charAt(0).toUpperCase() || "?";
-
         const button = document.createElement("button");
 
         button.className = "user-result";
 
-        button.innerHTML = `
-            <div class="result-avatar">
-                ${escapeHTML(initial)}
-            </div>
+        const avatar = document.createElement("div");
+        avatar.className = "result-avatar";
 
-            <div class="result-info">
+        setProfileImage(
+            avatar,
+            person.avatar_url,
+            username
+        );
 
-                <div class="result-name">
-                    ${escapeHTML(username)}
-                </div>
+        const info = document.createElement("div");
+        info.className = "result-info";
 
-                <div class="result-handle">
-                    @${escapeHTML(username)}
-                </div>
+        const name = document.createElement("div");
+        name.className = "result-name";
+        name.textContent = username;
 
-            </div>
+        const handle = document.createElement("div");
+        handle.className = "result-handle";
+        handle.textContent = "@" + username;
 
-            <div class="result-arrow">›</div>
-        `;
+        info.append(name, handle);
+
+        const arrow = document.createElement("div");
+        arrow.className = "result-arrow";
+        arrow.textContent = "›";
+
+        button.append(avatar, info, arrow);
 
         button.addEventListener("click", () => {
             openPublicProfile(person);
@@ -1600,30 +1990,11 @@ async function searchPeople(query, requestNumber) {
         results.appendChild(button);
 
     });
+
 }
 
 
-/* SAFE TEXT DISPLAY */
-
-function escapeHTML(value) {
-
-    return String(value).replace(/[&<>"']/g, char => {
-
-        const replacements = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        };
-
-        return replacements[char];
-
-    });
-}
-
-
-/* OPEN OTHER PERSON'S PROFILE */
+/* PUBLIC PROFILE */
 
 async function openPublicProfile(person) {
 
@@ -1658,38 +2029,172 @@ async function openPublicProfile(person) {
     loading.textContent = "Loading profile...";
     content.style.display = "none";
 
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("id,username,created_at")
-        .eq("id", person.id)
-        .maybeSingle();
+    try {
 
-    if (selectedPublicProfile?.id !== person.id) return;
+        const [profile, followers] = await Promise.all([
 
-    if (error || !data) {
+            getProfileData(person.id),
+
+            getFollowerCount(person.id)
+
+        ]);
+
+        if (selectedPublicProfile?.id !== person.id) return;
+
+        if (!profile) {
+
+            loading.textContent =
+                "This profile could not be found.";
+
+            return;
+
+        }
+
+        const username = profile.username || "Watcher User";
+
+        setProfileImage(
+            document.getElementById("publicAvatar"),
+            profile.avatar_url,
+            username
+        );
+
+        setBanner(
+            document.getElementById("publicCover"),
+            profile.banner_url
+        );
+
+        document.getElementById("publicName").textContent =
+            username;
+
+        document.getElementById("publicHandle").textContent =
+            "@" + username;
+
+        document.getElementById("publicCreated").textContent =
+            "Member since: " + formatDate(profile.created_at);
+
+        document.getElementById("publicFollowerCount").textContent =
+            formatFollowers(followers);
+
+        const button = document.getElementById("followButton");
+
+        if (person.id === currentUser.id) {
+
+            button.style.display = "none";
+
+        } else {
+
+            button.style.display = "block";
+
+            await updateFollowButton(person.id);
+
+        }
+
+        if (selectedPublicProfile?.id !== person.id) return;
+
+        loading.style.display = "none";
+        content.style.display = "block";
+
+    } catch (err) {
+
+        console.error(err);
 
         loading.textContent =
-            "This profile could not be found.";
+            "Unable to load this profile.";
 
-        return;
     }
 
-    const username = data.username || "Watcher User";
+}
 
-    document.getElementById("publicAvatar").textContent =
-        username.charAt(0).toUpperCase() || "?";
 
-    document.getElementById("publicName").textContent =
-        username;
+/* FOLLOW SYSTEM */
 
-    document.getElementById("publicHandle").textContent =
-        "@" + username;
+async function updateFollowButton(userId) {
 
-    document.getElementById("publicCreated").textContent =
-        "Member since: " + formatDate(data.created_at);
+    const button = document.getElementById("followButton");
 
-    loading.style.display = "none";
-    content.style.display = "block";
+    const { data, error } = await supabaseClient
+        .from("followers")
+        .select("follower_id")
+        .eq("follower_id", currentUser.id)
+        .eq("following_id", userId)
+        .maybeSingle();
+
+    if (error) {
+
+        console.error(error);
+
+        button.textContent = "Follow";
+        return;
+
+    }
+
+    button.dataset.following = data ? "true" : "false";
+
+    button.textContent = data ? "Following" : "Follow";
+
+    button.style.background = data ? "#222226" : "#307aae";
+
+}
+
+
+async function toggleFollow() {
+
+    if (!selectedPublicProfile || !currentUser) return;
+
+    const button = document.getElementById("followButton");
+
+    const userId = selectedPublicProfile.id;
+
+    if (userId === currentUser.id) return;
+
+    const wasFollowing = button.dataset.following === "true";
+
+    button.disabled = true;
+
+    button.textContent = wasFollowing
+        ? "Unfollowing..."
+        : "Following...";
+
+    try {
+
+        if (wasFollowing) {
+
+            const { error } = await supabaseClient
+                .from("followers")
+                .delete()
+                .eq("follower_id", currentUser.id)
+                .eq("following_id", userId);
+
+            if (error) throw error;
+
+        } else {
+
+            const { error } = await supabaseClient
+                .from("followers")
+                .insert({
+                    follower_id: currentUser.id,
+                    following_id: userId
+                });
+
+            if (error) throw error;
+
+        }
+
+        await openPublicProfile(selectedPublicProfile);
+
+    } catch (err) {
+
+        console.error("Follow error:", err);
+
+        button.textContent =
+            "Unable to update. Try again.";
+
+    } finally {
+
+        button.disabled = false;
+
+    }
+
 }
 
 
@@ -1722,9 +2227,11 @@ async function signOut() {
             "Unable to sign out: " + error.message;
 
         return;
+
     }
 
     window.location.href = "login.html";
+
 }
 
 
@@ -1737,8 +2244,11 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
     }
 
     if (session?.user) {
+
         currentUser = session.user;
+
         updateNavigationAvatar();
+
     }
 
 });
@@ -1763,6 +2273,7 @@ function outsideClose(event) {
 
 }
 
+
 function selectSource(source) {
 
     if (activeStream) {
@@ -1782,6 +2293,7 @@ function selectSource(source) {
         : "Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
 
     error.style.display = "none";
+
 }
 
 
@@ -1799,9 +2311,11 @@ async function startPreview() {
     try {
 
         if (!navigator.mediaDevices) {
+
             throw new Error(
                 "Camera and screen access require a supported secure browser connection."
             );
+
         }
 
         if (selectedSource === "camera") {
@@ -1815,9 +2329,11 @@ async function startPreview() {
         } else {
 
             if (!navigator.mediaDevices.getDisplayMedia) {
+
                 throw new Error(
                     "Screen sharing is not supported by this browser."
                 );
+
             }
 
             activeStream =
