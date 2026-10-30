@@ -10,746 +10,862 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #0e0e10;
+    --white: #efeff1;
+    --purple: #bf94ff;
+    --sidebar: 180px;
+    --muted: #a0a0a5;
+    --blue: #307aae;
+    --panel: #18181b;
+    --border: #303035;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+main {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 20px 16px 85px;
+}
+
+.header {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page-heading {
+    font-size: 23px;
+    font-weight: 750;
+    margin: 22px 0 7px;
+}
+
+.page-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* Home */
+
+.empty-home {
+    min-height: 65vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+}
+
+.empty-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    background: #1c1c21;
+    display: grid;
+    place-items: center;
+    margin-bottom: 18px;
+    color: #a6a6ac;
+}
+
+.empty-icon svg {
+    width: 31px;
+    height: 31px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.empty-home h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.empty-home p {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 260px;
+    line-height: 1.5;
+}
+
+/* Navigation */
+
+.navigation {
+    position: fixed;
+    z-index: 10;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(55px + env(safe-area-inset-bottom));
+    padding: 2px 6px env(safe-area-inset-bottom);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2px;
+    background: var(--bg);
+    border-top: 1px solid #252529;
+}
+
+.nav-item {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--white);
+    background: transparent;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.nav-label {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.nav-item.active {
+    color: var(--purple);
+}
+
+.create-button {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    cursor: pointer;
+}
+
+.plus-icon {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.activity-wrap {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.avatar {
+    width: 27px;
+    height: 27px;
+    border: 2px solid var(--purple);
+    border-radius: 50%;
+    background: #38294c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+/* Search */
+
+.search-box {
+    width: 100%;
+    height: 47px;
+    margin-top: 23px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 14px;
+    background: #1b1b1f;
+    border: 1px solid #34343a;
+    border-radius: 9px;
+}
+
+.search-box:focus-within {
+    border-color: var(--blue);
+}
+
+.search-box svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    stroke: #92929a;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.search-box input {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 13px;
+}
+
+.search-box input::placeholder {
+    color: #777780;
+}
+
+.search-caption {
+    margin-top: 25px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #b9b9c0;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.user-result {
+    width: 100%;
+    min-height: 72px;
+    padding: 11px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #18181b;
+    border: 1px solid #303035;
+    border-radius: 9px;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+}
+
+.user-result:active {
+    background: #242429;
+}
+
+.result-avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #38294c;
+    border: 1.5px solid var(--purple);
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.result-name {
+    font-size: 14px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.result-handle {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.result-arrow {
+    color: #777780;
+    font-size: 20px;
+}
+
+.search-message {
+    padding: 35px 15px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Profile */
+
+.profile-cover {
+    height: 125px;
+    margin-top: 23px;
+    border-radius: 11px;
+    background: linear-gradient(120deg, #28202f, #171c28);
+    border: 1px solid #34303d;
+}
+
+.profile-main {
+    position: relative;
+    padding: 0 17px 18px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    margin-top: 0;
+}
+
+.profile-avatar {
+    width: 82px;
+    height: 82px;
+    margin-top: -41px;
+    border-radius: 50%;
+    background: #38294c;
+    border: 3px solid var(--bg);
+    outline: 2px solid var(--purple);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.profile-name {
+    font-size: 21px;
+    font-weight: 750;
+    margin-top: 13px;
+    overflow-wrap: anywhere;
+}
+
+.profile-handle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 5px;
+    overflow-wrap: anywhere;
+}
+
+.profile-description {
+    margin-top: 15px;
+    color: #c4c4cb;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.profile-info-card {
+    margin-top: 13px;
+    padding: 17px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+
+.section-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 17px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid #303035;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.info-value {
+    font-size: 12px;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.profile-actions {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.action-button {
+    width: 100%;
+    height: 43px;
+    border-radius: 7px;
+    border: 1px solid #36363c;
+    background: #222226;
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.action-button.danger {
+    border-color: #663232;
+    background: #321a1a;
+    color: #ff8585;
+}
+
+.profile-loading {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 25px;
+}
+
+.signout-message {
+    font-size: 12px;
+    color: #ff8585;
+    margin-top: 12px;
+    display: none;
+}
+
+/* Other profile */
+
+.back-button {
+    border: none;
+    background: transparent;
+    color: #b9b9c0;
+    font-size: 13px;
+    padding: 12px 0;
+    cursor: pointer;
+}
+
+.public-profile-cover {
+    height: 125px;
+    margin-top: 10px;
+    border-radius: 11px;
+    background: linear-gradient(120deg, #252332, #1c2734);
+    border: 1px solid #34303d;
+}
+
+.public-profile-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 0 17px 20px;
+}
+
+.public-profile-avatar {
+    width: 82px;
+    height: 82px;
+    margin-top: -41px;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+    outline: 2px solid var(--purple);
+    background: #38294c;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.public-profile-name {
+    margin-top: 14px;
+    font-size: 21px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.public-profile-handle {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.public-profile-note {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: #202024;
+    font-size: 12px;
+    color: #b9b9c0;
+    line-height: 1.6;
+}
 
-:root{
-    --bg:#0e0e10;
-    --white:#efeff1;
-    --purple:#bf94ff;
-    --sidebar:180px;
-    --muted:#a0a0a5;
-    --blue:#307aae;
+/* General panels */
+
+.page-panel {
+    margin-top: 22px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-    background:var(--bg);
-    color:var(--white);
-    font-family:Arial,Helvetica,sans-serif;
+.page-panel h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
 }
 
-body{
-    min-height:100vh;
-    min-height:100dvh;
-    overflow-x:hidden;
+.page-panel p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
 }
 
-main{
-    min-height:100vh;
-    min-height:100dvh;
-    padding:20px 16px 85px;
+.small-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 15px;
 }
 
-.header{
-    height:45px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+/* Create modal */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 12px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 470px;
+    max-height: 92dvh;
+    overflow-y: auto;
+    background: #18181b;
+    border: 1px solid #303035;
+    border-radius: 15px;
+    padding: 19px;
+    animation: slideUp .2s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(25px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 19px;
+}
+
+.close-button {
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background: #29292e;
+    border-radius: 7px;
+    color: white;
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.field-label {
+    display: block;
+    font-size: 12px;
+    color: #c5c5cb;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.field {
+    width: 100%;
+    height: 43px;
+    border: 1px solid #36363c;
+    border-radius: 7px;
+    background: #101012;
+    color: white;
+    padding: 0 12px;
+    outline: none;
+    font-size: 13px;
+    margin-bottom: 17px;
+}
+
+.field:focus {
+    border-color: var(--blue);
+}
+
+select.field {
+    color: white;
+}
+
+.choice-title {
+    font-size: 12px;
+    color: #c5c5cb;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+.choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.choice {
+    min-height: 100px;
+    background: #222226;
+    border: 1px solid #36363c;
+    border-radius: 9px;
+    color: white;
+    padding: 13px;
+    text-align: left;
+    cursor: pointer;
+}
+
+.choice.selected {
+    border: 1.5px solid var(--blue);
+    background: #1b2a35;
+}
+
+.choice svg {
+    width: 25px;
+    height: 25px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 9px;
+}
+
+.choice strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.choice span {
+    font-size: 10px;
+    color: #a5a5ad;
+    line-height: 1.4;
 }
 
-.logo{
-    font-size:23px;
-    font-weight:800;
-    letter-spacing:-1px;
+.preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 9px;
+    background: #09090b;
+    overflow: hidden;
+    margin-bottom: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.page{display:none}
-.page.active{display:block}
+.preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+    background: black;
+}
 
-/* HOMEPAGE */
+.preview-placeholder {
+    color: #777780;
+    text-align: center;
+    font-size: 12px;
+}
 
-.home-welcome{
-    margin-top:27px;
-    margin-bottom:27px;
+.preview-placeholder svg {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 9px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
 }
 
-.home-welcome h1{
-    font-size:25px;
-    font-weight:750;
-    letter-spacing:-.7px;
-    margin-bottom:8px;
+.preview-status {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    display: none;
+    background: #d92222;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 5px 7px;
 }
 
-.home-welcome p{
-    color:var(--muted);
-    font-size:13px;
-    line-height:1.5;
-}
+.status-message {
+    font-size: 11px;
+    color: #a5a5ad;
+    line-height: 1.5;
+    margin-bottom: 13px;
+}
 
-.home-section-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:14px;
+.start-button {
+    width: 100%;
+    height: 44px;
+    border: 0;
+    border-radius: 7px;
+    background: var(--blue);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
 }
-
-.home-section-header h2{
-    font-size:17px;
-    font-weight:700;
-}
 
-.live-count{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:10px;
-    color:var(--muted);
-    background:#1c1c20;
-    padding:6px 9px;
-    border-radius:5px;
+.start-button:disabled {
+    opacity: .5;
 }
-
-.live-dot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#77777e;
+
+.stop-button {
+    display: none;
+    width: 100%;
+    height: 44px;
+    border: 1px solid #a83232;
+    border-radius: 7px;
+    background: #321a1a;
+    color: #ff7777;
+    font-weight: 700;
+    margin-top: 9px;
 }
 
-.empty-home{
-    min-height:310px;
-    border:1px solid #29292e;
-    border-radius:12px;
-    background:linear-gradient(145deg,#19191d,#121214);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:25px 20px;
-}
-
-.empty-icon{
-    width:65px;
-    height:65px;
-    border-radius:17px;
-    background:#242329;
-    display:grid;
-    place-items:center;
-    margin-bottom:18px;
-    color:#b4a1cb;
-}
-
-.empty-icon svg{
-    width:30px;
-    height:30px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.6;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.empty-home h2{
-    font-size:19px;
-    margin-bottom:9px;
-}
-
-.empty-home p{
-    font-size:12px;
-    color:var(--muted);
-    max-width:270px;
-    line-height:1.6;
+.error {
+    display: none;
+    color: #ff8585;
+    font-size: 12px;
+    margin-bottom: 12px;
+    line-height: 1.5;
 }
+
+@media(max-width:340px) {
+    .nav-label { font-size: 10px; }
 
-.empty-create{
-    height:39px;
-    padding:0 17px;
-    margin-top:19px;
-    border:0;
-    border-radius:7px;
-    background:var(--blue);
-    color:white;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.home-bottom-note{
-    margin-top:25px;
-    padding:17px;
-    background:#18181b;
-    border:1px solid #29292e;
-    border-radius:9px;
-    display:flex;
-    align-items:center;
-    gap:13px;
-}
-
-.note-icon{
-    width:36px;
-    height:36px;
-    flex-shrink:0;
-    border-radius:9px;
-    display:grid;
-    place-items:center;
-    background:#242329;
-    color:#bf94ff;
-}
-
-.note-icon svg{
-    width:19px;
-    height:19px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.7;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.home-bottom-note strong{
-    font-size:12px;
-    display:block;
-    margin-bottom:4px;
-}
-
-.home-bottom-note span{
-    font-size:11px;
-    color:var(--muted);
-    line-height:1.4;
-}
-
-/* OTHER PAGES */
-
-.page-heading{
-    font-size:23px;
-    font-weight:750;
-    margin:20px 0 8px;
-}
-
-.page-subtitle{
-    font-size:13px;
-    color:var(--muted);
-    line-height:1.5;
-}
-
-.page-panel{
-    margin-top:22px;
-    background:#18181b;
-    border:1px solid #303035;
-    border-radius:10px;
-    padding:20px;
-}
-
-.page-panel h3{
-    font-size:15px;
-    margin-bottom:8px;
-}
-
-.page-panel p{
-    font-size:12px;
-    line-height:1.5;
-    color:var(--muted);
-}
-
-.small-note{
-    font-size:11px;
-    color:var(--muted);
-    margin-top:15px;
-}
-
-/* NAVIGATION - ORIGINAL STYLE */
-
-.navigation{
-    position:fixed;
-    z-index:10;
-    bottom:0;
-    left:0;
-    right:0;
-    height:calc(55px + env(safe-area-inset-bottom));
-    padding:2px 6px env(safe-area-inset-bottom);
-    display:flex;
-    align-items:center;
-    justify-content:space-around;
-    gap:2px;
-    background:var(--bg);
-}
-
-.nav-item{
-    flex:1;
-    min-width:0;
-    height:100%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-    color:var(--white);
-    background:transparent;
-    border:none;
-    font:inherit;
-    cursor:pointer;
-}
-
-.nav-icon{
-    width:24px;
-    height:24px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.8;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.nav-label{
-    font-size:12px;
-    line-height:14px;
-    font-weight:600;
-    white-space:nowrap;
-}
-
-.nav-item.active{
-    color:var(--purple);
-}
-
-.create-button{
-    flex:0 0 44px;
-    width:44px;
-    height:44px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:none;
-    border-radius:50%;
-    background:#307aae;
-    color:white;
-    cursor:pointer;
-}
-
-.plus-icon{
-    width:25px;
-    height:25px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:2;
-}
-
-.activity-wrap{
-    position:relative;
-    width:24px;
-    height:24px;
-}
-
-.notification{
-    position:absolute;
-    top:-5px;
-    right:-9px;
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#e91916;
-    color:white;
-    font-size:11px;
-    font-weight:700;
-}
-
-.avatar{
-    width:27px;
-    height:27px;
-    padding:2px;
-    border:2px solid var(--purple);
-    border-radius:50%;
-    background:#38294c;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:12px;
-    font-weight:700;
-    overflow:hidden;
-}
-
-/* PROFILE */
-
-.profile-card{
-    margin-top:24px;
-    background:#18181b;
-    border:1px solid #303035;
-    border-radius:12px;
-    padding:20px;
-}
-
-.profile-top{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    margin-bottom:20px;
-}
-
-.profile-avatar{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    background:#38294c;
-    border:2px solid var(--purple);
-    display:grid;
-    place-items:center;
-    color:white;
-    font-size:24px;
-    font-weight:700;
-    flex-shrink:0;
-}
-
-.profile-name{
-    font-size:19px;
-    font-weight:700;
-    overflow-wrap:anywhere;
-}
-
-.profile-handle{
-    font-size:12px;
-    color:var(--muted);
-    margin-top:5px;
-}
-
-.profile-divider{
-    height:1px;
-    background:#303035;
-    margin:16px 0;
-}
-
-.info-label{
-    font-size:11px;
-    color:var(--muted);
-    margin-bottom:6px;
-}
-
-.info-value{
-    font-size:14px;
-    overflow-wrap:anywhere;
-}
-
-.profile-actions{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    margin-top:20px;
-}
-
-.action-button{
-    width:100%;
-    height:43px;
-    border-radius:7px;
-    border:1px solid #36363c;
-    background:#222226;
-    color:white;
-    font-weight:700;
-    font-size:13px;
-    cursor:pointer;
-}
-
-.action-button.danger{
-    border-color:#663232;
-    background:#321a1a;
-    color:#ff8585;
-}
-
-.profile-loading{
-    color:var(--muted);
-    font-size:13px;
-    margin-top:25px;
-}
-
-.signout-message{
-    font-size:12px;
-    color:#ff8585;
-    margin-top:12px;
-    display:none;
-}
-
-/* CREATE MODAL */
-
-.modal-overlay{
-    position:fixed;
-    inset:0;
-    z-index:30;
-    background:rgba(0,0,0,.75);
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    padding:12px;
-}
-
-.modal-overlay.show{display:flex}
-
-.modal{
-    width:100%;
-    max-width:470px;
-    max-height:92dvh;
-    overflow-y:auto;
-    background:#18181b;
-    border:1px solid #303035;
-    border-radius:15px;
-    padding:19px;
-    animation:slideUp .2s ease;
-}
-
-@keyframes slideUp{
-    from{transform:translateY(25px);opacity:0}
-    to{transform:translateY(0);opacity:1}
-}
-
-.modal-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
-}
-
-.modal-header h2{font-size:19px}
-
-.close-button{
-    width:30px;
-    height:30px;
-    border:0;
-    background:#29292e;
-    border-radius:7px;
-    color:white;
-    font-size:19px;
-    cursor:pointer;
-}
-
-.field-label{
-    display:block;
-    font-size:12px;
-    color:#c5c5cb;
-    font-weight:600;
-    margin-bottom:8px;
-}
-
-.field{
-    width:100%;
-    height:43px;
-    border:1px solid #36363c;
-    border-radius:7px;
-    background:#101012;
-    color:white;
-    padding:0 12px;
-    outline:none;
-    font-size:13px;
-    margin-bottom:17px;
-}
-
-.field:focus{border-color:var(--blue)}
-
-.choice-title{
-    font-size:12px;
-    color:#c5c5cb;
-    font-weight:600;
-    margin-bottom:9px;
-}
-
-.choices{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin-bottom:18px;
-}
-
-.choice{
-    min-height:100px;
-    background:#222226;
-    border:1px solid #36363c;
-    border-radius:9px;
-    color:white;
-    padding:13px;
-    text-align:left;
-    cursor:pointer;
-}
-
-.choice.selected{
-    border:1.5px solid var(--blue);
-    background:#1b2a35;
-}
-
-.choice svg{
-    width:25px;
-    height:25px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.7;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    margin-bottom:9px;
-}
-
-.choice strong{
-    display:block;
-    font-size:13px;
-    margin-bottom:4px;
-}
-
-.choice span{
-    font-size:10px;
-    color:#a5a5ad;
-    line-height:1.4;
-}
-
-.preview{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    border-radius:9px;
-    background:#09090b;
-    overflow:hidden;
-    margin-bottom:13px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.preview video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    display:none;
-    background:black;
-}
-
-.preview-placeholder{
-    color:#777780;
-    text-align:center;
-    font-size:12px;
-}
-
-.preview-placeholder svg{
-    display:block;
-    width:30px;
-    height:30px;
-    margin:0 auto 9px;
-    fill:none;
-    stroke:currentColor;
-    stroke-width:1.5;
-}
-
-.preview-status{
-    position:absolute;
-    top:9px;
-    left:9px;
-    display:none;
-    background:#d92222;
-    border-radius:4px;
-    font-size:10px;
-    font-weight:700;
-    padding:5px 7px;
-}
-
-.status-message{
-    font-size:11px;
-    color:#a5a5ad;
-    line-height:1.5;
-    margin-bottom:13px;
-}
-
-.start-button{
-    width:100%;
-    height:44px;
-    border:0;
-    border-radius:7px;
-    background:var(--blue);
-    color:white;
-    font-size:13px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.start-button:disabled{opacity:.5}
-
-.stop-button{
-    display:none;
-    width:100%;
-    height:44px;
-    border:1px solid #a83232;
-    border-radius:7px;
-    background:#321a1a;
-    color:#ff7777;
-    font-weight:700;
-    margin-top:9px;
-    cursor:pointer;
-}
-
-.error{
-    display:none;
-    color:#ff8585;
-    font-size:12px;
-    margin-bottom:12px;
-    line-height:1.5;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:340px){
-    .nav-label{font-size:10px}
-    .create-button{
-        flex-basis:38px;
-        width:38px;
-        height:38px;
+    .create-button {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
     }
-    .avatar{
-        width:24px;
-        height:24px;
+
+    .avatar {
+        width: 24px;
+        height: 24px;
     }
 }
 
-@media(min-width:760px){
-    main{
-        margin-left:var(--sidebar);
-        padding:25px 30px;
+@media(min-width:760px) {
+    main {
+        margin-left: var(--sidebar);
+        padding: 25px 30px;
     }
 
-    .navigation{
-        top:0;
-        bottom:0;
-        left:0;
-        right:auto;
-        width:var(--sidebar);
-        height:100dvh;
-        padding:18px 10px;
-        flex-direction:column;
-        align-items:stretch;
-        justify-content:flex-start;
-        gap:7px;
-        border-right:1px solid #252529;
+    .navigation {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        width: var(--sidebar);
+        height: 100dvh;
+        padding: 18px 10px;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 7px;
+        border-top: 0;
+        border-right: 1px solid #252529;
     }
 
-    .nav-item{
-        flex:0 0 42px;
-        width:100%;
-        height:42px;
-        flex-direction:row;
-        justify-content:flex-start;
-        gap:11px;
-        padding:0 11px;
+    .nav-item {
+        flex: 0 0 42px;
+        width: 100%;
+        height: 42px;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 11px;
+        padding: 0 11px;
     }
 
-    .nav-icon{
-        width:21px;
-        height:21px;
+    .nav-icon {
+        width: 21px;
+        height: 21px;
     }
 
-    .nav-label{font-size:13px}
-
-    .nav-item.active{
-        background:#242127;
-        border-radius:6px;
+    .nav-label {
+        font-size: 13px;
     }
 
-    .create-button{
-        flex:0 0 40px;
-        width:100%;
-        height:40px;
-        border-radius:8px;
+    .nav-item.active {
+        background: #242127;
+        border-radius: 6px;
     }
 
-    .modal-overlay{align-items:center}
+    .create-button {
+        flex: 0 0 40px;
+        width: 100%;
+        height: 40px;
+        border-radius: 8px;
+    }
 
-    .home-welcome h1{font-size:29px}
-
-    .empty-home{min-height:360px}
+    .modal-overlay {
+        align-items: center;
+    }
 }
 </style>
 </head>
@@ -757,137 +873,226 @@ main{
 <body>
 
 <main>
-    <header class="header">
-        <div class="logo">Watcher</div>
-    </header>
 
-    <!-- HOME -->
-    <section class="page active" id="homePage">
+<header class="header">
+    <div class="logo">Watcher</div>
+</header>
 
-        <div class="home-welcome">
-            <h1>Discover something live.</h1>
-            <p>Find creators, watch streams and share your moments on Watcher.</p>
+<!-- HOME -->
+
+<section class="page active" id="homePage">
+
+    <div class="empty-home">
+        <div class="empty-icon">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m10 9 5 3-5 3z"/>
+            </svg>
         </div>
 
-        <div class="home-section-header">
-            <h2>Live channels</h2>
-            <div class="live-count">
-                <span class="live-dot"></span>
-                0 LIVE
-            </div>
+        <h2>No streams yet</h2>
+
+        <p>
+            When creators go live, their streams will appear here.
+            Be the first to start streaming.
+        </p>
+    </div>
+
+</section>
+
+<!-- BROWSE / PEOPLE SEARCH -->
+
+<section class="page" id="browsePage">
+
+    <h1 class="page-heading">Discover people</h1>
+
+    <p class="page-subtitle">
+        Find creators and other people on Watcher.
+    </p>
+
+    <div class="search-box">
+
+        <svg viewBox="0 0 24 24">
+            <circle cx="10.5" cy="10.5" r="7.5"/>
+            <path d="m16 16 5 5"/>
+        </svg>
+
+        <input
+            id="peopleSearch"
+            type="search"
+            placeholder="Search usernames..."
+            autocomplete="off"
+            maxlength="24"
+            oninput="handlePeopleSearch(this.value)"
+        >
+
+    </div>
+
+    <div class="search-caption" id="searchCaption">
+        PEOPLE
+    </div>
+
+    <div class="search-results" id="searchResults">
+
+        <div class="search-message">
+            Search for a Watcher username to find people.
         </div>
 
-        <div class="empty-home">
-            <div class="empty-icon">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="5" width="18" height="14" rx="2"/>
-                    <path d="m10 9 5 3-5 3z"/>
-                </svg>
+    </div>
+
+</section>
+
+<!-- ACTIVITY -->
+
+<section class="page" id="activityPage">
+
+    <h1 class="page-heading">Activity</h1>
+
+    <p class="page-subtitle">
+        Your notifications and recent updates.
+    </p>
+
+    <div class="empty-home" style="min-height:48vh">
+
+        <div class="empty-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                <path d="M10 21h4"/>
+            </svg>
+        </div>
+
+        <h2>You're all caught up</h2>
+
+        <p>
+            When you receive notifications, they'll show up here.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- YOUR PROFILE -->
+
+<section class="page" id="profilePage">
+
+    <h1 class="page-heading">Your profile</h1>
+
+    <p class="page-subtitle">
+        Manage and view your Watcher account.
+    </p>
+
+    <div id="profileLoading" class="profile-loading">
+        Loading your profile...
+    </div>
+
+    <div id="profileContent" style="display:none">
+
+        <div class="profile-cover"></div>
+
+        <div class="profile-main">
+
+            <div class="profile-avatar" id="profileAvatar">?</div>
+
+            <div class="profile-name" id="profileName">
+                Username
             </div>
 
-            <h2>No streams yet</h2>
+            <div class="profile-handle" id="profileHandle">
+                @username
+            </div>
 
-            <p>
-                When creators go live, their streams will appear here.
-                Be the first to start streaming.
-            </p>
+            <div class="profile-description">
+                Welcome to my Watcher profile.
+            </div>
 
-            <button class="empty-create" onclick="openCreate()">
-                Start streaming
+        </div>
+
+        <div class="profile-info-card">
+
+            <div class="section-title">
+                Account information
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Username</span>
+                <span class="info-value" id="profileUsername">-</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Email address</span>
+                <span class="info-value" id="profileEmail">-</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Member since</span>
+                <span class="info-value" id="profileCreated">-</span>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <button class="action-button danger" onclick="signOut()">
+                Sign out
             </button>
+
         </div>
 
-        <div class="home-bottom-note">
-            <div class="note-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 3v18M3 12h18"/>
-                </svg>
-            </div>
-            <div>
-                <strong>Create something on Watcher</strong>
-                <span>Start your own stream and share it with others.</span>
-            </div>
-        </div>
+        <div class="signout-message" id="signoutMessage"></div>
 
-    </section>
+    </div>
 
-    <!-- BROWSE -->
-    <section class="page" id="browsePage">
-        <h1 class="page-heading">Browse</h1>
-        <p class="page-subtitle">Discover creators and communities on Watcher.</p>
+</section>
 
-        <div class="page-panel">
-            <h3>Nothing to discover yet</h3>
-            <p>Live channels and categories will appear here when creators start streaming.</p>
-            <p class="small-note">Stream discovery and search are not available yet.</p>
-        </div>
-    </section>
+<!-- OTHER PERSON'S PROFILE -->
 
-    <!-- ACTIVITY -->
-    <section class="page" id="activityPage">
-        <h1 class="page-heading">Activity</h1>
-        <p class="page-subtitle">Your notifications and recent updates.</p>
+<section class="page" id="publicProfilePage">
 
-        <div class="empty-home" style="min-height:310px;margin-top:22px">
-            <div class="empty-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                    <path d="M10 21h4"/>
-                </svg>
-            </div>
-            <h2>You're all caught up</h2>
-            <p>When you receive notifications, they'll show up here.</p>
-        </div>
-    </section>
+    <button class="back-button" onclick="backToPeople()">
+        ← Back to people
+    </button>
 
-    <!-- PROFILE -->
-    <section class="page" id="profilePage">
-        <h1 class="page-heading">Your profile</h1>
-        <p class="page-subtitle">Your Watcher account information.</p>
+    <div id="publicProfileLoading" class="profile-loading">
+        Loading profile...
+    </div>
 
-        <div id="profileLoading" class="profile-loading">
-            Loading your profile...
-        </div>
+    <div id="publicProfileContent" style="display:none">
 
-        <div class="profile-card" id="profileCard" style="display:none">
-            <div class="profile-top">
-                <div class="profile-avatar" id="profileAvatar">?</div>
-                <div>
-                    <div class="profile-name" id="profileName">Username</div>
-                    <div class="profile-handle" id="profileHandle">@username</div>
-                </div>
+        <div class="public-profile-cover"></div>
+
+        <div class="public-profile-card">
+
+            <div class="public-profile-avatar" id="publicAvatar">
+                ?
             </div>
 
-            <div class="profile-divider"></div>
-
-            <div class="info-label">Username</div>
-            <div class="info-value" id="profileUsername">Loading...</div>
-
-            <div class="profile-divider"></div>
-
-            <div class="info-label">Email address</div>
-            <div class="info-value" id="profileEmail">Loading...</div>
-
-            <div class="profile-divider"></div>
-
-            <div class="info-label">Account created</div>
-            <div class="info-value" id="profileCreated">Loading...</div>
-
-            <div class="profile-actions">
-                <button class="action-button danger" onclick="signOut()">
-                    Sign out
-                </button>
+            <div class="public-profile-name" id="publicName">
+                Username
             </div>
 
-            <div class="signout-message" id="signoutMessage"></div>
+            <div class="public-profile-handle" id="publicHandle">
+                @username
+            </div>
+
+            <div class="public-profile-note">
+                Watcher member
+                <br>
+                <span id="publicCreated">Member since: -</span>
+            </div>
+
         </div>
-    </section>
+
+    </div>
+
+</section>
+
 </main>
 
-<!-- BOTTOM NAVIGATION -->
+<!-- NAVIGATION -->
+
 <nav class="navigation" aria-label="Main navigation">
 
-    <button class="nav-item active" data-page="homePage"
+    <button class="nav-item active"
         onclick="showPage('homePage',this)">
 
         <svg class="nav-icon" viewBox="0 0 24 24">
@@ -896,9 +1101,10 @@ main{
         </svg>
 
         <span class="nav-label">Home</span>
+
     </button>
 
-    <button class="nav-item" data-page="browsePage"
+    <button class="nav-item"
         onclick="showPage('browsePage',this)">
 
         <svg class="nav-icon" viewBox="0 0 24 24">
@@ -907,52 +1113,76 @@ main{
         </svg>
 
         <span class="nav-label">Browse</span>
+
     </button>
 
-    <button class="create-button" onclick="openCreate()" aria-label="Create stream">
+    <button class="create-button"
+        onclick="openCreate()"
+        aria-label="Create stream">
+
         <svg class="plus-icon" viewBox="0 0 24 24">
             <path d="M12 4v16M4 12h16"/>
         </svg>
+
     </button>
 
-    <button class="nav-item" data-page="activityPage"
+    <button class="nav-item"
         onclick="showPage('activityPage',this)">
 
         <span class="activity-wrap">
+
             <svg class="nav-icon" viewBox="0 0 24 24">
                 <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
                 <path d="M10 21h4"/>
             </svg>
+
         </span>
 
         <span class="nav-label">Activity</span>
+
     </button>
 
-    <button class="nav-item" data-page="profilePage"
+    <button class="nav-item"
         onclick="showPage('profilePage',this)">
 
         <span class="avatar" id="navAvatar">?</span>
+
         <span class="nav-label">Profile</span>
+
     </button>
 
 </nav>
 
 <!-- CREATE STREAM MODAL -->
-<div class="modal-overlay" id="createModal" onclick="outsideClose(event)">
+
+<div class="modal-overlay" id="createModal"
+    onclick="outsideClose(event)">
+
     <div class="modal">
 
         <div class="modal-header">
+
             <h2>Create a stream</h2>
-            <button class="close-button" onclick="closeCreate()">×</button>
+
+            <button class="close-button"
+                onclick="closeCreate()">×</button>
+
         </div>
 
-        <label class="field-label" for="streamTitle">Stream title</label>
+        <label class="field-label" for="streamTitle">
+            Stream title
+        </label>
+
         <input class="field" id="streamTitle"
             maxlength="100"
             placeholder="What are you streaming?">
 
-        <label class="field-label" for="streamCategory">Category</label>
+        <label class="field-label" for="streamCategory">
+            Category
+        </label>
+
         <select class="field" id="streamCategory">
+
             <option value="">Select a category</option>
             <option>Gaming</option>
             <option>Roblox</option>
@@ -961,13 +1191,17 @@ main{
             <option>Music</option>
             <option>Technology</option>
             <option>Other</option>
+
         </select>
 
-        <div class="choice-title">Choose your streaming source</div>
+        <div class="choice-title">
+            Choose your streaming source
+        </div>
 
         <div class="choices">
 
-            <button class="choice selected" id="cameraChoice"
+            <button class="choice selected"
+                id="cameraChoice"
                 onclick="selectSource('camera')">
 
                 <svg viewBox="0 0 24 24">
@@ -976,10 +1210,15 @@ main{
                 </svg>
 
                 <strong>Camera</strong>
-                <span>Stream using your camera and microphone.</span>
+
+                <span>
+                    Stream using your camera and microphone.
+                </span>
+
             </button>
 
-            <button class="choice" id="screenChoice"
+            <button class="choice"
+                id="screenChoice"
                 onclick="selectSource('screen')">
 
                 <svg viewBox="0 0 24 24">
@@ -988,7 +1227,11 @@ main{
                 </svg>
 
                 <strong>Screen</strong>
-                <span>Share your screen, gameplay or apps.</span>
+
+                <span>
+                    Share your screen, gameplay or apps.
+                </span>
+
             </button>
 
         </div>
@@ -996,43 +1239,62 @@ main{
         <div class="field-label">Preview</div>
 
         <div class="preview">
-            <video id="previewVideo" autoplay muted playsinline></video>
 
-            <div class="preview-placeholder" id="previewPlaceholder">
+            <video id="previewVideo"
+                autoplay muted playsinline></video>
+
+            <div class="preview-placeholder"
+                id="previewPlaceholder">
+
                 <svg viewBox="0 0 24 24">
                     <rect x="3" y="5" width="18" height="14" rx="2"/>
                     <path d="m10 9 5 3-5 3z"/>
                 </svg>
+
                 Your preview will appear here
+
             </div>
 
-            <div class="preview-status" id="previewStatus">
+            <div class="preview-status"
+                id="previewStatus">
                 PREVIEW ACTIVE
             </div>
+
         </div>
 
         <div class="error" id="errorMessage"></div>
 
         <p class="status-message" id="statusMessage">
-            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
+            Choose a source and start your preview.
+            Your camera or screen will only be accessed after
+            you give permission.
         </p>
 
-        <button class="start-button" id="startButton" onclick="startPreview()">
+        <button class="start-button"
+            id="startButton"
+            onclick="startPreview()">
             Start Preview
         </button>
 
-        <button class="stop-button" id="stopButton" onclick="stopPreview()">
+        <button class="stop-button"
+            id="stopButton"
+            onclick="stopPreview()">
             Stop Preview
         </button>
 
     </div>
+
 </div>
 
 <script>
+
 /* SUPABASE CONNECTION */
 
-const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
+const SUPABASE_URL =
+"https://sjtaagrvncysbrpwqdzf.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
 
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
@@ -1040,8 +1302,13 @@ const supabaseClient = window.supabase.createClient(
 );
 
 let currentUser = null;
+let selectedPublicProfile = null;
+
 let selectedSource = "camera";
 let activeStream = null;
+
+let searchTimer = null;
+let searchRequestNumber = 0;
 
 const modal = document.getElementById("createModal");
 const video = document.getElementById("previewVideo");
@@ -1052,268 +1319,648 @@ const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const previewStatus = document.getElementById("previewStatus");
 
+
 /* PAGE NAVIGATION */
 
-function showPage(pageId,button){
+function showPage(pageId, button) {
 
-    document.querySelectorAll(".page").forEach(page=>{
+    document.querySelectorAll(".page").forEach(page => {
         page.classList.remove("active");
     });
 
     document.getElementById(pageId).classList.add("active");
 
-    document.querySelectorAll(".nav-item").forEach(item=>{
+    document.querySelectorAll(".nav-item").forEach(item => {
         item.classList.remove("active");
     });
 
-    if(button) button.classList.add("active");
+    if (button) {
+        button.classList.add("active");
+    }
 
-    if(pageId==="profilePage"){
+    if (pageId === "profilePage") {
         loadProfile();
     }
 
-    window.scrollTo({top:0,behavior:"smooth"});
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 }
 
-/* LOAD REAL ACCOUNT INFORMATION */
 
-async function loadProfile(){
+/* DATE FORMATTING */
 
-    const loading=document.getElementById("profileLoading");
-    const card=document.getElementById("profileCard");
+function formatDate(date) {
 
-    if(!currentUser){
-        loading.style.display="block";
-        loading.textContent="You are not signed in.";
-        card.style.display="none";
+    if (!date) return "Not available";
+
+    const parsed = new Date(date);
+
+    if (isNaN(parsed.getTime())) {
+        return "Not available";
+    }
+
+    return parsed.toLocaleDateString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    });
+}
+
+
+/* AUTHENTICATION */
+
+async function checkLogin() {
+
+    const { data, error } =
+        await supabaseClient.auth.getSession();
+
+    if (error || !data.session) {
+        window.location.href = "login.html";
         return;
     }
 
-    loading.style.display="block";
-    loading.textContent="Loading your profile...";
-    card.style.display="none";
+    currentUser = data.session.user;
 
-    let username=
+    updateNavigationAvatar();
+}
+
+function updateNavigationAvatar() {
+
+    if (!currentUser) return;
+
+    const username =
         currentUser.user_metadata?.username ||
         currentUser.user_metadata?.user_name ||
-        "";
+        currentUser.email?.split("@")[0] ||
+        "U";
 
-    const {data:profile,error:profileError}=await supabaseClient
-        .from("profiles")
-        .select("username,created_at")
-        .eq("id",currentUser.id)
-        .maybeSingle();
-
-    if(profile && profile.username){
-        username=profile.username;
-    }
-
-    if(!username){
-        username=currentUser.email
-            ?currentUser.email.split("@")[0]
-            :"Watcher User";
-    }
-
-    const initial=username.trim().charAt(0).toUpperCase() || "?";
-
-    document.getElementById("profileAvatar").textContent=initial;
-    document.getElementById("navAvatar").textContent=initial;
-    document.getElementById("profileName").textContent=username;
-    document.getElementById("profileHandle").textContent="@"+username;
-    document.getElementById("profileUsername").textContent=username;
-    document.getElementById("profileEmail").textContent=
-        currentUser.email || "Not available";
-
-    const created=profile?.created_at || currentUser.created_at;
-
-    document.getElementById("profileCreated").textContent=created
-        ?new Date(created).toLocaleDateString(undefined,{
-            year:"numeric",
-            month:"long",
-            day:"numeric"
-        })
-        :"Not available";
-
-    loading.style.display="none";
-    card.style.display="block";
-
-    if(profileError){
-        console.warn("Could not load profile table:",profileError.message);
-    }
+    document.getElementById("navAvatar").textContent =
+        username.charAt(0).toUpperCase();
 }
 
-/* AUTHENTICATION CHECK */
 
-async function checkLogin(){
+/* YOUR PROFILE */
 
-    const {data,error}=await supabaseClient.auth.getSession();
+async function loadProfile() {
 
-    if(error || !data.session){
-        window.location.href="login.html";
+    const loading =
+        document.getElementById("profileLoading");
+
+    const content =
+        document.getElementById("profileContent");
+
+    if (!currentUser) {
+        loading.textContent = "You are not signed in.";
+        content.style.display = "none";
         return;
     }
 
-    currentUser=data.session.user;
+    loading.style.display = "block";
+    loading.textContent = "Loading your profile...";
+    content.style.display = "none";
+
+    const { data: profile, error: profileError } =
+        await supabaseClient
+            .from("profiles")
+            .select("id,username,created_at")
+            .eq("id", currentUser.id)
+            .maybeSingle();
+
+    if (profileError) {
+
+        console.error(profileError);
+
+        loading.textContent =
+            "Unable to load your profile. Please try again.";
+
+        return;
+    }
+
+    const username =
+        profile?.username ||
+        currentUser.user_metadata?.username ||
+        currentUser.email?.split("@")[0] ||
+        "Watcher User";
+
+    const initial =
+        username.trim().charAt(0).toUpperCase() || "?";
+
+    document.getElementById("profileAvatar").textContent = initial;
+
+    document.getElementById("profileName").textContent = username;
+
+    document.getElementById("profileHandle").textContent =
+        "@" + username;
+
+    document.getElementById("profileUsername").textContent =
+        username;
+
+    document.getElementById("profileEmail").textContent =
+        currentUser.email || "Not available";
+
+    document.getElementById("profileCreated").textContent =
+        formatDate(profile?.created_at || currentUser.created_at);
+
+    loading.style.display = "none";
+    content.style.display = "block";
 }
 
-supabaseClient.auth.onAuthStateChange((event,session)=>{
 
-    if(event==="SIGNED_OUT"){
-        window.location.href="login.html";
+/* PEOPLE SEARCH */
+
+function handlePeopleSearch(value) {
+
+    clearTimeout(searchTimer);
+
+    const results =
+        document.getElementById("searchResults");
+
+    const caption =
+        document.getElementById("searchCaption");
+
+    const query = value.trim();
+
+    searchRequestNumber++;
+
+    if (!query) {
+
+        caption.textContent = "PEOPLE";
+
+        results.innerHTML = `
+            <div class="search-message">
+                Search for a Watcher username to find people.
+            </div>
+        `;
+
+        return;
     }
 
-    if(event==="SIGNED_IN" && session){
-        currentUser=session.user;
-    }
-});
+    if (query.length < 2) {
 
-checkLogin();
+        caption.textContent = "SEARCH";
+
+        results.innerHTML = `
+            <div class="search-message">
+                Enter at least 2 characters.
+            </div>
+        `;
+
+        return;
+    }
+
+    caption.textContent = "SEARCH RESULTS";
+
+    results.innerHTML = `
+        <div class="search-message">
+            Searching Watcher...
+        </div>
+    `;
+
+    const requestNumber = searchRequestNumber;
+
+    searchTimer = setTimeout(() => {
+
+        searchPeople(query, requestNumber);
+
+    }, 350);
+}
+
+
+async function searchPeople(query, requestNumber) {
+
+    const results =
+        document.getElementById("searchResults");
+
+    /*
+       Usernames in the actual profiles table are restricted
+       to letters, numbers and underscores.
+    */
+
+    const safeQuery = query.replace(
+        /[^a-zA-Z0-9_]/g,
+        ""
+    );
+
+    if (safeQuery.length < 2) {
+
+        results.innerHTML = `
+            <div class="search-message">
+                Enter a valid username.
+            </div>
+        `;
+
+        return;
+    }
+
+    const pattern = safeQuery.replace(
+        /[\\%_]/g,
+        "\\$&"
+    );
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("id,username,created_at")
+        .ilike("username", "%" + pattern + "%")
+        .neq("id", currentUser.id)
+        .order("username", { ascending: true })
+        .limit(25);
+
+    // Ignore old searches if the user has already typed again.
+    if (requestNumber !== searchRequestNumber) {
+        return;
+    }
+
+    if (error) {
+
+        console.error("People search error:", error);
+
+        results.innerHTML = `
+            <div class="search-message">
+                Unable to search for people.
+                Please try again.
+            </div>
+        `;
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        results.innerHTML = `
+            <div class="search-message">
+                No users found matching
+                <strong>${escapeHTML(safeQuery)}</strong>.
+            </div>
+        `;
+
+        return;
+    }
+
+    results.innerHTML = "";
+
+    data.forEach(person => {
+
+        const username = person.username || "Watcher User";
+
+        const initial =
+            username.charAt(0).toUpperCase();
+
+        const button = document.createElement("button");
+
+        button.className = "user-result";
+
+        button.innerHTML = `
+            <div class="result-avatar">
+                ${escapeHTML(initial)}
+            </div>
+
+            <div class="result-info">
+
+                <div class="result-name">
+                    ${escapeHTML(username)}
+                </div>
+
+                <div class="result-handle">
+                    @${escapeHTML(username)}
+                </div>
+
+            </div>
+
+            <div class="result-arrow">›</div>
+        `;
+
+        button.addEventListener("click", () => {
+            openPublicProfile(person);
+        });
+
+        results.appendChild(button);
+
+    });
+}
+
+
+/* SAFE TEXT DISPLAY */
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, char => {
+
+        const replacements = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        };
+
+        return replacements[char];
+
+    });
+}
+
+
+/* OPEN OTHER PERSON'S PROFILE */
+
+async function openPublicProfile(person) {
+
+    selectedPublicProfile = person;
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById("publicProfilePage")
+        .classList.add("active");
+
+    // Keep Browse highlighted.
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-item")[1]
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    const loading =
+        document.getElementById("publicProfileLoading");
+
+    const content =
+        document.getElementById("publicProfileContent");
+
+    loading.style.display = "block";
+    loading.textContent = "Loading profile...";
+    content.style.display = "none";
+
+    // Retrieve the latest public profile information.
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("id,username,created_at")
+        .eq("id", person.id)
+        .maybeSingle();
+
+    if (selectedPublicProfile?.id !== person.id) return;
+
+    if (error || !data) {
+
+        loading.textContent =
+            "This profile could not be found.";
+
+        return;
+    }
+
+    const username = data.username || "Watcher User";
+
+    document.getElementById("publicAvatar").textContent =
+        username.charAt(0).toUpperCase();
+
+    document.getElementById("publicName").textContent =
+        username;
+
+    document.getElementById("publicHandle").textContent =
+        "@" + username;
+
+    document.getElementById("publicCreated").textContent =
+        "Member since: " + formatDate(data.created_at);
+
+    loading.style.display = "none";
+    content.style.display = "block";
+
+}
+
+
+function backToPeople() {
+
+    showPage(
+        "browsePage",
+        document.querySelectorAll(".nav-item")[1]
+    );
+
+}
+
 
 /* SIGN OUT */
 
-async function signOut(){
+async function signOut() {
 
-    const message=document.getElementById("signoutMessage");
+    const message =
+        document.getElementById("signoutMessage");
 
-    message.style.display="block";
-    message.textContent="Signing out...";
+    message.style.display = "block";
+    message.textContent = "Signing out...";
 
-    const {error}=await supabaseClient.auth.signOut();
+    const { error } =
+        await supabaseClient.auth.signOut();
 
-    if(error){
-        message.textContent="Unable to sign out: "+error.message;
+    if (error) {
+
+        message.textContent =
+            "Unable to sign out: " + error.message;
+
         return;
     }
 
-    window.location.href="login.html";
+    window.location.href = "login.html";
 }
 
-/* CREATE PREVIEW */
 
-function openCreate(){
+/* AUTH STATE */
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+    if (event === "SIGNED_OUT") {
+        window.location.href = "login.html";
+    }
+
+    if (session?.user) {
+        currentUser = session.user;
+        updateNavigationAvatar();
+    }
+
+});
+
+
+/* CREATE STREAM */
+
+function openCreate() {
     modal.classList.add("show");
 }
 
-function closeCreate(){
+function closeCreate() {
     stopPreview();
     modal.classList.remove("show");
 }
 
-function outsideClose(event){
-    if(event.target===modal){
+function outsideClose(event) {
+
+    if (event.target === modal) {
         closeCreate();
     }
+
 }
 
-function selectSource(source){
+function selectSource(source) {
 
-    if(activeStream) stopPreview();
+    if (activeStream) {
+        stopPreview();
+    }
 
-    selectedSource=source;
+    selectedSource = source;
 
     document.getElementById("cameraChoice")
-        .classList.toggle("selected",source==="camera");
+        .classList.toggle("selected", source === "camera");
 
     document.getElementById("screenChoice")
-        .classList.toggle("selected",source==="screen");
+        .classList.toggle("selected", source === "screen");
 
-    status.textContent=source==="camera"
-        ?"Camera mode selected. Your camera and microphone will be requested when you start the preview."
-        :"Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
+    status.textContent = source === "camera"
+        ? "Camera mode selected. Your camera and microphone will be requested when you start the preview."
+        : "Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
 
-    error.style.display="none";
+    error.style.display = "none";
 }
 
-async function startPreview(){
 
-    error.style.display="none";
+async function startPreview() {
 
-    if(activeStream) stopPreview();
+    error.style.display = "none";
 
-    startButton.disabled=true;
-    startButton.textContent="Starting...";
+    if (activeStream) {
+        stopPreview();
+    }
 
-    try{
+    startButton.disabled = true;
+    startButton.textContent = "Starting...";
 
-        if(selectedSource==="camera"){
+    try {
 
-            activeStream=await navigator.mediaDevices.getUserMedia({
-                video:true,
-                audio:true
-            });
-
-        }else{
-
-            if(!navigator.mediaDevices.getDisplayMedia){
-                throw new Error("Screen sharing is not supported by this browser.");
-            }
-
-            activeStream=await navigator.mediaDevices.getDisplayMedia({
-                video:true,
-                audio:true
-            });
+        if (!navigator.mediaDevices) {
+            throw new Error(
+                "Camera and screen access require a supported secure browser connection."
+            );
         }
 
-        video.srcObject=activeStream;
-        video.style.display="block";
-        placeholder.style.display="none";
-        previewStatus.style.display="block";
+        if (selectedSource === "camera") {
+
+            activeStream =
+                await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
+
+        } else {
+
+            if (!navigator.mediaDevices.getDisplayMedia) {
+
+                throw new Error(
+                    "Screen sharing is not supported by this browser."
+                );
+
+            }
+
+            activeStream =
+                await navigator.mediaDevices.getDisplayMedia({
+                    video: true,
+                    audio: true
+                });
+
+        }
+
+        video.srcObject = activeStream;
+        video.style.display = "block";
+        placeholder.style.display = "none";
+        previewStatus.style.display = "block";
 
         await video.play();
 
-        status.textContent=selectedSource==="camera"
-            ?"Camera preview is active. Only you can see this preview."
-            :"Screen preview is active. Only you can see this preview.";
+        status.textContent = selectedSource === "camera"
+            ? "Camera preview is active. Only you can see this preview."
+            : "Screen preview is active. Only you can see this preview.";
 
-        startButton.style.display="none";
-        stopButton.style.display="block";
+        startButton.style.display = "none";
+        stopButton.style.display = "block";
 
-        const videoTrack=activeStream.getVideoTracks()[0];
+        const videoTrack = activeStream.getVideoTracks()[0];
 
-        if(videoTrack){
-            videoTrack.addEventListener("ended",()=>stopPreview());
+        if (videoTrack) {
+
+            videoTrack.addEventListener("ended", () => {
+                stopPreview();
+            });
+
         }
 
-    }catch(err){
+    } catch (err) {
 
-        error.textContent=err.name==="NotAllowedError"
-            ?"Permission was denied or sharing was cancelled."
-            :err.message || "Unable to start preview.";
+        error.textContent = err.name === "NotAllowedError"
+            ? "Permission was denied or sharing was cancelled."
+            : err.message || "Unable to start preview.";
 
-        error.style.display="block";
-        status.textContent="Please check your browser permissions and try again.";
+        error.style.display = "block";
 
-    }finally{
+        status.textContent =
+            "Please check your browser permissions and try again.";
 
-        startButton.disabled=false;
-        startButton.textContent="Start Preview";
-    }
-}
+    } finally {
 
-function stopPreview(){
+        startButton.disabled = false;
+        startButton.textContent = "Start Preview";
 
-    if(activeStream){
-        activeStream.getTracks().forEach(track=>track.stop());
-        activeStream=null;
     }
 
-    video.srcObject=null;
-    video.style.display="none";
-    placeholder.style.display="block";
-    previewStatus.style.display="none";
-
-    startButton.style.display="block";
-    startButton.disabled=false;
-    startButton.textContent="Start Preview";
-
-    stopButton.style.display="none";
-
-    status.textContent="Preview stopped. Choose a source to try again.";
 }
 
-document.addEventListener("keydown",event=>{
-    if(event.key==="Escape") closeCreate();
+
+function stopPreview() {
+
+    if (activeStream) {
+
+        activeStream.getTracks().forEach(track => {
+            track.stop();
+        });
+
+        activeStream = null;
+
+    }
+
+    video.srcObject = null;
+    video.style.display = "none";
+
+    placeholder.style.display = "block";
+    previewStatus.style.display = "none";
+
+    startButton.style.display = "block";
+    startButton.disabled = false;
+    startButton.textContent = "Start Preview";
+
+    stopButton.style.display = "none";
+
+    status.textContent =
+        "Preview stopped. Choose a source to try again.";
+
+}
+
+
+/* KEYBOARD */
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+        closeCreate();
+    }
+
 });
+
+
+/* START */
+
+checkLogin();
+
 </script>
 
 </body>
