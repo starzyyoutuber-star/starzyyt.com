@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0e10">
 <title>Watcher</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
@@ -17,8 +20,9 @@
     --bg: #0e0e10;
     --white: #efeff1;
     --purple: #bf94ff;
-    --sidebar: 180px;
+    --blue: #307aae;
     --muted: #a0a0a5;
+    --sidebar: 180px;
 }
 
 html, body {
@@ -38,20 +42,18 @@ body {
 main {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 20px 16px 85px;
+    padding: 12px 16px 85px;
 }
 
 .header {
-    height: 45px;
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .logo {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 800;
-    letter-spacing: -1px;
 }
 
 /* HOME */
@@ -71,9 +73,9 @@ main {
 }
 
 .empty-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 18px;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
     background: #1c1c21;
     display: grid;
     place-items: center;
@@ -82,13 +84,11 @@ main {
 }
 
 .empty-icon svg {
-    width: 31px;
-    height: 31px;
+    width: 29px;
+    height: 29px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
 }
 
 .empty-home h2 {
@@ -107,106 +107,48 @@ main {
 
 #profilePage {
     display: none;
-    margin: -20px -16px 0;
-    padding-bottom: 0;
+    padding-bottom: 5px;
 }
-
-.profile-banner {
-    width: 100%;
-    height: 65px;
-    position: relative;
-    overflow: hidden;
-    background: #307aae;
-}
-
-.banner-pattern {
-    display: none;
-}
-
-.profile-top-actions {
-    position: absolute;
-    top: 10px;
-    left: 14px;
-    right: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.profile-action {
-    height: 40px;
-    padding: 0 16px;
-    border: 0;
-    border-radius: 30px;
-    background: rgba(20,20,20,.72);
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    backdrop-filter: blur(8px);
-}
-
-.settings-button {
-    width: 40px;
-    padding: 0;
-}
-
-.settings-button svg {
-    width: 21px;
-    height: 21px;
-    fill: none;
-    stroke: white;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* PROFILE INFORMATION */
 
 .profile-content {
-    padding: 0 18px;
+    padding: 0 4px;
 }
 
 .profile-identity {
     display: flex;
     align-items: center;
-    gap: 13px;
-    margin-top: -25px;
+    gap: 15px;
+    min-height: 105px;
 }
 
 .profile-avatar {
-    width: 90px;
-    height: 90px;
-    min-width: 90px;
+    width: 96px;
+    height: 96px;
     flex-shrink: 0;
     border-radius: 50%;
     background: #307aae;
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    margin-top: 0;
-}
-
-.profile-avatar svg {
-    display: none;
-}
-
-.profile-avatar::after {
-    content: attr(data-letter);
     color: white;
-    font-size: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 68px;
     font-weight: 500;
 }
 
 .profile-name-area {
     min-width: 0;
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
 }
 
 .profile-username {
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 800;
     letter-spacing: -1px;
     overflow-wrap: anywhere;
@@ -215,27 +157,33 @@ main {
 .profile-status {
     font-size: 15px;
     color: #d0d0d5;
-    margin-top: 4px;
+    margin-top: 5px;
+}
+
+.edit-profile-button {
+    flex-shrink: 0;
+    height: 37px;
+    padding: 0 13px;
+    border: none;
+    border-radius: 20px;
+    background: #29292e;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .profile-bio {
     font-size: 15px;
     color: #aaaab2;
-    margin-top: 12px;
-    margin-bottom: 10px;
+    margin-top: 13px;
+    margin-bottom: 12px;
 }
 
 .profile-followers {
     font-size: 15px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
-
-.profile-followers span {
-    font-weight: 800;
-}
-
-/* PROFILE BUTTONS */
 
 .profile-buttons {
     display: flex;
@@ -243,38 +191,35 @@ main {
     gap: 9px;
 }
 
-.profile-main-button {
+.profile-main-button,
+.profile-secondary-button {
     width: 100%;
-    height: 51px;
+    height: 49px;
     border: none;
     border-radius: 9px;
-    background: #9146ff;
     color: white;
     font-size: 16px;
     font-weight: 700;
+}
+
+.profile-main-button {
+    background: #9146ff;
 }
 
 .profile-secondary-button {
-    width: 100%;
-    height: 51px;
-    border: none;
-    border-radius: 9px;
     background: #29292e;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .profile-secondary-button svg {
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 2;
+    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -285,9 +230,9 @@ main {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    gap: 4px;
-    margin-top: 12px;
-    padding: 0 8px;
+    gap: 2px;
+    margin-top: 22px;
+    padding: 0;
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -298,14 +243,13 @@ main {
 
 .profile-tab {
     position: relative;
-    flex: 0 0 auto;
-    min-width: 0;
-    height: 43px;
+    flex: 1 0 auto;
+    height: 42px;
     padding: 0 7px 12px;
-    border: 0;
+    border: none;
     background: transparent;
     color: #efeff1;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -324,11 +268,11 @@ main {
     background: var(--purple);
 }
 
-/* PROFILE TAB CONTENT */
+/* TAB CONTENT */
 
 .profile-tab-content {
     display: none;
-    padding: 8px 15px;
+    padding: 12px 0;
 }
 
 .profile-tab-content.active {
@@ -336,19 +280,19 @@ main {
 }
 
 .no-clips {
-    min-height: 105px;
+    min-height: 175px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: #a0a0a5;
-    gap: 7px;
+    gap: 9px;
 }
 
 .no-clips svg {
-    width: 29px;
-    height: 29px;
+    width: 34px;
+    height: 34px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.5;
@@ -358,28 +302,28 @@ main {
 
 .no-clips h3 {
     color: #efeff1;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .no-clips p {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .profile-section-title {
-    font-size: 18px;
-    margin-bottom: 15px;
+    font-size: 17px;
+    margin-bottom: 12px;
 }
 
 .profile-info-card {
-    padding: 17px;
+    padding: 14px;
     background: #19191d;
     border-radius: 9px;
     color: #aaaab2;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.7;
 }
 
-/* NAVIGATION */
+/* BOTTOM NAVIGATION */
 
 .navigation {
     position: fixed;
@@ -387,8 +331,8 @@ main {
     bottom: 0;
     left: 0;
     right: 0;
-    height: calc(55px + env(safe-area-inset-bottom));
-    padding: 2px 6px env(safe-area-inset-bottom);
+    height: calc(61px + env(safe-area-inset-bottom));
+    padding: 3px 6px env(safe-area-inset-bottom);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -413,8 +357,8 @@ main {
 }
 
 .nav-icon {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
@@ -423,7 +367,7 @@ main {
 }
 
 .nav-label {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 14px;
     font-weight: 600;
     white-space: nowrap;
@@ -434,22 +378,21 @@ main {
 }
 
 .create-button {
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: #307aae;
+    background: var(--blue);
     color: white;
-    cursor: pointer;
 }
 
 .plus-icon {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
@@ -457,8 +400,8 @@ main {
 
 .activity-wrap {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
 }
 
 .notification {
@@ -478,21 +421,20 @@ main {
 }
 
 .avatar {
-    width: 27px;
-    height: 27px;
-    padding: 2px;
+    width: 26px;
+    height: 26px;
     border: 2px solid var(--purple);
     border-radius: 50%;
     background: #307aae;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 17px;
+    font-weight: 500;
 }
 
-/* MODALS */
+/* CREATE MODAL */
 
 .modal-overlay {
     position: fixed;
@@ -522,14 +464,8 @@ main {
 }
 
 @keyframes slideUp {
-    from {
-        transform: translateY(25px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    from { transform: translateY(25px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header {
@@ -575,11 +511,7 @@ main {
 }
 
 .field:focus {
-    border-color: #307aae;
-}
-
-select.field {
-    color: white;
+    border-color: var(--blue);
 }
 
 .choice-title {
@@ -608,7 +540,7 @@ select.field {
 }
 
 .choice.selected {
-    border: 1.5px solid #307aae;
+    border: 1.5px solid var(--blue);
     background: #1b2a35;
 }
 
@@ -618,8 +550,6 @@ select.field {
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
     margin-bottom: 9px;
 }
 
@@ -696,7 +626,7 @@ select.field {
     height: 44px;
     border: 0;
     border-radius: 7px;
-    background: #307aae;
+    background: var(--blue);
     color: white;
     font-size: 13px;
     font-weight: 700;
@@ -726,9 +656,30 @@ select.field {
     line-height: 1.5;
 }
 
-/* SMALL SCREENS */
+/* RESPONSIVE */
 
-@media (max-width: 340px) {
+@media (max-width: 360px) {
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        font-size: 58px;
+    }
+
+    .profile-username {
+        font-size: 22px;
+    }
+
+    .edit-profile-button {
+        padding: 0 9px;
+        font-size: 11px;
+    }
+
+    .profile-tab {
+        font-size: 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
     .nav-label {
         font-size: 10px;
     }
@@ -738,59 +689,7 @@ select.field {
         width: 38px;
         height: 38px;
     }
-
-    .avatar {
-        width: 24px;
-        height: 24px;
-    }
-
-    .profile-tab {
-        font-size: 12px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
 }
-
-/* SHORT PHONE SCREENS */
-
-@media (max-height: 750px) {
-    .profile-banner {
-        height: 55px;
-    }
-
-    .profile-identity {
-        margin-top: -23px;
-    }
-
-    .profile-avatar {
-        width: 82px;
-        height: 82px;
-        min-width: 82px;
-    }
-
-    .profile-avatar::after {
-        font-size: 50px;
-    }
-
-    .profile-bio {
-        margin-top: 9px;
-        margin-bottom: 8px;
-    }
-
-    .profile-followers {
-        margin-bottom: 8px;
-    }
-
-    .profile-tabs {
-        margin-top: 9px;
-    }
-
-    .no-clips {
-        min-height: 90px;
-    }
-}
-
-/* DESKTOP */
 
 @media (min-width: 760px) {
     main {
@@ -799,31 +698,30 @@ select.field {
     }
 
     #profilePage {
-        margin: -25px -30px 0;
-    }
-
-    .profile-banner {
-        height: 110px;
+        max-width: 950px;
     }
 
     .profile-content {
-        padding-left: 35px;
-        padding-right: 35px;
+        padding: 0 20px;
+    }
+
+    .profile-avatar {
+        width: 115px;
+        height: 115px;
+        font-size: 80px;
     }
 
     .profile-buttons {
-        max-width: 780px;
+        max-width: 650px;
     }
 
     .profile-tabs {
         justify-content: flex-start;
-        gap: 45px;
-        padding-left: 35px;
+        gap: 35px;
     }
 
-    .profile-tab-content {
-        padding-left: 35px;
-        padding-right: 35px;
+    .profile-tab {
+        flex: 0 0 auto;
     }
 
     .navigation {
@@ -835,7 +733,6 @@ select.field {
         height: 100dvh;
         padding: 18px 10px;
         flex-direction: column;
-        align-items: stretch;
         justify-content: flex-start;
         gap: 7px;
         border-right: 1px solid #252529;
@@ -849,15 +746,6 @@ select.field {
         justify-content: flex-start;
         gap: 11px;
         padding: 0 11px;
-    }
-
-    .nav-icon {
-        width: 21px;
-        height: 21px;
-    }
-
-    .nav-label {
-        font-size: 13px;
     }
 
     .nav-item.active {
@@ -883,7 +771,7 @@ select.field {
 
 <main>
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 
 <section id="homePage">
 
@@ -911,56 +799,41 @@ select.field {
 
 </section>
 
-<!-- PROFILE PAGE -->
+<!-- PROFILE -->
 
 <section id="profilePage">
-
-    <div class="profile-banner">
-
-        <div class="banner-pattern">
-            <span class="banner-symbol">⌘</span>
-            <span class="banner-symbol">⊕</span>
-        </div>
-
-        <div class="profile-top-actions">
-
-            <button class="profile-action settings-button"
-                aria-label="Settings"
-                onclick="showProfileMessage('Settings')">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
-                    <path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.5-2.6 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.5-2.6 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h3l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.5 2.6-1.4 1.1a8 8 0 0 1 0 2z" transform="translate(-1 -1)"/>
-                </svg>
-
-            </button>
-
-            <button class="profile-action"
-                onclick="openEditProfile()">
-                Edit Profile
-            </button>
-
-        </div>
-
-    </div>
 
     <div class="profile-content">
 
         <div class="profile-identity">
 
-            <div class="profile-avatar" data-letter="U"></div>
+            <div class="profile-avatar" id="profileAvatar">U</div>
 
             <div class="profile-name-area">
-                <h1 class="profile-username">unknown</h1>
+
+                <div class="profile-name-row">
+
+                    <h1 class="profile-username" id="profileUsername">Loading...</h1>
+
+                    <button class="edit-profile-button"
+                        onclick="showProfileMessage('Edit Profile')">
+                        Edit Profile
+                    </button>
+
+                </div>
+
                 <div class="profile-status">Offline</div>
+
             </div>
 
         </div>
 
-        <div class="profile-bio">No bio yet</div>
+        <div class="profile-bio" id="profileBio">
+            No bio yet
+        </div>
 
         <div class="profile-followers">
-            <span>0</span> followers
+            0 followers
         </div>
 
         <div class="profile-buttons">
@@ -971,15 +844,14 @@ select.field {
             </button>
 
             <button class="profile-secondary-button"
-                onclick="showProfileMessage('Try Ad-Free')">
+                onclick="showProfileMessage('Reminders')">
 
                 <svg viewBox="0 0 24 24">
-                    <rect x="2" y="6" width="17" height="12" rx="1"/>
-                    <path d="m13 8-4 5h4l-2 4 6-6h-4z"/>
-                    <path d="M19 10h3v4h-3"/>
+                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                    <path d="M10 21h4"/>
                 </svg>
 
-                Try Ad-Free
+                Reminders
 
             </button>
 
@@ -1018,6 +890,8 @@ select.field {
 
     </div>
 
+    <!-- HOME TAB -->
+
     <div class="profile-tab-content active" id="profileHome">
 
         <div class="no-clips">
@@ -1035,54 +909,73 @@ select.field {
 
     </div>
 
+    <!-- ABOUT -->
+
     <div class="profile-tab-content" id="profileAbout">
 
-        <h2 class="profile-section-title">About unknown</h2>
+        <h2 class="profile-section-title" id="aboutUsername">
+            About
+        </h2>
 
-        <div class="profile-info-card">
-            This creator hasn't added a bio yet.
+        <div class="profile-info-card" id="aboutInfo">
+            Loading account information...
         </div>
 
     </div>
 
+    <!-- CLIPS -->
+
     <div class="profile-tab-content" id="profileClips">
 
         <div class="no-clips">
+
             <svg viewBox="0 0 24 24">
                 <path d="M4 5h16v14H4z"/>
                 <path d="m10 9 5 3-5 3z"/>
             </svg>
 
             <h3>No clips yet</h3>
+
             <p>Clips created by this user will appear here.</p>
+
         </div>
 
     </div>
 
+    <!-- VIDEOS -->
+
     <div class="profile-tab-content" id="profileVideos">
 
         <div class="no-clips">
+
             <svg viewBox="0 0 24 24">
                 <rect x="3" y="5" width="18" height="14" rx="2"/>
                 <path d="m10 9 5 3-5 3z"/>
             </svg>
 
             <h3>No videos yet</h3>
+
             <p>Uploaded videos will appear here.</p>
+
         </div>
 
     </div>
 
+    <!-- SCHEDULE -->
+
     <div class="profile-tab-content" id="profileSchedule">
 
         <div class="no-clips">
+
             <svg viewBox="0 0 24 24">
                 <rect x="3" y="5" width="18" height="16" rx="2"/>
                 <path d="M7 3v4M17 3v4M3 10h18"/>
             </svg>
 
             <h3>No schedule yet</h3>
+
             <p>This creator hasn't added a streaming schedule.</p>
+
         </div>
 
     </div>
@@ -1150,54 +1043,13 @@ select.field {
     <button class="nav-item" id="profileNav"
         onclick="showPage('profile')">
 
-        <span class="avatar">U</span>
+        <span class="avatar" id="navAvatar">U</span>
 
         <span class="nav-label">Profile</span>
 
     </button>
 
 </nav>
-
-<!-- EDIT PROFILE MODAL -->
-
-<div class="modal-overlay" id="editProfileModal"
-    onclick="closeEditProfileOutside(event)">
-
-    <div class="modal">
-
-        <div class="modal-header">
-            <h2>Edit Profile</h2>
-
-            <button class="close-button"
-                onclick="closeEditProfile()">×</button>
-        </div>
-
-        <label class="field-label" for="editUsername">
-            Username
-        </label>
-
-        <input class="field" id="editUsername"
-            maxlength="24"
-            placeholder="Enter username">
-
-        <label class="field-label" for="editBio">
-            Bio
-        </label>
-
-        <textarea class="field" id="editBio"
-            maxlength="160"
-            placeholder="Tell people about yourself"
-            style="height:90px;padding:12px;resize:none;"></textarea>
-
-        <div class="error" id="profileEditError"></div>
-
-        <button class="start-button" onclick="saveProfile()">
-            Save Changes
-        </button>
-
-    </div>
-
-</div>
 
 <!-- CREATE STREAM MODAL -->
 
@@ -1207,10 +1059,12 @@ select.field {
     <div class="modal">
 
         <div class="modal-header">
+
             <h2>Create a stream</h2>
 
             <button class="close-button"
                 onclick="closeCreate()">×</button>
+
         </div>
 
         <label class="field-label" for="streamTitle">
@@ -1252,7 +1106,10 @@ select.field {
                 </svg>
 
                 <strong>Camera</strong>
-                <span>Stream using your camera and microphone.</span>
+
+                <span>
+                    Stream using your camera and microphone.
+                </span>
 
             </button>
 
@@ -1266,7 +1123,10 @@ select.field {
                 </svg>
 
                 <strong>Screen</strong>
-                <span>Share your screen, gameplay or apps.</span>
+
+                <span>
+                    Share your screen, gameplay or apps.
+                </span>
 
             </button>
 
@@ -1291,7 +1151,8 @@ select.field {
 
             </div>
 
-            <div class="preview-status" id="previewStatus">
+            <div class="preview-status"
+                id="previewStatus">
                 PREVIEW ACTIVE
             </div>
 
@@ -1300,16 +1161,17 @@ select.field {
         <div class="error" id="errorMessage"></div>
 
         <p class="status-message" id="statusMessage">
-            Choose a source and start your preview. Your camera or
-            screen will only be accessed after you give permission.
+            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
         </p>
 
-        <button class="start-button" id="startButton"
+        <button class="start-button"
+            id="startButton"
             onclick="startPreview()">
             Start Preview
         </button>
 
-        <button class="stop-button" id="stopButton"
+        <button class="stop-button"
+            id="stopButton"
             onclick="stopPreview()">
             Stop Preview
         </button>
@@ -1320,11 +1182,152 @@ select.field {
 
 <script>
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+/* SUPABASE CONFIGURATION */
+
+const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let currentUser = null;
+let currentProfile = null;
+
+
+/* SAFE HTML */
+
+function escapeHTML(value) {
+    return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[character]);
+}
+
+
+/* LOAD ACCOUNT INFORMATION */
+
+async function loadUserProfile(user) {
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    currentUser = user;
+
+    const { data: profile, error: profileError } =
+        await supabaseClient
+            .from("profiles")
+            .select("username, created_at")
+            .eq("id", user.id)
+            .maybeSingle();
+
+    if (profileError) {
+        console.error("Profile loading error:", profileError);
+    }
+
+    currentProfile = profile;
+
+    const username =
+        profile?.username ||
+        user.user_metadata?.username ||
+        user.email?.split("@")[0] ||
+        "User";
+
+    const initial = username.charAt(0).toUpperCase();
+
+    /* UPDATE PROFILE */
+
+    document.getElementById("profileUsername").textContent = username;
+
+    document.getElementById("profileAvatar").textContent = initial;
+
+    document.getElementById("navAvatar").textContent = initial;
+
+    document.getElementById("aboutUsername").textContent =
+        "About " + username;
+
+    /* EMAIL */
+
+    const email = user.email || "Not available";
+
+    /* ACCOUNT CREATION DATE */
+
+    let memberSince = "Unknown";
+
+    const creationDate = profile?.created_at || user.created_at;
+
+    if (creationDate) {
+        memberSince = new Date(creationDate).toLocaleDateString(
+            undefined,
+            {
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+            }
+        );
+    }
+
+    /* ABOUT INFORMATION */
+
+    document.getElementById("aboutInfo").innerHTML = `
+        <strong>Username:</strong> ${escapeHTML(username)}<br>
+        <strong>Email:</strong> ${escapeHTML(email)}<br>
+        <strong>Member since:</strong> ${escapeHTML(memberSince)}<br>
+        <strong>Status:</strong> Offline
+    `;
+
+}
+
+
+/* INITIALIZE ACCOUNT */
+
+async function initializeWatcher() {
+
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
+
+    if (error) {
+        console.error("Session error:", error);
+    }
+
+    if (!session) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    await loadUserProfile(session.user);
+}
+
+
+/* AUTHENTICATION CHANGES */
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+    if (event === "SIGNED_OUT" || !session) {
+        window.location.replace("login.html");
+    }
+
+});
+
+
+/* START ACCOUNT CHECK */
+
+initializeWatcher();
+
+
+/* PAGE NAVIGATION */
 
 function showPage(page) {
+
     const home = document.getElementById("homePage");
     const profile = document.getElementById("profilePage");
 
@@ -1340,11 +1343,11 @@ function showPage(page) {
     window.scrollTo(0, 0);
 }
 
-/* =========================
-   PROFILE TABS
-========================= */
+
+/* PROFILE TABS */
 
 function switchProfileTab(tabId, button) {
+
     document.querySelectorAll(".profile-tab").forEach(tab => {
         tab.classList.remove("active");
     });
@@ -1355,140 +1358,18 @@ function switchProfileTab(tabId, button) {
 
     button.classList.add("active");
 
-    const target = document.getElementById(tabId);
-
-    if (target) {
-        target.classList.add("active");
-    }
+    document.getElementById(tabId).classList.add("active");
 }
 
-/* =========================
-   PROFILE EDITING
-========================= */
 
-function openEditProfile() {
-    document.getElementById("editUsername").value =
-        document.querySelector(".profile-username").textContent;
-
-    const bio = document.querySelector(".profile-bio").textContent;
-
-    document.getElementById("editBio").value =
-        bio === "No bio yet" ? "" : bio;
-
-    document.getElementById("profileEditError").style.display = "none";
-
-    document.getElementById("editProfileModal")
-        .classList.add("show");
-}
-
-function closeEditProfile() {
-    document.getElementById("editProfileModal")
-        .classList.remove("show");
-}
-
-function closeEditProfileOutside(event) {
-    if (event.target.id === "editProfileModal") {
-        closeEditProfile();
-    }
-}
-
-function saveProfile() {
-    const usernameInput = document.getElementById("editUsername");
-    const bioInput = document.getElementById("editBio");
-    const error = document.getElementById("profileEditError");
-
-    const username = usernameInput.value.trim();
-    const bio = bioInput.value.trim();
-
-    if (!username) {
-        error.textContent = "Please enter a username.";
-        error.style.display = "block";
-        return;
-    }
-
-    if (username.length < 3) {
-        error.textContent = "Username must be at least 3 characters.";
-        error.style.display = "block";
-        return;
-    }
-
-    // Update username and bio
-    document.querySelector(".profile-username").textContent = username;
-
-    document.querySelector(".profile-bio").textContent =
-        bio || "No bio yet";
-
-    // Update About tab
-    document.querySelector("#profileAbout .profile-section-title")
-        .textContent = "About " + username;
-
-    document.querySelector("#profileAbout .profile-info-card")
-        .textContent = bio || "This creator hasn't added a bio yet.";
-
-    // Update avatar initials
-    const letter = username.charAt(0).toUpperCase();
-
-    document.querySelector(".profile-avatar")
-        .setAttribute("data-letter", letter);
-
-    document.querySelector(".navigation .avatar").textContent = letter;
-
-    // Save locally
-    try {
-        localStorage.setItem("watcher_username", username);
-        localStorage.setItem("watcher_bio", bio);
-    } catch (err) {
-        console.warn("Could not save profile locally:", err);
-    }
-
-    closeEditProfile();
-}
-
-function loadProfile() {
-    let username = null;
-    let bio = null;
-
-    try {
-        username = localStorage.getItem("watcher_username");
-        bio = localStorage.getItem("watcher_bio");
-    } catch (err) {
-        console.warn("Could not load saved profile:", err);
-    }
-
-    if (username) {
-        document.querySelector(".profile-username").textContent = username;
-
-        const letter = username.charAt(0).toUpperCase();
-
-        document.querySelector(".profile-avatar")
-            .setAttribute("data-letter", letter);
-
-        document.querySelector(".navigation .avatar").textContent = letter;
-
-        document.querySelector("#profileAbout .profile-section-title")
-            .textContent = "About " + username;
-    }
-
-    if (bio !== null) {
-        document.querySelector(".profile-bio").textContent =
-            bio || "No bio yet";
-
-        document.querySelector("#profileAbout .profile-info-card")
-            .textContent = bio || "This creator hasn't added a bio yet.";
-    }
-}
-
-/* =========================
-   TEMPORARY PAGE MESSAGES
-========================= */
+/* TEMPORARY PAGE MESSAGE */
 
 function showProfileMessage(name) {
     alert(name + " is not available yet.");
 }
 
-/* =========================
-   STREAM PREVIEW
-========================= */
+
+/* STREAM PREVIEW */
 
 let selectedSource = "camera";
 let activeStream = null;
@@ -1502,14 +1383,17 @@ const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const previewStatus = document.getElementById("previewStatus");
 
+
 function openCreate() {
     modal.classList.add("show");
 }
+
 
 function closeCreate() {
     stopPreview();
     modal.classList.remove("show");
 }
+
 
 function outsideClose(event) {
     if (event.target === modal) {
@@ -1517,10 +1401,10 @@ function outsideClose(event) {
     }
 }
 
+
 function selectSource(source) {
-    if (activeStream) {
-        stopPreview();
-    }
+
+    if (activeStream) stopPreview();
 
     selectedSource = source;
 
@@ -1537,27 +1421,33 @@ function selectSource(source) {
     error.style.display = "none";
 }
 
+
 async function startPreview() {
+
     error.style.display = "none";
 
-    if (activeStream) {
-        stopPreview();
+    if (!navigator.mediaDevices) {
+        error.textContent = "Media access is unavailable. Open this page using a supported browser and secure connection.";
+        error.style.display = "block";
+        return;
     }
+
+    if (activeStream) stopPreview();
 
     startButton.disabled = true;
     startButton.textContent = "Starting...";
 
     try {
-        if (!navigator.mediaDevices) {
-            throw new Error("Media access is unavailable. Open this page using HTTPS.");
-        }
 
         if (selectedSource === "camera") {
+
             activeStream = await navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: true
             });
+
         } else {
+
             if (!navigator.mediaDevices.getDisplayMedia) {
                 throw new Error("Screen sharing is not supported by this browser.");
             }
@@ -1566,6 +1456,7 @@ async function startPreview() {
                 video: true,
                 audio: true
             });
+
         }
 
         video.srcObject = activeStream;
@@ -1585,28 +1476,32 @@ async function startPreview() {
         const videoTrack = activeStream.getVideoTracks()[0];
 
         if (videoTrack) {
-            videoTrack.addEventListener("ended", function() {
+            videoTrack.addEventListener("ended", () => {
                 stopPreview();
             });
         }
 
     } catch (err) {
+
         error.textContent = err.name === "NotAllowedError"
             ? "Permission was denied or sharing was cancelled."
             : err.message || "Unable to start preview.";
 
         error.style.display = "block";
 
-        status.textContent =
-            "Please check your browser permissions and try again.";
+        status.textContent = "Please check your browser permissions and try again.";
 
     } finally {
+
         startButton.disabled = false;
         startButton.textContent = "Start Preview";
+
     }
 }
 
+
 function stopPreview() {
+
     if (activeStream) {
         activeStream.getTracks().forEach(track => track.stop());
         activeStream = null;
@@ -1626,40 +1521,16 @@ function stopPreview() {
     status.textContent = "Preview stopped. Choose a source to try again.";
 }
 
-/* =========================
-   BUTTON CONNECTIONS
-========================= */
 
-window.showPage = showPage;
-window.switchProfileTab = switchProfileTab;
-window.showProfileMessage = showProfileMessage;
+/* KEYBOARD */
 
-window.openCreate = openCreate;
-window.closeCreate = closeCreate;
-window.outsideClose = outsideClose;
-window.selectSource = selectSource;
-window.startPreview = startPreview;
-window.stopPreview = stopPreview;
-
-window.openEditProfile = openEditProfile;
-window.closeEditProfile = closeEditProfile;
-window.closeEditProfileOutside = closeEditProfileOutside;
-window.saveProfile = saveProfile;
-
-/* =========================
-   INITIALIZATION
-========================= */
-
-loadProfile();
-
-document.addEventListener("keydown", function(event) {
+document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
         closeCreate();
-        closeEditProfile();
     }
 });
 
 </script>
 
 </body>
-    </html>
+</html>
