@@ -119,6 +119,66 @@ main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
 .chat-send{height:40px;padding:0 14px;border:0;border-radius:6px;background:#307aae;color:white;font-weight:700}
 .viewer-error{font-size:12px;color:#ff8585;margin-top:9px}
 
+/* WATCHER VIDEO PLATFORM */
+.video-toolbar{display:flex;gap:9px;margin:18px 0;flex-wrap:wrap}
+.video-search{flex:1;min-width:150px;height:42px;background:#19191d;border:1px solid #34343a;border-radius:8px;padding:0 12px;color:white;outline:none}
+.video-filter{height:42px;background:#19191d;border:1px solid #34343a;border-radius:8px;padding:0 10px;color:white}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:17px;margin-top:16px}
+.video-card{min-width:0;background:#19191d;border:1px solid #29292e;border-radius:10px;overflow:hidden;color:white;text-align:left;cursor:pointer}
+.video-thumb{width:100%;aspect-ratio:16/9;background:#080809;position:relative;display:grid;place-items:center;overflow:hidden}
+.video-thumb img{width:100%;height:100%;object-fit:cover}
+.video-thumb-placeholder{color:#777}
+.video-thumb-placeholder svg{width:36px;height:36px;stroke:currentColor;fill:none;stroke-width:1.5}
+.video-card-info{padding:11px}
+.video-card-title{font-size:14px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.video-card-meta{font-size:11px;color:#a0a0a5;margin-top:6px}
+.video-card-actions{display:flex;gap:7px;margin-top:10px}
+.video-card-actions button{background:#29292e;border:0;color:white;border-radius:6px;padding:7px 10px;font-size:11px}
+.video-section-title{font-size:19px;font-weight:800;margin:22px 0 12px}
+.video-empty{padding:55px 15px;text-align:center;color:#a0a0a5}
+.video-empty h3{color:white;margin-bottom:7px}
+.upload-progress{height:5px;background:#303035;border-radius:5px;overflow:hidden;margin:12px 0;display:none}
+.upload-progress div{height:100%;width:0;background:#307aae;transition:width .2s}
+.upload-note{font-size:11px;color:#a0a0a5;line-height:1.5;margin-top:-8px;margin-bottom:15px}
+.video-player-overlay{position:fixed;inset:0;z-index:70;background:#080809;display:none;overflow-y:auto}
+.video-player-overlay.show{display:block}
+.video-player-shell{width:100%;max-width:1050px;margin:0 auto;padding:12px}
+.custom-player{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:9px;user-select:none}
+.custom-player video{width:100%;height:100%;object-fit:contain;background:#000}
+.player-center-button{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border:0;border-radius:50%;background:rgba(20,20,20,.75);color:white;font-size:23px}
+.player-controls{position:absolute;bottom:0;left:0;right:0;padding:35px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
+.player-timeline{width:100%;height:5px;accent-color:#bf94ff;cursor:pointer;display:block;margin-bottom:11px}
+.player-control-row{display:flex;align-items:center;gap:9px}
+.player-control{border:0;background:transparent;color:white;min-width:27px;height:30px;font-size:17px}
+.player-time{font-size:11px;color:#ddd;white-space:nowrap}
+.player-spacer{flex:1}
+.player-speed{background:#222;color:white;border:1px solid #555;border-radius:5px;padding:5px;font-size:11px}
+.player-volume{width:65px;accent-color:#bf94ff}
+.player-title{font-size:18px;font-weight:700;margin:14px 0 7px;overflow-wrap:anywhere}
+.player-description{font-size:13px;line-height:1.6;color:#aaa}
+.player-actions{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}
+.player-action{border:1px solid #38383e;border-radius:7px;background:#202024;color:white;padding:9px 13px;font-size:12px}
+.player-comments{margin-top:22px;background:#19191d;border-radius:9px;padding:13px}
+.player-comments h3{font-size:15px;margin-bottom:12px}
+.player-comment-list{display:flex;flex-direction:column;gap:12px;max-height:250px;overflow-y:auto}
+.player-comment{font-size:12px;line-height:1.5;color:#ddd;overflow-wrap:anywhere}
+.player-comment strong{color:#bf94ff;margin-right:5px}
+.player-comment-form{display:flex;gap:7px;margin-top:12px}
+.player-comment-form input{flex:1;min-width:0;height:40px;background:#101012;border:1px solid #36363c;border-radius:6px;color:white;padding:0 10px}
+.player-comment-form button{border:0;border-radius:6px;background:#307aae;color:white;padding:0 13px}
+.upload-file-label{display:block;background:#222226;border:1px dashed #555;border-radius:8px;padding:18px;text-align:center;margin-bottom:15px;color:#ddd;font-size:12px}
+.upload-file-label input{display:block;width:100%;margin-top:12px}
+.video-player-close{width:36px;height:36px;border:0;border-radius:7px;background:#29292e;color:white;font-size:21px;float:right}
+
+@media(max-width:500px){
+.video-grid{grid-template-columns:1fr 1fr;gap:9px}
+.video-card-info{padding:8px}
+.video-card-title{font-size:12px}
+.video-card-meta{font-size:10px}
+.player-volume{display:none}
+.video-player-shell{padding:7px}
+}
+
 @media(max-width:360px){
 .profile-avatar{width:82px;height:82px;font-size:58px}
 .profile-username{font-size:22px}
@@ -215,6 +275,24 @@ main{margin-left:var(--sidebar);padding:25px 30px}
 <div class="no-clips"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><h3>No schedule yet</h3><p>This creator hasn't added a streaming schedule.</p></div>
 </div>
 </section>
+
+<section id="browsePage" style="display:none">
+    <header class="header"><div class="logo">Browse</div></header>
+
+    <div class="video-toolbar">
+        <input id="videoSearch" class="video-search" placeholder="Search videos..." oninput="filterVideos()">
+        <select id="videoFilter" class="video-filter" onchange="filterVideos()">
+            <option value="all">All</option>
+            <option value="videos">Videos</option>
+            <option value="shorts">Shorts</option>
+        </select>
+    </div>
+
+    <h2 class="video-section-title">Discover videos</h2>
+    <div class="video-grid" id="videoGrid">
+        <div class="video-empty">Loading videos...</div>
+    </div>
+</section>
 </main>
 
 <nav class="navigation" aria-label="Main navigation">
@@ -222,12 +300,12 @@ main{margin-left:var(--sidebar);padding:25px 30px}
 <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.5l8.5 7V21h-17z"/><path d="M9 21v-7h6v7"/></svg>
 <span class="nav-label">Home</span>
 </button>
-<button class="nav-item" id="browseNav" onclick="showProfileMessage('Browse')">
+<button class="nav-item" id="browseNav" onclick="showPage('browse')">
 <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
 <span class="nav-label">Browse</span>
 </button>
-<button class="create-button" onclick="openCreate()" aria-label="Create stream">
-<svg class="plus-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>
+<button class="create-button" onclick="openCreateMenu()" aria-label="Create">
+    <svg class="plus-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>
 </button>
 <button class="nav-item" id="activityNav" onclick="showProfileMessage('Activity')">
 <span class="activity-wrap">
@@ -241,6 +319,79 @@ main{margin-left:var(--sidebar);padding:25px 30px}
 <span class="nav-label">Profile</span>
 </button>
 </nav>
+
+<!-- CREATE MENU -->
+<div class="modal-overlay" id="createMenu">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Create on Watcher</h2>
+            <button class="close-button" onclick="closeCreateMenu()">×</button>
+        </div>
+        <button class="start-button" onclick="closeCreateMenu();openCreate()">Start a livestream</button>
+        <button class="start-button" style="margin-top:10px;background:#9146ff" onclick="closeCreateMenu();openUpload()">Upload a video</button>
+    </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Upload a video</h2>
+            <button class="close-button" onclick="closeUpload()">×</button>
+        </div>
+
+        <label class="field-label">Video title</label>
+        <input class="field" id="uploadTitle" maxlength="120" placeholder="Give your video a title">
+
+        <label class="field-label">Description</label>
+        <textarea class="field" id="uploadDescription" maxlength="5000" rows="3" placeholder="Write a description..." style="height:auto;padding:12px"></textarea>
+
+        <label class="field-label">Category</label>
+        <select class="field" id="uploadCategory">
+            <option>Other</option>
+            <option>Gaming</option>
+            <option>Roblox</option>
+            <option>Minecraft</option>
+            <option>Entertainment</option>
+            <option>Music</option>
+            <option>Technology</option>
+            <option>Education</option>
+            <option>Sports</option>
+        </select>
+
+        <label class="field-label">Visibility</label>
+        <select class="field" id="uploadVisibility">
+            <option value="public">Public</option>
+            <option value="unlisted">Unlisted</option>
+            <option value="private">Private</option>
+        </select>
+
+        <label class="field-label">Video type</label>
+        <select class="field" id="uploadType">
+            <option value="video">Regular video</option>
+            <option value="short">Short</option>
+        </select>
+
+        <label class="upload-file-label">
+            Select your video
+            <input id="uploadFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/ogg">
+        </label>
+
+        <label class="field-label">Thumbnail (optional)</label>
+        <input class="field" id="uploadThumbnail" type="file" accept="image/jpeg,image/png,image/webp">
+
+        <p class="upload-note">Maximum video size: 100 MB. Uploading requires a signed-in Watcher account.</p>
+
+        <div class="upload-progress" id="uploadProgress">
+            <div id="uploadProgressBar"></div>
+        </div>
+
+        <p class="status-message" id="uploadStatus">Your video will be uploaded to Watcher.</p>
+        <p class="error" id="uploadError"></p>
+
+        <button class="start-button" id="uploadButton" onclick="uploadVideo()">Upload video</button>
+    </div>
+</div>
 
 <!-- CREATE STREAM -->
 <div class="modal-overlay" id="createModal" onclick="outsideClose(event)">
@@ -314,6 +465,62 @@ Your preview will appear here
 </div>
 </div>
 
+<!-- CUSTOM PLAYER OVERLAY -->
+<div class="video-player-overlay" id="videoPlayerOverlay">
+    <div class="video-player-shell">
+        <button class="video-player-close" onclick="closeVideoPlayer()">×</button>
+        <div style="clear:both;height:10px"></div>
+
+        <div class="custom-player" id="customPlayer">
+            <video id="watcherVideo" playsinline preload="metadata"></video>
+
+            <button class="player-center-button" id="centerPlayButton" onclick="toggleVideoPlay()">▶</button>
+
+            <div class="player-controls">
+                <input class="player-timeline" id="playerTimeline" type="range" min="0" max="100" value="0" step=".1">
+
+                <div class="player-control-row">
+                    <button class="player-control" onclick="toggleVideoPlay()" id="playPauseButton">▶</button>
+                    <button class="player-control" onclick="skipVideo(-10)">↶</button>
+                    <button class="player-control" onclick="skipVideo(10)">↷</button>
+                    <span class="player-time" id="playerTime">0:00 / 0:00</span>
+                    <span class="player-spacer"></span>
+                    <button class="player-control" onclick="toggleVideoMute()" id="muteButton">🔊</button>
+                    <input class="player-volume" id="playerVolume" type="range" min="0" max="1" step=".05" value="1">
+                    <select class="player-speed" id="playerSpeed" onchange="changeVideoSpeed(this.value)">
+                        <option value=".5">0.5x</option>
+                        <option value=".75">0.75x</option>
+                        <option value="1" selected>1x</option>
+                        <option value="1.25">1.25x</option>
+                        <option value="1.5">1.5x</option>
+                        <option value="1.75">1.75x</option>
+                        <option value="2">2x</option>
+                    </select>
+                    <button class="player-control" onclick="togglePiP()" title="Picture in picture">▣</button>
+                    <button class="player-control" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="player-title" id="playerVideoTitle"></h2>
+        <p class="player-description" id="playerVideoDescription"></p>
+
+        <div class="player-actions">
+            <button class="player-action" id="videoLikeButton" onclick="toggleVideoLike()">♡ Like</button>
+            <button class="player-action" onclick="shareCurrentVideo()">Share</button>
+        </div>
+
+        <div class="player-comments">
+            <h3>Comments</h3>
+            <div class="player-comment-list" id="videoCommentList"></div>
+            <form class="player-comment-form" onsubmit="postVideoComment(event)">
+                <input id="videoCommentInput" maxlength="2000" placeholder="Write a comment...">
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="module">
 import { Room, RoomEvent } from "https://cdn.jsdelivr.net/npm/livekit-client@2.15.6/dist/livekit-client.esm.mjs";
 
@@ -376,6 +583,8 @@ if(sessionError)console.error(sessionError);
 if(!session){location.replace("login.html");return}
 await loadUserProfile(session.user);
 await loadLiveStreams();
+await loadVideos();
+await loadProfileVideos();
 subscribeToStreams();
 }
 
@@ -386,11 +595,18 @@ initializeWatcher();
 
 /* NAVIGATION */
 function showPage(page){
-$("homePage").style.display=page==="home"?"block":"none";
-$("profilePage").style.display=page==="profile"?"block":"none";
-$("homeNav").classList.toggle("active",page==="home");
-$("profileNav").classList.toggle("active",page==="profile");
-window.scrollTo(0,0);
+    $("homePage").style.display=page==="home"?"block":"none";
+    $("profilePage").style.display=page==="profile"?"block":"none";
+    $("browsePage").style.display=page==="browse"?"block":"none";
+
+    $("homeNav").classList.toggle("active",page==="home");
+    $("browseNav").classList.toggle("active",page==="browse");
+    $("profileNav").classList.toggle("active",page==="profile");
+
+    if(page==="browse")loadVideos();
+    if(page==="profile")loadProfileVideos();
+
+    window.scrollTo(0,0);
 }
 function switchProfileTab(tabId,button){
 document.querySelectorAll(".profile-tab").forEach(t=>t.classList.remove("active"));
@@ -731,10 +947,666 @@ return;
 input.value="";
 }
 
+/* WATCHER VIDEO PLATFORM */
+
+let watcherVideos=[];
+let currentVideo=null;
+let currentVideoUrl=null;
+let currentVideoLiked=false;
+let videoSearchTimer=null;
+
+const watcherVideo=$("watcherVideo");
+const playerTimeline=$("playerTimeline");
+const playerVolume=$("playerVolume");
+
+function openCreateMenu(){
+    $("createMenu").classList.add("show");
+}
+
+function closeCreateMenu(){
+    $("createMenu").classList.remove("show");
+}
+
+function openUpload(){
+    if(!currentUser){
+        alert("Please sign in to upload videos.");
+        return;
+    }
+    $("uploadModal").classList.add("show");
+}
+
+function closeUpload(){
+    $("uploadModal").classList.remove("show");
+}
+
+function formatVideoTime(seconds){
+    if(!Number.isFinite(seconds))return "0:00";
+    const mins=Math.floor(seconds/60);
+    const secs=Math.floor(seconds%60).toString().padStart(2,"0");
+    return mins+":"+secs;
+}
+
+function getVideoUrl(path){
+    if(!path)return "";
+    return supabaseClient.storage.from("watcher-videos").getPublicUrl(path).data.publicUrl;
+}
+
+async function loadVideos(){
+    const {data,error}=await supabaseClient
+        .from("watcher_videos")
+        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,is_short,visibility")
+        .eq("visibility","public")
+        .order("created_at",{ascending:false})
+        .limit(60);
+
+    if(error){
+        console.error("Video loading error:",error);
+        $("videoGrid").innerHTML='<div class="video-empty">Unable to load videos right now.</div>';
+        return;
+    }
+
+    watcherVideos=data||[];
+    await renderVideos(watcherVideos);
+}
+
+async function renderVideos(videos){
+    const grid=$("videoGrid");
+    grid.innerHTML="";
+
+    if(!videos.length){
+        grid.innerHTML='<div class="video-empty"><h3>No videos yet</h3><p>Be the first to upload a video to Watcher.</p></div>';
+        return;
+    }
+
+    const ownerIds=[...new Set(videos.map(v=>v.owner_id))];
+    let usernames={};
+
+    if(ownerIds.length){
+        const {data:profiles}=await supabaseClient
+            .from("profiles")
+            .select("id,username")
+            .in("id",ownerIds);
+
+        (profiles||[]).forEach(p=>usernames[p.id]=p.username);
+    }
+
+    videos.forEach(video=>{
+        const card=document.createElement("button");
+        card.className="video-card";
+
+        const thumbnail=video.thumbnail_path
+            ?getVideoUrl(video.thumbnail_path)
+            :"";
+
+        const thumbHTML=thumbnail
+            ?`<img src="${escapeHTML(thumbnail)}" alt="">`
+            :`<div class="video-thumb-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg></div>`;
+
+        card.innerHTML=`
+            <div class="video-thumb">${thumbHTML}</div>
+            <div class="video-card-info">
+                <div class="video-card-title">${escapeHTML(video.title)}</div>
+                <div class="video-card-meta">
+                    ${escapeHTML(usernames[video.owner_id]||"Watcher creator")}
+                    · ${Number(video.views_count||0).toLocaleString()} views
+                    ${video.is_short?" · Short":""}
+                </div>
+            </div>`;
+
+        card.addEventListener("click",()=>openVideo(video));
+        grid.appendChild(card);
+    });
+}
+
+function filterVideos(){
+    const query=$("videoSearch").value.trim().toLowerCase();
+    const filter=$("videoFilter").value;
+
+    const filtered=watcherVideos.filter(video=>{
+        const matchesText=
+            video.title.toLowerCase().includes(query)||
+            (video.description||"").toLowerCase().includes(query)||
+            (video.category||"").toLowerCase().includes(query);
+
+        const matchesType=
+            filter==="all"||
+            (filter==="shorts"&&video.is_short)||
+            (filter==="videos"&&!video.is_short);
+
+        return matchesText&&matchesType;
+    });
+
+    renderVideos(filtered);
+}
+
+async function uploadVideo(){
+    const file=$("uploadFile").files[0];
+    const thumbnailFile=$("uploadThumbnail").files[0];
+    const title=$("uploadTitle").value.trim();
+    const description=$("uploadDescription").value.trim();
+    const category=$("uploadCategory").value;
+    const visibility=$("uploadVisibility").value;
+    const isShort=$("uploadType").value==="short";
+    const button=$("uploadButton");
+    const errorBox=$("uploadError");
+    const statusBox=$("uploadStatus");
+    const progress=$("uploadProgress");
+    const progressBar=$("uploadProgressBar");
+
+    errorBox.style.display="none";
+
+    if(!currentUser){
+        errorBox.textContent="Please sign in again.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    if(!title){
+        errorBox.textContent="Enter a video title.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    if(!file){
+        errorBox.textContent="Choose a video file first.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    if(!file.type.startsWith("video/")){
+        errorBox.textContent="Please select a supported video file.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    if(file.size>100*1024*1024){
+        errorBox.textContent="Your video is larger than the current 100 MB upload limit.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    if(thumbnailFile&&!thumbnailFile.type.startsWith("image/")){
+        errorBox.textContent="Choose a valid image for the thumbnail.";
+        errorBox.style.display="block";
+        return;
+    }
+
+    button.disabled=true;
+    button.textContent="Uploading...";
+    progress.style.display="block";
+    progressBar.style.width="0%";
+    statusBox.textContent="Preparing your upload...";
+
+    let videoPath=null;
+    let thumbnailPath=null;
+
+    try{
+        const extension=(file.name.split(".").pop()||"mp4").toLowerCase();
+        videoPath=`${currentUser.id}/${crypto.randomUUID()}.${extension}`;
+
+        const {error:uploadError}=await supabaseClient.storage
+            .from("watcher-videos")
+            .upload(videoPath,file,{
+                contentType:file.type,
+                cacheControl:"3600",
+                upsert:false
+            });
+
+        if(uploadError)throw uploadError;
+
+        progressBar.style.width="75%";
+        statusBox.textContent="Saving video information...";
+
+        if(thumbnailFile){
+            const thumbExt=(thumbnailFile.name.split(".").pop()||"jpg").toLowerCase();
+            thumbnailPath=`${currentUser.id}/${crypto.randomUUID()}.${thumbExt}`;
+
+            const {error:thumbError}=await supabaseClient.storage
+                .from("watcher-videos")
+                .upload(thumbnailPath,thumbnailFile,{
+                    contentType:thumbnailFile.type,
+                    cacheControl:"3600",
+                    upsert:false
+                });
+
+            if(thumbError)throw thumbError;
+        }
+
+        const {data:record,error:recordError}=await supabaseClient
+            .from("watcher_videos")
+            .insert({
+                owner_id:currentUser.id,
+                title,
+                description,
+                category,
+                video_path:videoPath,
+                thumbnail_path:thumbnailPath,
+                mime_type:file.type,
+                size_bytes:file.size,
+                is_short:isShort,
+                visibility
+            })
+            .select()
+            .single();
+
+        if(recordError)throw recordError;
+
+        progressBar.style.width="100%";
+        statusBox.textContent="Your video was uploaded successfully.";
+
+        $("uploadTitle").value="";
+        $("uploadDescription").value="";
+        $("uploadFile").value="";
+        $("uploadThumbnail").value="";
+
+        await loadVideos();
+        await loadProfileVideos();
+
+        setTimeout(closeUpload,900);
+
+    }catch(err){
+        console.error("Video upload error:",err);
+
+        if(videoPath){
+            await supabaseClient.storage.from("watcher-videos").remove([videoPath]);
+        }
+        if(thumbnailPath){
+            await supabaseClient.storage.from("watcher-videos").remove([thumbnailPath]);
+        }
+
+        errorBox.textContent=err.message||"The video could not be uploaded.";
+        errorBox.style.display="block";
+        statusBox.textContent="Upload failed.";
+    }finally{
+        button.disabled=false;
+        button.textContent="Upload video";
+    }
+}
+
+/* CUSTOM WATCHER PLAYER */
+
+async function openVideo(video){
+    currentVideo=video;
+    currentVideoLiked=false;
+
+    const {data:{publicUrl}}=supabaseClient.storage
+        .from("watcher-videos")
+        .getPublicUrl(video.video_path);
+
+    currentVideoUrl=publicUrl;
+    watcherVideo.pause();
+    watcherVideo.src=publicUrl;
+    watcherVideo.load();
+
+    $("playerVideoTitle").textContent=video.title;
+    $("playerVideoDescription").textContent=video.description||"";
+    $("videoPlayerOverlay").classList.add("show");
+    $("centerPlayButton").style.display="block";
+
+    $("videoCommentList").innerHTML='<div style="color:#888;font-size:12px">Loading comments...</div>';
+
+    await loadVideoComments(video.id);
+    await checkVideoLike(video.id);
+
+    if(currentUser){
+        const {error}=await supabaseClient.from("watcher_watch_history").upsert({
+            user_id:currentUser.id,
+            video_id:video.id,
+            watched_at:new Date().toISOString(),
+            progress_seconds:0
+        },{onConflict:"user_id,video_id"});
+
+        if(error)console.error("Watch history:",error);
+    }
+
+    const {error:viewError}=await supabaseClient
+        .from("watcher_videos")
+        .update({views_count:Number(video.views_count||0)+1})
+        .eq("id",video.id);
+
+    if(viewError)console.error("View count:",viewError);
+    else video.views_count=Number(video.views_count||0)+1;
+}
+
+function closeVideoPlayer(){
+    watcherVideo.pause();
+    watcherVideo.removeAttribute("src");
+    watcherVideo.load();
+    $("videoPlayerOverlay").classList.remove("show");
+    currentVideo=null;
+    currentVideoUrl=null;
+}
+
+function toggleVideoPlay(){
+    if(watcherVideo.paused){
+        watcherVideo.play().catch(err=>console.error("Playback error:",err));
+    }else{
+        watcherVideo.pause();
+    }
+}
+
+function skipVideo(amount){
+    if(!Number.isFinite(watcherVideo.duration))return;
+    watcherVideo.currentTime=Math.max(0,Math.min(watcherVideo.duration,watcherVideo.currentTime+amount));
+}
+
+function toggleVideoMute(){
+    watcherVideo.muted=!watcherVideo.muted;
+    $("muteButton").textContent=watcherVideo.muted?"Muted":"🔊";
+}
+
+function changeVideoSpeed(speed){
+    watcherVideo.playbackRate=Number(speed);
+}
+
+async function toggleFullscreen(){
+    const player=$("customPlayer");
+    try{
+        if(document.fullscreenElement){
+            await document.exitFullscreen();
+        }else if(player.requestFullscreen){
+            await player.requestFullscreen();
+        }else if(watcherVideo.webkitEnterFullscreen){
+            watcherVideo.webkitEnterFullscreen();
+        }
+    }catch(err){
+        console.error("Fullscreen unavailable:",err);
+    }
+}
+
+async function togglePiP(){
+    try{
+        if(!document.pictureInPictureEnabled||!watcherVideo.requestPictureInPicture){
+            alert("Picture in picture is not supported by this browser.");
+            return;
+        }
+        if(document.pictureInPictureElement){
+            await document.exitPictureInPicture();
+        }else{
+            await watcherVideo.requestPictureInPicture();
+        }
+    }catch(err){
+        console.error("Picture in picture:",err);
+    }
+}
+
+watcherVideo.addEventListener("play",()=>{
+    $("playPauseButton").textContent="Ⅱ";
+    $("centerPlayButton").style.display="none";
+});
+
+watcherVideo.addEventListener("pause",()=>{
+    $("playPauseButton").textContent="▶";
+    $("centerPlayButton").style.display="block";
+});
+
+watcherVideo.addEventListener("timeupdate",()=>{
+    if(!Number.isFinite(watcherVideo.duration))return;
+
+    playerTimeline.value=(watcherVideo.currentTime/watcherVideo.duration)*100;
+
+    $("playerTime").textContent=
+        formatVideoTime(watcherVideo.currentTime)+" / "+
+        formatVideoTime(watcherVideo.duration);
+});
+
+watcherVideo.addEventListener("loadedmetadata",()=>{
+    $("playerTime").textContent=
+        "0:00 / "+formatVideoTime(watcherVideo.duration);
+});
+
+playerTimeline.addEventListener("input",()=>{
+    if(Number.isFinite(watcherVideo.duration)){
+        watcherVideo.currentTime=(Number(playerTimeline.value)/100)*watcherVideo.duration;
+    }
+});
+
+playerVolume.addEventListener("input",()=>{
+    watcherVideo.volume=Number(playerVolume.value);
+    watcherVideo.muted=watcherVideo.volume===0;
+});
+
+async function checkVideoLike(videoId){
+    if(!currentUser){
+        $("videoLikeButton").textContent="♡ Like";
+        return;
+    }
+
+    const {data,error}=await supabaseClient
+        .from("watcher_video_likes")
+        .select("video_id")
+        .eq("video_id",videoId)
+        .eq("user_id",currentUser.id)
+        .maybeSingle();
+
+    if(error)console.error(error);
+    currentVideoLiked=!!data;
+    $("videoLikeButton").textContent=currentVideoLiked?"♥ Liked":"♡ Like";
+}
+
+async function toggleVideoLike(){
+    if(!currentUser||!currentVideo){
+        alert("Sign in to like videos.");
+        return;
+    }
+
+    if(currentVideoLiked){
+        const {error}=await supabaseClient
+            .from("watcher_video_likes")
+            .delete()
+            .eq("video_id",currentVideo.id)
+            .eq("user_id",currentUser.id);
+
+        if(error){alert(error.message);return}
+        currentVideoLiked=false;
+    }else{
+        const {error}=await supabaseClient
+            .from("watcher_video_likes")
+            .insert({video_id:currentVideo.id,user_id:currentUser.id});
+
+        if(error){alert(error.message);return}
+        currentVideoLiked=true;
+    }
+
+    $("videoLikeButton").textContent=currentVideoLiked?"♥ Liked":"♡ Like";
+}
+
+async function loadVideoComments(videoId){
+    const {data,error}=await supabaseClient
+        .from("watcher_video_comments")
+        .select("id,user_id,body,created_at")
+        .eq("video_id",videoId)
+        .order("created_at",{ascending:true})
+        .limit(100);
+
+    const list=$("videoCommentList");
+    list.innerHTML="";
+
+    if(error){
+        list.textContent="Unable to load comments.";
+        console.error(error);
+        return;
+    }
+
+    if(!data?.length){
+        list.innerHTML='<div style="font-size:12px;color:#888">No comments yet. Be the first to comment.</div>';
+        return;
+    }
+
+    const ids=[...new Set(data.map(c=>c.user_id))];
+    const {data:profiles}=await supabaseClient
+        .from("profiles")
+        .select("id,username")
+        .in("id",ids);
+
+    const names={};
+    (profiles||[]).forEach(p=>names[p.id]=p.username);
+
+    data.forEach(comment=>{
+        const row=document.createElement("div");
+        row.className="player-comment";
+
+        const strong=document.createElement("strong");
+        strong.textContent=names[comment.user_id]||"Watcher user";
+
+        const body=document.createElement("span");
+        body.textContent=comment.body;
+
+        row.append(strong,body);
+        list.appendChild(row);
+    });
+}
+
+async function postVideoComment(event){
+    event.preventDefault();
+
+    if(!currentUser||!currentVideo){
+        alert("Sign in to comment.");
+        return;
+    }
+
+    const input=$("videoCommentInput");
+    const body=input.value.trim();
+    if(!body)return;
+
+    const {error}=await supabaseClient
+        .from("watcher_video_comments")
+        .insert({
+            video_id:currentVideo.id,
+            user_id:currentUser.id,
+            body
+        });
+
+    if(error){
+        alert(error.message);
+        return;
+    }
+
+    input.value="";
+    await loadVideoComments(currentVideo.id);
+}
+
+async function shareCurrentVideo(){
+    if(!currentVideo)return;
+
+    const url=location.origin+location.pathname+"?video="+encodeURIComponent(currentVideo.id);
+
+    if(navigator.share){
+        try{
+            await navigator.share({title:currentVideo.title,url});
+        }catch(err){}
+    }else if(navigator.clipboard){
+        await navigator.clipboard.writeText(url);
+        alert("Video link copied.");
+    }else{
+        prompt("Copy this video link:",url);
+    }
+}
+
+/* CREATOR PROFILE VIDEOS */
+
+async function loadProfileVideos(){
+    if(!currentUser)return;
+
+    const {data,error}=await supabaseClient
+        .from("watcher_videos")
+        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,is_short,visibility")
+        .eq("owner_id",currentUser.id)
+        .order("created_at",{ascending:false});
+
+    if(error){
+        console.error("Profile videos:",error);
+        return;
+    }
+
+    const container=$("profileVideos");
+    container.innerHTML="";
+
+    if(!data?.length){
+        container.innerHTML=`
+            <div class="no-clips">
+                <h3>No videos yet</h3>
+                <p>Your uploaded videos will appear here.</p>
+            </div>`;
+        return;
+    }
+
+    const heading=document.createElement("h2");
+    heading.className="profile-section-title";
+    heading.textContent="Your videos";
+    container.appendChild(heading);
+
+    const grid=document.createElement("div");
+    grid.className="video-grid";
+
+    data.forEach(video=>{
+        const card=document.createElement("button");
+        card.className="video-card";
+
+        const thumb=video.thumbnail_path?getVideoUrl(video.thumbnail_path):"";
+
+        card.innerHTML=`
+            <div class="video-thumb">
+                ${thumb?`<img src="${escapeHTML(thumb)}" alt="">`:"<span>▶</span>"}
+            </div>
+            <div class="video-card-info">
+                <div class="video-card-title">${escapeHTML(video.title)}</div>
+                <div class="video-card-meta">${Number(video.views_count||0).toLocaleString()} views · ${escapeHTML(video.visibility)}</div>
+                <div class="video-card-actions">
+                    <button type="button" class="delete-video">Delete</button>
+                </div>
+            </div>`;
+
+        card.addEventListener("click",event=>{
+            if(event.target.closest(".delete-video"))return;
+            openVideo(video);
+        });
+
+        card.querySelector(".delete-video").addEventListener("click",async event=>{
+            event.stopPropagation();
+            await deleteVideo(video);
+        });
+
+        grid.appendChild(card);
+    });
+
+    container.appendChild(grid);
+}
+
+async function deleteVideo(video){
+    if(!confirm("Delete this video permanently?"))return;
+
+    const paths=[video.video_path,video.thumbnail_path].filter(Boolean);
+
+    const {error:recordError}=await supabaseClient
+        .from("watcher_videos")
+        .delete()
+        .eq("id",video.id)
+        .eq("owner_id",currentUser.id);
+
+    if(recordError){
+        alert("Could not delete video: "+recordError.message);
+        return;
+    }
+
+    if(paths.length){
+        const {error:storageError}=await supabaseClient
+            .storage.from("watcher-videos").remove(paths);
+
+        if(storageError)console.error("Storage cleanup:",storageError);
+    }
+
+    await loadVideos();
+    await loadProfileVideos();
+}
+
 /* KEYBOARD */
 document.addEventListener("keydown",event=>{
 if(event.key==="Escape"){
-if($("viewerOverlay").classList.contains("show"))closeViewer();
+if($("videoPlayerOverlay").classList.contains("show"))closeVideoPlayer();
+else if($("viewerOverlay").classList.contains("show"))closeViewer();
+else if($("uploadModal").classList.contains("show"))closeUpload();
+else if($("createMenu").classList.contains("show"))closeCreateMenu();
 else closeCreate();
 }
 });
@@ -743,8 +1615,12 @@ else closeCreate();
 Object.assign(window,{
 showPage,switchProfileTab,showProfileMessage,
 openCreate,closeCreate,outsideClose,selectSource,
-startPreview,stopPreview,goLive,closeViewer,sendChatMessage
+startPreview,stopPreview,goLive,closeViewer,sendChatMessage,
+openCreateMenu,closeCreateMenu,openUpload,closeUpload,uploadVideo,
+filterVideos,openVideo,closeVideoPlayer,toggleVideoPlay,skipVideo,
+toggleVideoMute,changeVideoSpeed,toggleFullscreen,togglePiP,
+toggleVideoLike,shareCurrentVideo,postVideoComment
 });
 </script>
 </body>
-    </html>
+</html>
