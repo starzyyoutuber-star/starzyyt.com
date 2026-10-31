@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0e10">
 <title>Watcher</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 * {
@@ -19,11 +18,9 @@
     --bg: #0e0e10;
     --white: #efeff1;
     --purple: #bf94ff;
-    --sidebar: 180px;
-    --muted: #a0a0a5;
     --blue: #307aae;
-    --panel: #18181b;
-    --border: #303035;
+    --muted: #a0a0a5;
+    --sidebar: 180px;
 }
 
 html, body {
@@ -43,43 +40,25 @@ body {
 main {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 20px 16px 85px;
+    padding: 12px 16px 85px;
 }
 
 .header {
-    height: 45px;
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 }
 
 .logo {
-    font-size: 23px;
+    font-size: 21px;
     font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-.page-heading {
-    font-size: 23px;
-    font-weight: 750;
-    margin: 22px 0 7px;
-}
-
-.page-subtitle {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.5;
 }
 
 /* HOME */
+
+#homePage {
+    display: block;
+}
 
 .empty-home {
     min-height: 65vh;
@@ -92,9 +71,9 @@ main {
 }
 
 .empty-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 18px;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
     background: #1c1c21;
     display: grid;
     place-items: center;
@@ -103,13 +82,11 @@ main {
 }
 
 .empty-icon svg {
-    width: 31px;
-    height: 31px;
+    width: 29px;
+    height: 29px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
 }
 
 .empty-home h2 {
@@ -124,7 +101,360 @@ main {
     line-height: 1.5;
 }
 
-/* NAVIGATION */
+/* BROWSE */
+
+#browsePage {
+    display: none;
+}
+
+.search-box {
+    width: 100%;
+    height: 43px;
+    background: #1b1b20;
+    border: 1px solid #303035;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.search-box svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: #9999a2;
+    stroke-width: 2;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 14px;
+}
+
+.search-results {
+    margin-top: 12px;
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 4px;
+    border: 0;
+    border-bottom: 1px solid #252529;
+    background: transparent;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+}
+
+.search-result-avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: #307aae;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    font-size: 21px;
+}
+
+.search-result-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.search-result-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-result-bio {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.search-message {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 18px 2px;
+}
+
+/* PROFILE */
+
+#profilePage {
+    display: none;
+    padding-bottom: 5px;
+}
+
+.profile-content {
+    padding: 0 4px;
+}
+
+.profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 105px;
+}
+
+.profile-avatar {
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #307aae;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 68px;
+    font-weight: 500;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+
+.profile-name-area {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.profile-title-group {
+    min-width: 0;
+}
+
+.profile-username {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+}
+
+.inline-followers {
+    font-size: 12px;
+    color: #aaaab2;
+    margin-top: 5px;
+}
+
+.inline-followers strong {
+    color: white;
+    font-size: 14px;
+}
+
+.profile-status {
+    font-size: 15px;
+    color: #d0d0d5;
+    margin-top: 5px;
+}
+
+.edit-profile-button {
+    flex-shrink: 0;
+    height: 37px;
+    padding: 0 13px;
+    border: none;
+    border-radius: 20px;
+    background: #29292e;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.profile-bio {
+    font-size: 15px;
+    color: #aaaab2;
+    margin-top: 13px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.profile-followers {
+    display: none;
+}
+
+/* PROFILE BUTTONS */
+
+.profile-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.profile-main-button,
+.profile-secondary-button {
+    width: 100%;
+    height: 49px;
+    border: none;
+    border-radius: 9px;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.profile-main-button {
+    background: #9146ff;
+}
+
+.profile-secondary-button {
+    background: #29292e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.profile-secondary-button svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.follow-button {
+    display: none;
+    width: 100%;
+    height: 45px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.follow-button.following {
+    background: #29292e;
+}
+
+/* PROFILE TABS */
+
+.profile-tabs {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 2px;
+    margin-top: 22px;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.profile-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.profile-tab {
+    position: relative;
+    flex: 1 0 auto;
+    height: 42px;
+    padding: 0 7px 12px;
+    border: none;
+    background: transparent;
+    color: #efeff1;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.profile-tab.active {
+    color: var(--purple);
+}
+
+.profile-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--purple);
+}
+
+/* TAB CONTENT */
+
+.profile-tab-content {
+    display: none;
+    padding: 12px 0;
+}
+
+.profile-tab-content.active {
+    display: block;
+}
+
+.no-clips {
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #a0a0a5;
+    gap: 9px;
+}
+
+.no-clips svg {
+    width: 34px;
+    height: 34px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.no-clips h3 {
+    color: #efeff1;
+    font-size: 16px;
+}
+
+.no-clips p {
+    font-size: 12px;
+}
+
+.profile-section-title {
+    font-size: 17px;
+    margin-bottom: 12px;
+}
+
+.profile-info-card {
+    padding: 14px;
+    background: #19191d;
+    border-radius: 9px;
+    color: #aaaab2;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* BOTTOM NAVIGATION */
 
 .navigation {
     position: fixed;
@@ -132,8 +462,8 @@ main {
     bottom: 0;
     left: 0;
     right: 0;
-    height: calc(55px + env(safe-area-inset-bottom));
-    padding: 2px 6px env(safe-area-inset-bottom);
+    height: calc(61px + env(safe-area-inset-bottom));
+    padding: 3px 6px env(safe-area-inset-bottom);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -158,8 +488,8 @@ main {
 }
 
 .nav-icon {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
@@ -168,7 +498,7 @@ main {
 }
 
 .nav-label {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 14px;
     font-weight: 600;
     white-space: nowrap;
@@ -179,22 +509,21 @@ main {
 }
 
 .create-button {
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+    flex: 0 0 43px;
+    width: 43px;
+    height: 43px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: #307aae;
+    background: var(--blue);
     color: white;
-    cursor: pointer;
 }
 
 .plus-icon {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
@@ -202,8 +531,8 @@ main {
 
 .activity-wrap {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
 }
 
 .notification {
@@ -223,378 +552,28 @@ main {
 }
 
 .avatar {
-    width: 27px;
-    height: 27px;
+    width: 26px;
+    height: 26px;
     border: 2px solid var(--purple);
     border-radius: 50%;
-    background: #38294c;
+    background: #307aae;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 500;
     overflow: hidden;
-    flex-shrink: 0;
 }
 
 .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* SEARCH */
-
-.search-box {
-    width: 100%;
-    height: 47px;
-    margin-top: 23px;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    padding: 0 14px;
-    background: #1b1b1f;
-    border: 1px solid #34343a;
-    border-radius: 9px;
-}
-
-.search-box:focus-within {
-    border-color: var(--blue);
-}
-
-.search-box svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    stroke: #92929a;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-}
-
-.search-box input {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    outline: none;
-    background: transparent;
-    color: white;
-    font-size: 13px;
-}
-
-.search-box input::placeholder {
-    color: #777780;
-}
-
-.search-caption {
-    margin-top: 25px;
-    margin-bottom: 12px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #b9b9c0;
-}
-
-.search-results {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.user-result {
-    width: 100%;
-    min-height: 72px;
-    padding: 11px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #18181b;
-    border: 1px solid #303035;
-    border-radius: 9px;
-    color: white;
-    text-align: left;
-    cursor: pointer;
-}
-
-.user-result:active {
-    background: #242429;
-}
-
-.result-avatar {
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
-    background: #38294c;
-    border: 1.5px solid var(--purple);
-    display: grid;
-    place-items: center;
-    font-size: 17px;
-    font-weight: 700;
-    flex-shrink: 0;
-    overflow: hidden;
-}
-
-.result-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.result-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.result-name {
-    font-size: 14px;
-    font-weight: 700;
-    overflow-wrap: anywhere;
-}
-
-.result-handle {
-    margin-top: 5px;
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.result-arrow {
-    color: #777780;
-    font-size: 20px;
-}
-
-.search-message {
-    padding: 35px 15px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-/* PROFILE */
-
-.profile-cover,
-.public-profile-cover {
-    position: relative;
-    width: 100%;
-    height: 145px;
-    margin-top: 23px;
-    border-radius: 10px;
-    background: #25232d;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    border: 1px solid #34303d;
-    overflow: hidden;
-}
-
-.profile-cover:not([style*="background-image"]) {
-    background: linear-gradient(120deg, #28202f, #171c28);
-}
-
-.public-profile-cover:not([style*="background-image"]) {
-    background: linear-gradient(120deg, #252332, #1c2734);
-}
-
-.profile-main,
-.public-profile-card {
-    position: relative;
-    padding: 0 17px 18px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 11px;
-}
-
-.profile-avatar,
-.public-profile-avatar {
-    width: 82px;
-    height: 82px;
-    margin-top: -41px;
-    border-radius: 50%;
-    background: #38294c;
-    border: 3px solid var(--bg);
-    outline: 2px solid var(--purple);
-    display: grid;
-    place-items: center;
-    color: white;
-    font-size: 30px;
-    font-weight: 700;
-    overflow: hidden;
-}
-
-.profile-avatar img,
-.public-profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-name,
-.public-profile-name {
-    font-size: 21px;
-    font-weight: 750;
-    margin-top: 13px;
-    overflow-wrap: anywhere;
-}
-
-.profile-handle,
-.public-profile-handle {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 5px;
-    overflow-wrap: anywhere;
-}
-
-.name-line {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.follower-count {
-    font-size: 11px;
-    color: #b7b7be;
-    background: #252529;
-    border: 1px solid #36363c;
-    padding: 5px 8px;
-    border-radius: 5px;
-    white-space: nowrap;
-}
-
-.profile-description {
-    margin-top: 15px;
-    color: #c4c4cb;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.profile-info-card {
-    margin-top: 13px;
-    padding: 17px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-}
-
-.section-title {
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 17px;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 13px 0;
-    border-bottom: 1px solid #303035;
-}
-
-.info-row:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.info-label {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-.info-value {
-    font-size: 12px;
-    text-align: right;
-    overflow-wrap: anywhere;
-}
-
-.profile-actions {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-}
-
-.action-button {
-    width: 100%;
-    min-height: 43px;
-    border-radius: 7px;
-    border: 1px solid #36363c;
-    background: #222226;
-    color: white;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-.action-button:disabled {
-    opacity: .55;
-}
-
-.action-button.primary {
-    background: #307aae;
-    border-color: #307aae;
-}
-
-.action-button.danger {
-    border-color: #663232;
-    background: #321a1a;
-    color: #ff8585;
-}
-
-.upload-input {
     display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.profile-loading {
-    color: var(--muted);
-    font-size: 13px;
-    margin-top: 25px;
-}
-
-.signout-message {
-    font-size: 12px;
-    color: #ff8585;
-    margin-top: 12px;
-    display: none;
-}
-
-.upload-message {
-    font-size: 12px;
-    color: #b9b9c0;
-    margin-top: 10px;
-    line-height: 1.5;
-}
-
-/* PUBLIC PROFILE */
-
-.back-button {
-    border: none;
-    background: transparent;
-    color: #b9b9c0;
-    font-size: 13px;
-    padding: 12px 0;
-    cursor: pointer;
-}
-
-.public-profile-cover {
-    margin-top: 10px;
-}
-
-.public-profile-card {
-    padding-bottom: 20px;
-}
-
-.public-profile-note {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    background: #202024;
-    font-size: 12px;
-    color: #b9b9c0;
-    line-height: 1.6;
-}
-
-/* CREATE STREAM */
+/* MODALS */
 
 .modal-overlay {
     position: fixed;
@@ -647,7 +626,6 @@ main {
     border-radius: 7px;
     color: white;
     font-size: 19px;
-    cursor: pointer;
 }
 
 .field-label {
@@ -672,7 +650,51 @@ main {
 }
 
 .field:focus {
-    border-color: #307aae;
+    border-color: var(--blue);
+}
+
+.field-textarea {
+    height: 90px;
+    resize: vertical;
+    padding: 12px;
+    font-family: inherit;
+}
+
+.upload-picture-button {
+    width: 100%;
+    height: 42px;
+    border: 1px solid #36363c;
+    border-radius: 7px;
+    background: #222226;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 17px;
+}
+
+.save-profile-button {
+    width: 100%;
+    height: 44px;
+    border: 0;
+    border-radius: 7px;
+    background: var(--blue);
+    color: white;
+    font-weight: 700;
+}
+
+.modal-message {
+    color: #aaaab2;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* CREATE MODAL */
+
+.choice-title {
+    font-size: 12px;
+    color: #c5c5cb;
+    font-weight: 600;
+    margin-bottom: 9px;
 }
 
 .choices {
@@ -694,7 +716,7 @@ main {
 }
 
 .choice.selected {
-    border: 1.5px solid #307aae;
+    border: 1.5px solid var(--blue);
     background: #1b2a35;
 }
 
@@ -717,13 +739,6 @@ main {
     font-size: 10px;
     color: #a5a5ad;
     line-height: 1.4;
-}
-
-.choice-title {
-    font-size: 12px;
-    color: #c5c5cb;
-    font-weight: 600;
-    margin-bottom: 9px;
 }
 
 .preview {
@@ -782,20 +797,15 @@ main {
     margin-bottom: 13px;
 }
 
-.start-button,
-.stop-button {
+.start-button {
     width: 100%;
     height: 44px;
-    border-radius: 7px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.start-button {
     border: 0;
-    background: #307aae;
+    border-radius: 7px;
+    background: var(--blue);
     color: white;
     font-size: 13px;
+    font-weight: 700;
 }
 
 .start-button:disabled {
@@ -804,9 +814,13 @@ main {
 
 .stop-button {
     display: none;
+    width: 100%;
+    height: 44px;
     border: 1px solid #a83232;
+    border-radius: 7px;
     background: #321a1a;
     color: #ff7777;
+    font-weight: 700;
     margin-top: 9px;
 }
 
@@ -820,25 +834,70 @@ main {
 
 /* RESPONSIVE */
 
-@media(max-width:340px) {
-    .nav-label { font-size: 10px; }
+@media (max-width: 360px) {
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        font-size: 58px;
+    }
+
+    .profile-username {
+        font-size: 22px;
+    }
+
+    .edit-profile-button {
+        padding: 0 9px;
+        font-size: 11px;
+    }
+
+    .profile-tab {
+        font-size: 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .nav-label {
+        font-size: 10px;
+    }
 
     .create-button {
         flex-basis: 38px;
         width: 38px;
         height: 38px;
     }
-
-    .avatar {
-        width: 24px;
-        height: 24px;
-    }
 }
 
-@media(min-width:760px) {
+@media (min-width: 760px) {
     main {
         margin-left: var(--sidebar);
         padding: 25px 30px;
+    }
+
+    #profilePage {
+        max-width: 950px;
+    }
+
+    .profile-content {
+        padding: 0 20px;
+    }
+
+    .profile-avatar {
+        width: 115px;
+        height: 115px;
+        font-size: 80px;
+    }
+
+    .profile-buttons {
+        max-width: 650px;
+    }
+
+    .profile-tabs {
+        justify-content: flex-start;
+        gap: 35px;
+    }
+
+    .profile-tab {
+        flex: 0 0 auto;
     }
 
     .navigation {
@@ -850,7 +909,6 @@ main {
         height: 100dvh;
         padding: 18px 10px;
         flex-direction: column;
-        align-items: stretch;
         justify-content: flex-start;
         gap: 7px;
         border-right: 1px solid #252529;
@@ -864,15 +922,6 @@ main {
         justify-content: flex-start;
         gap: 11px;
         padding: 0 11px;
-    }
-
-    .nav-icon {
-        width: 21px;
-        height: 21px;
-    }
-
-    .nav-label {
-        font-size: 13px;
     }
 
     .nav-item.active {
@@ -898,15 +947,16 @@ main {
 
 <main>
 
-<header class="header">
-    <div class="logo">Watcher</div>
-</header>
-
 <!-- HOME -->
 
-<section class="page active" id="homePage">
+<section id="homePage">
 
-    <div class="empty-home">
+    <header class="header">
+        <div class="logo">Watcher</div>
+    </header>
+
+    <section class="empty-home">
+
         <div class="empty-icon">
             <svg viewBox="0 0 24 24">
                 <rect x="3" y="5" width="18" height="14" rx="2"/>
@@ -920,19 +970,18 @@ main {
             When creators go live, their streams will appear here.
             Be the first to start streaming.
         </p>
-    </div>
+
+    </section>
 
 </section>
 
 <!-- BROWSE -->
 
-<section class="page" id="browsePage">
+<section id="browsePage">
 
-    <h1 class="page-heading">Discover people</h1>
-
-    <p class="page-subtitle">
-        Find creators and other people on Watcher.
-    </p>
+    <header class="header">
+        <div class="logo">Browse</div>
+    </header>
 
     <div class="search-box">
         <svg viewBox="0 0 24 24">
@@ -943,226 +992,187 @@ main {
         <input
             id="peopleSearch"
             type="search"
-            placeholder="Search usernames..."
+            placeholder="Search people..."
             autocomplete="off"
-            maxlength="24"
-            oninput="handlePeopleSearch(this.value)"
         >
     </div>
 
-    <div class="search-caption" id="searchCaption">
-        PEOPLE
-    </div>
-
     <div class="search-results" id="searchResults">
-        <div class="search-message">
-            Search for a Watcher username to find people.
-        </div>
+        <div class="search-message">Search for a username to find people.</div>
     </div>
 
 </section>
 
-<!-- ACTIVITY -->
+<!-- PROFILE -->
 
-<section class="page" id="activityPage">
+<section id="profilePage">
 
-    <h1 class="page-heading">Activity</h1>
+    <div class="profile-content">
 
-    <p class="page-subtitle">
-        Your notifications and recent updates.
-    </p>
+        <div class="profile-identity">
 
-    <div class="empty-home" style="min-height:48vh">
+            <button class="profile-avatar" id="profileAvatarButton"
+                onclick="openAvatarUpload()" aria-label="Change profile picture">
+                <span id="profileAvatarInitial">U</span>
+                <img id="profileAvatarImage" alt="Profile picture">
+            </button>
 
-        <div class="empty-icon">
-            <svg viewBox="0 0 24 24">
-                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                <path d="M10 21h4"/>
-            </svg>
-        </div>
+            <div class="profile-name-area">
 
-        <h2>You're all caught up</h2>
+                <div class="profile-name-row">
 
-        <p>
-            When you receive notifications, they'll show up here.
-        </p>
+                    <div class="profile-title-group">
+                        <h1 class="profile-username" id="profileUsername">unknown</h1>
+                        <div class="inline-followers">
+                            <strong id="followersCountInline">0</strong> followers
+                        </div>
+                    </div>
 
-    </div>
+                    <button class="edit-profile-button"
+                        id="editProfileButton"
+                        onclick="openEditProfile()">
+                        Edit Profile
+                    </button>
 
-</section>
-
-<!-- YOUR PROFILE -->
-
-<section class="page" id="profilePage">
-
-    <h1 class="page-heading">Your profile</h1>
-
-    <p class="page-subtitle">
-        Manage and view your Watcher account.
-    </p>
-
-    <div id="profileLoading" class="profile-loading">
-        Loading your profile...
-    </div>
-
-    <div id="profileContent" style="display:none">
-
-        <div class="profile-cover" id="profileCover"></div>
-
-        <div class="profile-main">
-
-            <div class="profile-avatar" id="profileAvatar">?</div>
-
-            <div class="name-line">
-                <div class="profile-name" id="profileName">
-                    Username
                 </div>
 
-                <span class="follower-count" id="myFollowerCount">
-                    0 followers
-                </span>
-            </div>
+                <div class="profile-status">Offline</div>
 
-            <div class="profile-handle" id="profileHandle">
-                @username
-            </div>
-
-            <div class="profile-description">
-                Welcome to my Watcher profile.
             </div>
 
         </div>
 
-        <div class="profile-info-card">
+        <div class="profile-bio" id="profileBio">
+            No bio yet
+        </div>
 
-            <div class="section-title">
-                Customize your profile
-            </div>
+        <div class="profile-followers" id="profileFollowers">
+            0 followers
+        </div>
 
-            <button class="action-button primary"
-                onclick="document.getElementById('avatarInput').click()">
-                Change profile picture
+        <div class="profile-buttons">
+
+            <button class="follow-button" id="followActionButton"
+                onclick="toggleFollow()">
+                Follow
             </button>
 
-            <input
-                type="file"
-                id="avatarInput"
-                class="upload-input"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                onchange="uploadProfileImage(this,'avatar_url')"
-            >
+            <div id="ownProfileButtons">
 
-            <button class="action-button"
-                style="margin-top:9px"
-                onclick="document.getElementById('bannerInput').click()">
-                Change profile banner
-            </button>
+                <button class="profile-main-button"
+                    onclick="showProfileMessage('Stream Manager')">
+                    Stream Manager
+                </button>
 
-            <input
-                type="file"
-                id="bannerInput"
-                class="upload-input"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                onchange="uploadProfileImage(this,'banner_url')"
-            >
+                <button class="profile-secondary-button"
+                    onclick="showProfileMessage('Reminders')">
 
-            <div class="upload-message" id="uploadMessage">
-                JPG, PNG, WEBP or GIF. Maximum 5 MB.
-            </div>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+                        <path d="M10 21h4"/>
+                    </svg>
 
-        </div>
+                    Reminders
 
-        <div class="profile-info-card">
-
-            <div class="section-title">
-                Account information
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Username</span>
-                <span class="info-value" id="profileUsername">-</span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Email address</span>
-                <span class="info-value" id="profileEmail">-</span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Member since</span>
-                <span class="info-value" id="profileCreated">-</span>
-            </div>
-
-        </div>
-
-        <div class="profile-actions">
-
-            <button class="action-button danger" onclick="signOut()">
-                Sign out
-            </button>
-
-        </div>
-
-        <div class="signout-message" id="signoutMessage"></div>
-
-    </div>
-
-</section>
-
-<!-- PUBLIC PROFILE -->
-
-<section class="page" id="publicProfilePage">
-
-    <button class="back-button" onclick="backToPeople()">
-        ← Back to people
-    </button>
-
-    <div id="publicProfileLoading" class="profile-loading">
-        Loading profile...
-    </div>
-
-    <div id="publicProfileContent" style="display:none">
-
-        <div class="public-profile-cover" id="publicCover"></div>
-
-        <div class="public-profile-card">
-
-            <div class="public-profile-avatar" id="publicAvatar">
-                ?
-            </div>
-
-            <div class="name-line">
-
-                <div class="public-profile-name" id="publicName">
-                    Username
-                </div>
-
-                <span class="follower-count" id="publicFollowerCount">
-                    0 followers
-                </span>
-
-            </div>
-
-            <div class="public-profile-handle" id="publicHandle">
-                @username
-            </div>
-
-            <div class="public-profile-note">
-                Watcher member
-                <br>
-                <span id="publicCreated">Member since: -</span>
-            </div>
-
-            <div class="profile-actions">
-
-                <button class="action-button primary"
-                    id="followButton"
-                    onclick="toggleFollow()">
-                    Follow
                 </button>
 
             </div>
 
+        </div>
+
+    </div>
+
+    <div class="profile-tabs">
+
+        <button class="profile-tab active"
+            onclick="switchProfileTab('profileHome', this)">
+            Home
+        </button>
+
+        <button class="profile-tab"
+            onclick="switchProfileTab('profileAbout', this)">
+            About
+        </button>
+
+        <button class="profile-tab"
+            onclick="switchProfileTab('profileClips', this)">
+            Clips
+        </button>
+
+        <button class="profile-tab"
+            onclick="switchProfileTab('profileVideos', this)">
+            Videos
+        </button>
+
+        <button class="profile-tab"
+            onclick="switchProfileTab('profileSchedule', this)">
+            Schedule
+        </button>
+
+    </div>
+
+    <div class="profile-tab-content active" id="profileHome">
+
+        <div class="no-clips">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m10 9 5 3-5 3z"/>
+            </svg>
+
+            <h3>No clips yet</h3>
+            <p>This creator hasn't posted anything yet.</p>
+        </div>
+
+    </div>
+
+    <div class="profile-tab-content" id="profileAbout">
+
+        <h2 class="profile-section-title" id="aboutTitle">About unknown</h2>
+
+        <div class="profile-info-card" id="aboutBio">
+            This creator hasn't added a bio yet.
+        </div>
+
+    </div>
+
+    <div class="profile-tab-content" id="profileClips">
+
+        <div class="no-clips">
+            <svg viewBox="0 0 24 24">
+                <path d="M4 5h16v14H4z"/>
+                <path d="m10 9 5 3-5 3z"/>
+            </svg>
+
+            <h3>No clips yet</h3>
+            <p>Clips created by this user will appear here.</p>
+        </div>
+
+    </div>
+
+    <div class="profile-tab-content" id="profileVideos">
+
+        <div class="no-clips">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="m10 9 5 3-5 3z"/>
+            </svg>
+
+            <h3>No videos yet</h3>
+            <p>Uploaded videos will appear here.</p>
+        </div>
+
+    </div>
+
+    <div class="profile-tab-content" id="profileSchedule">
+
+        <div class="no-clips">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                <path d="M7 3v4M17 3v4M3 10h18"/>
+            </svg>
+
+            <h3>No schedule yet</h3>
+            <p>This creator hasn't added a streaming schedule.</p>
         </div>
 
     </div>
@@ -1175,8 +1185,8 @@ main {
 
 <nav class="navigation" aria-label="Main navigation">
 
-    <button class="nav-item active"
-        onclick="showPage('homePage',this)">
+    <button class="nav-item active" id="homeNav"
+        onclick="showPage('home')">
 
         <svg class="nav-icon" viewBox="0 0 24 24">
             <path d="M3.5 10.5 12 3.5l8.5 7V21h-17z"/>
@@ -1187,8 +1197,8 @@ main {
 
     </button>
 
-    <button class="nav-item"
-        onclick="showPage('browsePage',this)">
+    <button class="nav-item" id="browseNav"
+        onclick="showPage('browse')">
 
         <svg class="nav-icon" viewBox="0 0 24 24">
             <circle cx="10.5" cy="10.5" r="7.5"/>
@@ -1209,8 +1219,8 @@ main {
 
     </button>
 
-    <button class="nav-item"
-        onclick="showPage('activityPage',this)">
+    <button class="nav-item" id="activityNav"
+        onclick="showProfileMessage('Activity')">
 
         <span class="activity-wrap">
 
@@ -1227,16 +1237,69 @@ main {
 
     </button>
 
-    <button class="nav-item"
-        onclick="showPage('profilePage',this)">
+    <button class="nav-item" id="profileNav"
+        onclick="showOwnProfile()">
 
-        <span class="avatar" id="navAvatar">?</span>
+        <span class="avatar" id="navAvatar">
+            <span id="navAvatarInitial">U</span>
+            <img id="navAvatarImage" alt="">
+        </span>
 
         <span class="nav-label">Profile</span>
 
     </button>
 
 </nav>
+
+<!-- EDIT PROFILE MODAL -->
+
+<div class="modal-overlay" id="editProfileModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2>Edit Profile</h2>
+            <button class="close-button" onclick="closeEditProfile()">×</button>
+        </div>
+
+        <label class="field-label" for="editUsername">Username</label>
+
+        <input class="field" id="editUsername"
+            maxlength="24"
+            minlength="3"
+            placeholder="Your username">
+
+        <label class="field-label" for="editBio">Bio</label>
+
+        <textarea class="field field-textarea"
+            id="editBio"
+            maxlength="160"
+            placeholder="Tell people about yourself"></textarea>
+
+        <label class="field-label">Profile picture</label>
+
+        <input type="file" id="avatarFile"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            hidden>
+
+        <button class="upload-picture-button"
+            onclick="document.getElementById('avatarFile').click()">
+            Choose profile picture
+        </button>
+
+        <p class="modal-message" id="editMessage">
+            Images must be 3 MB or smaller.
+        </p>
+
+        <button class="save-profile-button"
+            id="saveProfileButton"
+            onclick="saveProfile()">
+            Save Changes
+        </button>
+
+    </div>
+
+</div>
 
 <!-- CREATE STREAM MODAL -->
 
@@ -1246,12 +1309,9 @@ main {
     <div class="modal">
 
         <div class="modal-header">
-
             <h2>Create a stream</h2>
-
             <button class="close-button"
                 onclick="closeCreate()">×</button>
-
         </div>
 
         <label class="field-label" for="streamTitle">
@@ -1267,7 +1327,6 @@ main {
         </label>
 
         <select class="field" id="streamCategory">
-
             <option value="">Select a category</option>
             <option>Gaming</option>
             <option>Roblox</option>
@@ -1276,7 +1335,6 @@ main {
             <option>Music</option>
             <option>Technology</option>
             <option>Other</option>
-
         </select>
 
         <div class="choice-title">
@@ -1350,9 +1408,7 @@ main {
         <div class="error" id="errorMessage"></div>
 
         <p class="status-message" id="statusMessage">
-            Choose a source and start your preview.
-            Your camera or screen will only be accessed after
-            you give permission.
+            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
         </p>
 
         <button class="start-button"
@@ -1371,29 +1427,670 @@ main {
 
 </div>
 
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-/* SUPABASE */
+/* SUPABASE CONNECTION */
 
-const SUPABASE_URL =
-"https://sjtaagrvncysbrpwqdzf.supabase.co";
+const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
 
-const SUPABASE_KEY =
-"sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
-
-const supabaseClient = window.supabase.createClient(
+const supabase = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 let currentUser = null;
-let selectedPublicProfile = null;
+let ownProfile = null;
+let viewedProfile = null;
+let viewingOwnProfile = true;
+let searchTimer = null;
+
+/* PAGE NAVIGATION */
+
+function showPage(page) {
+
+    document.getElementById("homePage").style.display =
+        page === "home" ? "block" : "none";
+
+    document.getElementById("browsePage").style.display =
+        page === "browse" ? "block" : "none";
+
+    document.getElementById("profilePage").style.display =
+        page === "profile" ? "block" : "none";
+
+    document.getElementById("homeNav").classList.toggle(
+        "active", page === "home"
+    );
+
+    document.getElementById("browseNav").classList.toggle(
+        "active", page === "browse"
+    );
+
+    document.getElementById("profileNav").classList.toggle(
+        "active", page === "profile"
+    );
+
+    window.scrollTo(0, 0);
+}
+
+/* PROFILE TABS */
+
+function switchProfileTab(tabId, button) {
+
+    document.querySelectorAll(".profile-tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    document.querySelectorAll(".profile-tab-content").forEach(content => {
+        content.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    document.getElementById(tabId).classList.add("active");
+}
+
+/* PROFILE DISPLAY */
+
+function setProfilePicture(url, username) {
+
+    const initial = (username || "U").charAt(0).toUpperCase();
+
+    const profileImage = document.getElementById("profileAvatarImage");
+    const profileInitial = document.getElementById("profileAvatarInitial");
+
+    const navImage = document.getElementById("navAvatarImage");
+    const navInitial = document.getElementById("navAvatarInitial");
+
+    if (url) {
+        profileImage.src = url;
+        profileImage.style.display = "block";
+        profileInitial.style.display = "none";
+
+        navImage.src = url;
+        navImage.style.display = "block";
+        navInitial.style.display = "none";
+    } else {
+        profileImage.removeAttribute("src");
+        profileImage.style.display = "none";
+        profileInitial.style.display = "block";
+        profileInitial.textContent = initial;
+
+        navImage.removeAttribute("src");
+        navImage.style.display = "none";
+        navInitial.style.display = "block";
+        navInitial.textContent = initial;
+    }
+}
+
+function updateProfileDisplay(profile) {
+
+    const username = profile.username || "unknown";
+    const bio = profile.bio || "";
+
+    document.getElementById("profileUsername").textContent = username;
+    document.getElementById("profileBio").textContent =
+        bio || "No bio yet";
+
+    document.getElementById("aboutTitle").textContent =
+        "About " + username;
+
+    document.getElementById("aboutBio").textContent =
+        bio || "This creator hasn't added a bio yet.";
+
+    setProfilePicture(profile.avatar_url, username);
+}
+
+/* LOAD OWN PROFILE */
+
+async function loadOwnProfile() {
+
+    const { data: { session }, error: sessionError } =
+        await supabase.auth.getSession();
+
+    if (sessionError) {
+        console.error(sessionError);
+        return;
+    }
+
+    if (!session) {
+        document.getElementById("profileUsername").textContent =
+            "Not signed in";
+        return;
+    }
+
+    currentUser = session.user;
+
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("id, username, bio, avatar_url")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+    if (error) {
+        console.error("Profile loading error:", error);
+        alert("Couldn't load your profile: " + error.message);
+        return;
+    }
+
+    if (!data) {
+        document.getElementById("profileUsername").textContent =
+            "Profile not found";
+        return;
+    }
+
+    ownProfile = data;
+
+    viewingOwnProfile = true;
+    viewedProfile = data;
+
+    updateProfileDisplay(data);
+
+    document.getElementById("editProfileButton").style.display = "";
+    document.getElementById("ownProfileButtons").style.display = "block";
+    document.getElementById("followActionButton").style.display = "none";
+
+    await loadFollowerCount(data.id);
+}
+
+/* OWN PROFILE BUTTON */
+
+async function showOwnProfile() {
+
+    if (!currentUser || !ownProfile) {
+        await loadOwnProfile();
+    }
+
+    if (ownProfile) {
+        viewingOwnProfile = true;
+        viewedProfile = ownProfile;
+
+        updateProfileDisplay(ownProfile);
+
+        document.getElementById("editProfileButton").style.display = "";
+        document.getElementById("ownProfileButtons").style.display = "block";
+        document.getElementById("followActionButton").style.display = "none";
+
+        await loadFollowerCount(ownProfile.id);
+    }
+
+    showPage("profile");
+}
+
+/* FOLLOWER COUNT */
+
+async function loadFollowerCount(profileId) {
+
+    const { count, error } = await supabase
+        .from("followers")
+        .select("follower_id", {
+            count: "exact",
+            head: true
+        })
+        .eq("following_id", profileId);
+
+    if (error) {
+        console.error("Follower count error:", error);
+        return;
+    }
+
+    document.getElementById("followersCountInline").textContent =
+        Number(count || 0).toLocaleString();
+}
+
+/* EDIT PROFILE */
+
+function openEditProfile() {
+
+    if (!ownProfile) return;
+
+    document.getElementById("editUsername").value =
+        ownProfile.username || "";
+
+    document.getElementById("editBio").value =
+        ownProfile.bio || "";
+
+    document.getElementById("editMessage").textContent =
+        "Images must be 3 MB or smaller.";
+
+    document.getElementById("avatarFile").value = "";
+
+    document.getElementById("editProfileModal")
+        .classList.add("show");
+}
+
+function closeEditProfile() {
+    document.getElementById("editProfileModal")
+        .classList.remove("show");
+}
+
+/* PROFILE PICTURE UPLOAD */
+
+function openAvatarUpload() {
+
+    if (!viewingOwnProfile) return;
+
+    openEditProfile();
+
+    setTimeout(() => {
+        document.getElementById("avatarFile").click();
+    }, 150);
+}
+
+async function uploadAvatar(file) {
+
+    if (!currentUser) {
+        throw new Error("You must be signed in.");
+    }
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/gif"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        throw new Error("Choose a JPG, PNG, WEBP or GIF image.");
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+        throw new Error("Your image must be 3 MB or smaller.");
+    }
+
+    const extension = file.type.split("/")[1].replace("jpeg", "jpg");
+
+    const filePath =
+        currentUser.id + "/" + crypto.randomUUID() + "." + extension;
+
+    const { error: uploadError } = await supabase
+        .storage
+        .from("watcher-profile-images")
+        .upload(filePath, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+        });
+
+    if (uploadError) {
+        throw uploadError;
+    }
+
+    const { data } = supabase
+        .storage
+        .from("watcher-profile-images")
+        .getPublicUrl(filePath);
+
+    return data.publicUrl;
+}
+
+document.getElementById("avatarFile")
+    .addEventListener("change", async event => {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+        const message = document.getElementById("editMessage");
+
+        message.textContent = "Uploading picture...";
+
+        try {
+
+            const avatarUrl = await uploadAvatar(file);
+
+            const { error } = await supabase
+                .from("profiles")
+                .update({
+                    avatar_url: avatarUrl
+                })
+                .eq("id", currentUser.id);
+
+            if (error) throw error;
+
+            ownProfile.avatar_url = avatarUrl;
+            viewedProfile.avatar_url = avatarUrl;
+
+            updateProfileDisplay(ownProfile);
+
+            message.textContent = "Profile picture updated.";
+
+        } catch (err) {
+
+            console.error(err);
+
+            message.textContent =
+                err.message || "Unable to upload your picture.";
+
+        }
+    });
+
+/* SAVE PROFILE */
+
+async function saveProfile() {
+
+    if (!currentUser || !ownProfile) {
+        alert("You must be signed in.");
+        return;
+    }
+
+    const username = document.getElementById("editUsername")
+        .value.trim();
+
+    const bio = document.getElementById("editBio")
+        .value.trim();
+
+    const button = document.getElementById("saveProfileButton");
+
+    if (!/^[A-Za-z0-9_]{3,24}$/.test(username)) {
+        alert("Username must be 3–24 characters and use only letters, numbers or underscores.");
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+    try {
+
+        const { data, error } = await supabase
+            .from("profiles")
+            .update({
+                username: username,
+                bio: bio
+            })
+            .eq("id", currentUser.id)
+            .select("id, username, bio, avatar_url")
+            .single();
+
+        if (error) throw error;
+
+        ownProfile = data;
+        viewedProfile = data;
+
+        updateProfileDisplay(data);
+
+        closeEditProfile();
+
+    } catch (err) {
+
+        console.error(err);
+
+        alert(
+            err.code === "23505"
+                ? "That username is already taken."
+                : err.message || "Unable to save your profile."
+        );
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Save Changes";
+
+    }
+}
+
+/* SEARCH PEOPLE */
+
+function showSearchMessage(message) {
+
+    const results = document.getElementById("searchResults");
+
+    results.replaceChildren();
+
+    const text = document.createElement("div");
+    text.className = "search-message";
+    text.textContent = message;
+
+    results.appendChild(text);
+}
+
+document.getElementById("peopleSearch")
+    .addEventListener("input", event => {
+
+        clearTimeout(searchTimer);
+
+        const query = event.target.value.trim();
+
+        if (!query) {
+            showSearchMessage("Search for a username to find people.");
+            return;
+        }
+
+        if (query.length < 2) {
+            showSearchMessage("Type at least 2 characters.");
+            return;
+        }
+
+        searchTimer = setTimeout(() => {
+            searchPeople(query);
+        }, 300);
+    });
+
+async function searchPeople(query) {
+
+    if (!currentUser) {
+        showSearchMessage("Sign in to search for people.");
+        return;
+    }
+
+    const results = document.getElementById("searchResults");
+
+    showSearchMessage("Searching...");
+
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("id, username, bio, avatar_url")
+        .ilike("username", "%" + query + "%")
+        .neq("id", currentUser.id)
+        .limit(20);
+
+    if (error) {
+        console.error(error);
+        showSearchMessage("Unable to search right now.");
+        return;
+    }
+
+    results.replaceChildren();
+
+    if (!data || data.length === 0) {
+        showSearchMessage("No users found.");
+        return;
+    }
+
+    data.forEach(profile => {
+
+        const result = document.createElement("button");
+        result.className = "search-result";
+
+        const avatar = document.createElement("div");
+        avatar.className = "search-result-avatar";
+
+        if (profile.avatar_url) {
+
+            const image = document.createElement("img");
+            image.src = profile.avatar_url;
+            image.alt = "";
+
+            avatar.appendChild(image);
+
+        } else {
+
+            avatar.textContent =
+                (profile.username || "U").charAt(0).toUpperCase();
+
+        }
+
+        const details = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "search-result-name";
+        name.textContent = profile.username;
+
+        const bio = document.createElement("div");
+        bio.className = "search-result-bio";
+        bio.textContent = profile.bio || "No bio yet";
+
+        details.appendChild(name);
+        details.appendChild(bio);
+
+        result.appendChild(avatar);
+        result.appendChild(details);
+
+        result.addEventListener("click", () => {
+            openPublicProfile(profile.id);
+        });
+
+        results.appendChild(result);
+
+    });
+}
+
+/* OPEN ANOTHER USER'S PROFILE */
+
+async function openPublicProfile(profileId) {
+
+    const { data, error } = await supabase
+        .from("profiles")
+        .select("id, username, bio, avatar_url")
+        .eq("id", profileId)
+        .maybeSingle();
+
+    if (error || !data) {
+        alert("Couldn't open this profile.");
+        return;
+    }
+
+    viewedProfile = data;
+    viewingOwnProfile = false;
+
+    updateProfileDisplay(data);
+
+    document.getElementById("editProfileButton").style.display = "none";
+    document.getElementById("ownProfileButtons").style.display = "none";
+    document.getElementById("followActionButton").style.display = "block";
+
+    await loadFollowerCount(data.id);
+    await updateFollowButton(data.id);
+
+    showPage("profile");
+
+    document.querySelectorAll(".profile-tab").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    document.querySelectorAll(".profile-tab-content").forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    document.querySelector('.profile-tab[onclick*="profileHome"]')
+        .classList.add("active");
+
+    document.getElementById("profileHome").classList.add("active");
+}
+
+/* FOLLOW / UNFOLLOW */
+
+async function updateFollowButton(profileId) {
+
+    const button = document.getElementById("followActionButton");
+
+    if (!currentUser || profileId === currentUser.id) {
+        button.style.display = "none";
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from("followers")
+        .select("follower_id")
+        .eq("follower_id", currentUser.id)
+        .eq("following_id", profileId)
+        .maybeSingle();
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const following = !!data;
+
+    button.textContent = following ? "Following" : "Follow";
+    button.classList.toggle("following", following);
+}
+
+async function toggleFollow() {
+
+    if (!currentUser || !viewedProfile) {
+        alert("Sign in to follow people.");
+        return;
+    }
+
+    const button = document.getElementById("followActionButton");
+
+    button.disabled = true;
+
+    try {
+
+        const { data: existing, error: checkError } = await supabase
+            .from("followers")
+            .select("follower_id")
+            .eq("follower_id", currentUser.id)
+            .eq("following_id", viewedProfile.id)
+            .maybeSingle();
+
+        if (checkError) throw checkError;
+
+        if (existing) {
+
+            const { error } = await supabase
+                .from("followers")
+                .delete()
+                .eq("follower_id", currentUser.id)
+                .eq("following_id", viewedProfile.id);
+
+            if (error) throw error;
+
+        } else {
+
+            const { error } = await supabase
+                .from("followers")
+                .insert({
+                    follower_id: currentUser.id,
+                    following_id: viewedProfile.id
+                });
+
+            if (error) throw error;
+
+        }
+
+        await updateFollowButton(viewedProfile.id);
+        await loadFollowerCount(viewedProfile.id);
+
+    } catch (err) {
+
+        console.error(err);
+        alert(err.message || "Unable to update follow status.");
+
+    } finally {
+
+        button.disabled = false;
+
+    }
+}
+
+/* TEMPORARY PAGE MESSAGE */
+
+function showProfileMessage(name) {
+    alert(name + " is not available yet.");
+}
+
+/* STREAM PREVIEW */
+
 let selectedSource = "camera";
 let activeStream = null;
-let searchTimer = null;
-let searchRequestNumber = 0;
-
-let currentProfile = null;
 
 const modal = document.getElementById("createModal");
 const video = document.getElementById("previewVideo");
@@ -1403,858 +2100,6 @@ const error = document.getElementById("errorMessage");
 const startButton = document.getElementById("startButton");
 const stopButton = document.getElementById("stopButton");
 const previewStatus = document.getElementById("previewStatus");
-
-
-/* NAVIGATION */
-
-function showPage(pageId, button) {
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document.getElementById(pageId).classList.add("active");
-
-    document.querySelectorAll(".nav-item").forEach(item => {
-        item.classList.remove("active");
-    });
-
-    if (button) button.classList.add("active");
-
-    if (pageId === "profilePage") {
-        loadProfile();
-    }
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-
-/* DATE */
-
-function formatDate(date) {
-
-    if (!date) return "Not available";
-
-    const parsed = new Date(date);
-
-    if (isNaN(parsed.getTime())) {
-        return "Not available";
-    }
-
-    return parsed.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    });
-}
-
-
-/* HELPERS */
-
-function escapeHTML(value) {
-
-    return String(value).replace(/[&<>"']/g, char => {
-
-        const replacements = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-        };
-
-        return replacements[char];
-
-    });
-}
-
-
-function getUsername(profile) {
-
-    return profile?.username ||
-        currentUser?.user_metadata?.username ||
-        currentUser?.email?.split("@")[0] ||
-        "Watcher User";
-
-}
-
-
-function formatFollowers(count) {
-
-    const number = Number(count) || 0;
-
-    return number.toLocaleString() +
-        (number === 1 ? " follower" : " followers");
-
-}
-
-
-function setProfileImage(element, url, username) {
-
-    element.replaceChildren();
-
-    if (url) {
-
-        const image = document.createElement("img");
-
-        image.src = url;
-        image.alt = username + " profile picture";
-
-        image.onerror = () => {
-            image.remove();
-            element.textContent =
-                username.charAt(0).toUpperCase() || "?";
-        };
-
-        element.appendChild(image);
-
-    } else {
-
-        element.textContent =
-            username.charAt(0).toUpperCase() || "?";
-
-    }
-
-}
-
-
-function setBanner(element, url) {
-
-    element.style.backgroundImage = url
-        ? 'url("' + url.replace(/["\\]/g, "") + '")'
-        : "";
-
-}
-
-
-/* AUTHENTICATION */
-
-async function checkLogin() {
-
-    const { data, error } =
-        await supabaseClient.auth.getSession();
-
-    if (error || !data.session) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    currentUser = data.session.user;
-
-    updateNavigationAvatar();
-
-}
-
-
-function updateNavigationAvatar() {
-
-    if (!currentUser) return;
-
-    const username =
-        currentUser.user_metadata?.username ||
-        currentUser.email?.split("@")[0] ||
-        "U";
-
-    const avatar = document.getElementById("navAvatar");
-
-    if (currentProfile?.avatar_url) {
-
-        setProfileImage(
-            avatar,
-            currentProfile.avatar_url,
-            username
-        );
-
-    } else {
-
-        avatar.textContent =
-            username.charAt(0).toUpperCase();
-
-    }
-
-}
-
-
-/* FOLLOWER COUNT */
-
-async function getFollowerCount(userId) {
-
-    const { count, error } = await supabaseClient
-        .from("followers")
-        .select("*", {
-            count: "exact",
-            head: true
-        })
-        .eq("following_id", userId);
-
-    if (error) {
-
-        console.error("Follower count error:", error);
-
-        return 0;
-
-    }
-
-    return count || 0;
-
-}
-
-
-/* PROFILE DATA */
-
-async function getProfileData(userId) {
-
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("id,username,created_at,avatar_url,banner_url")
-        .eq("id", userId)
-        .maybeSingle();
-
-    if (error) throw error;
-
-    return data;
-
-}
-
-
-/* YOUR PROFILE */
-
-async function loadProfile() {
-
-    const loading =
-        document.getElementById("profileLoading");
-
-    const content =
-        document.getElementById("profileContent");
-
-    if (!currentUser) {
-
-        loading.textContent = "You are not signed in.";
-
-        return;
-
-    }
-
-    loading.style.display = "block";
-    loading.textContent = "Loading your profile...";
-    content.style.display = "none";
-
-    try {
-
-        const [profile, followers] = await Promise.all([
-
-            getProfileData(currentUser.id),
-
-            getFollowerCount(currentUser.id)
-
-        ]);
-
-        currentProfile = profile || {};
-
-        const username = getUsername(profile);
-
-        setProfileImage(
-            document.getElementById("profileAvatar"),
-            profile?.avatar_url,
-            username
-        );
-
-        setBanner(
-            document.getElementById("profileCover"),
-            profile?.banner_url
-        );
-
-        document.getElementById("profileName").textContent =
-            username;
-
-        document.getElementById("profileHandle").textContent =
-            "@" + username;
-
-        document.getElementById("profileUsername").textContent =
-            username;
-
-        document.getElementById("profileEmail").textContent =
-            currentUser.email || "Not available";
-
-        document.getElementById("profileCreated").textContent =
-            formatDate(profile?.created_at || currentUser.created_at);
-
-        document.getElementById("myFollowerCount").textContent =
-            formatFollowers(followers);
-
-        updateNavigationAvatar();
-
-        loading.style.display = "none";
-        content.style.display = "block";
-
-    } catch (err) {
-
-        console.error(err);
-
-        loading.textContent =
-            "Unable to load your profile. Please try again.";
-
-    }
-
-}
-
-
-/* PROFILE PICTURE AND BANNER UPLOAD */
-
-async function uploadProfileImage(input, column) {
-
-    const file = input.files?.[0];
-
-    if (!file || !currentUser) return;
-
-    const message =
-        document.getElementById("uploadMessage");
-
-    const validTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/gif"
-    ];
-
-    if (!validTypes.includes(file.type)) {
-
-        message.textContent =
-            "Please select a JPG, PNG, WEBP or GIF image.";
-
-        input.value = "";
-
-        return;
-
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-
-        message.textContent =
-            "Image is too large. Maximum size is 5 MB.";
-
-        input.value = "";
-
-        return;
-
-    }
-
-    const isAvatar = column === "avatar_url";
-
-    message.textContent = isAvatar
-        ? "Uploading profile picture..."
-        : "Uploading profile banner...";
-
-    const extension = file.type.split("/")[1].replace("jpeg", "jpg");
-
-    const filePath =
-        currentUser.id + "/" +
-        (isAvatar ? "avatar" : "banner") +
-        "-" + Date.now() + "." + extension;
-
-    try {
-
-        const { error: uploadError } =
-            await supabaseClient.storage
-                .from("profile-media")
-                .upload(filePath, file, {
-                    cacheControl: "3600",
-                    upsert: false,
-                    contentType: file.type
-                });
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicData } =
-            supabaseClient.storage
-                .from("profile-media")
-                .getPublicUrl(filePath);
-
-        const imageUrl = publicData.publicUrl;
-
-        const { error: updateError } =
-            await supabaseClient
-                .from("profiles")
-                .update({
-                    [column]: imageUrl
-                })
-                .eq("id", currentUser.id);
-
-        if (updateError) throw updateError;
-
-        message.textContent = isAvatar
-            ? "Profile picture updated successfully."
-            : "Profile banner updated successfully.";
-
-        currentProfile = {
-            ...currentProfile,
-            [column]: imageUrl
-        };
-
-        // Refresh all visible profile images.
-        await loadProfile();
-
-        if (selectedPublicProfile?.id === currentUser.id) {
-            await openPublicProfile(selectedPublicProfile);
-        }
-
-    } catch (err) {
-
-        console.error("Image upload error:", err);
-
-        message.textContent =
-            "Upload failed: " + err.message;
-
-    } finally {
-
-        input.value = "";
-
-    }
-
-}
-
-
-/* PEOPLE SEARCH */
-
-function handlePeopleSearch(value) {
-
-    clearTimeout(searchTimer);
-
-    const results =
-        document.getElementById("searchResults");
-
-    const caption =
-        document.getElementById("searchCaption");
-
-    const query = value.trim();
-
-    searchRequestNumber++;
-
-    if (!query) {
-
-        caption.textContent = "PEOPLE";
-
-        results.innerHTML = `
-            <div class="search-message">
-                Search for a Watcher username to find people.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    if (query.length < 2) {
-
-        caption.textContent = "SEARCH";
-
-        results.innerHTML = `
-            <div class="search-message">
-                Enter at least 2 characters.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    caption.textContent = "SEARCH RESULTS";
-
-    results.innerHTML = `
-        <div class="search-message">
-            Searching Watcher...
-        </div>
-    `;
-
-    const requestNumber = searchRequestNumber;
-
-    searchTimer = setTimeout(() => {
-
-        searchPeople(query, requestNumber);
-
-    }, 350);
-
-}
-
-
-async function searchPeople(query, requestNumber) {
-
-    const results =
-        document.getElementById("searchResults");
-
-    const safeQuery = query.replace(
-        /[^a-zA-Z0-9_]/g,
-        ""
-    );
-
-    if (safeQuery.length < 2) {
-
-        results.innerHTML = `
-            <div class="search-message">
-                Enter a valid username.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    const pattern = safeQuery.replace(
-        /[\\%_]/g,
-        "\\$&"
-    );
-
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("id,username,created_at,avatar_url")
-        .ilike("username", "%" + pattern + "%")
-        .neq("id", currentUser.id)
-        .order("username", { ascending: true })
-        .limit(25);
-
-    if (requestNumber !== searchRequestNumber) return;
-
-    if (error) {
-
-        console.error(error);
-
-        results.innerHTML = `
-            <div class="search-message">
-                Unable to search for people.
-                Please try again.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    if (!data || data.length === 0) {
-
-        results.innerHTML = `
-            <div class="search-message">
-                No users found matching
-                <strong>${escapeHTML(safeQuery)}</strong>.
-            </div>
-        `;
-
-        return;
-
-    }
-
-    results.innerHTML = "";
-
-    data.forEach(person => {
-
-        const username = person.username || "Watcher User";
-
-        const button = document.createElement("button");
-
-        button.className = "user-result";
-
-        const avatar = document.createElement("div");
-        avatar.className = "result-avatar";
-
-        setProfileImage(
-            avatar,
-            person.avatar_url,
-            username
-        );
-
-        const info = document.createElement("div");
-        info.className = "result-info";
-
-        const name = document.createElement("div");
-        name.className = "result-name";
-        name.textContent = username;
-
-        const handle = document.createElement("div");
-        handle.className = "result-handle";
-        handle.textContent = "@" + username;
-
-        info.append(name, handle);
-
-        const arrow = document.createElement("div");
-        arrow.className = "result-arrow";
-        arrow.textContent = "›";
-
-        button.append(avatar, info, arrow);
-
-        button.addEventListener("click", () => {
-            openPublicProfile(person);
-        });
-
-        results.appendChild(button);
-
-    });
-
-}
-
-
-/* PUBLIC PROFILE */
-
-async function openPublicProfile(person) {
-
-    selectedPublicProfile = person;
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.remove("active");
-    });
-
-    document.getElementById("publicProfilePage")
-        .classList.add("active");
-
-    document.querySelectorAll(".nav-item").forEach(item => {
-        item.classList.remove("active");
-    });
-
-    document.querySelectorAll(".nav-item")[1]
-        .classList.add("active");
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-    const loading =
-        document.getElementById("publicProfileLoading");
-
-    const content =
-        document.getElementById("publicProfileContent");
-
-    loading.style.display = "block";
-    loading.textContent = "Loading profile...";
-    content.style.display = "none";
-
-    try {
-
-        const [profile, followers] = await Promise.all([
-
-            getProfileData(person.id),
-
-            getFollowerCount(person.id)
-
-        ]);
-
-        if (selectedPublicProfile?.id !== person.id) return;
-
-        if (!profile) {
-
-            loading.textContent =
-                "This profile could not be found.";
-
-            return;
-
-        }
-
-        const username = profile.username || "Watcher User";
-
-        setProfileImage(
-            document.getElementById("publicAvatar"),
-            profile.avatar_url,
-            username
-        );
-
-        setBanner(
-            document.getElementById("publicCover"),
-            profile.banner_url
-        );
-
-        document.getElementById("publicName").textContent =
-            username;
-
-        document.getElementById("publicHandle").textContent =
-            "@" + username;
-
-        document.getElementById("publicCreated").textContent =
-            "Member since: " + formatDate(profile.created_at);
-
-        document.getElementById("publicFollowerCount").textContent =
-            formatFollowers(followers);
-
-        const button = document.getElementById("followButton");
-
-        if (person.id === currentUser.id) {
-
-            button.style.display = "none";
-
-        } else {
-
-            button.style.display = "block";
-
-            await updateFollowButton(person.id);
-
-        }
-
-        if (selectedPublicProfile?.id !== person.id) return;
-
-        loading.style.display = "none";
-        content.style.display = "block";
-
-    } catch (err) {
-
-        console.error(err);
-
-        loading.textContent =
-            "Unable to load this profile.";
-
-    }
-
-}
-
-
-/* FOLLOW SYSTEM */
-
-async function updateFollowButton(userId) {
-
-    const button = document.getElementById("followButton");
-
-    const { data, error } = await supabaseClient
-        .from("followers")
-        .select("follower_id")
-        .eq("follower_id", currentUser.id)
-        .eq("following_id", userId)
-        .maybeSingle();
-
-    if (error) {
-
-        console.error(error);
-
-        button.textContent = "Follow";
-        return;
-
-    }
-
-    button.dataset.following = data ? "true" : "false";
-
-    button.textContent = data ? "Following" : "Follow";
-
-    button.style.background = data ? "#222226" : "#307aae";
-
-}
-
-
-async function toggleFollow() {
-
-    if (!selectedPublicProfile || !currentUser) return;
-
-    const button = document.getElementById("followButton");
-
-    const userId = selectedPublicProfile.id;
-
-    if (userId === currentUser.id) return;
-
-    const wasFollowing = button.dataset.following === "true";
-
-    button.disabled = true;
-
-    button.textContent = wasFollowing
-        ? "Unfollowing..."
-        : "Following...";
-
-    try {
-
-        if (wasFollowing) {
-
-            const { error } = await supabaseClient
-                .from("followers")
-                .delete()
-                .eq("follower_id", currentUser.id)
-                .eq("following_id", userId);
-
-            if (error) throw error;
-
-        } else {
-
-            const { error } = await supabaseClient
-                .from("followers")
-                .insert({
-                    follower_id: currentUser.id,
-                    following_id: userId
-                });
-
-            if (error) throw error;
-
-        }
-
-        await openPublicProfile(selectedPublicProfile);
-
-    } catch (err) {
-
-        console.error("Follow error:", err);
-
-        button.textContent =
-            "Unable to update. Try again.";
-
-    } finally {
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-function backToPeople() {
-
-    showPage(
-        "browsePage",
-        document.querySelectorAll(".nav-item")[1]
-    );
-
-}
-
-
-/* SIGN OUT */
-
-async function signOut() {
-
-    const message =
-        document.getElementById("signoutMessage");
-
-    message.style.display = "block";
-    message.textContent = "Signing out...";
-
-    const { error } =
-        await supabaseClient.auth.signOut();
-
-    if (error) {
-
-        message.textContent =
-            "Unable to sign out: " + error.message;
-
-        return;
-
-    }
-
-    window.location.href = "login.html";
-
-}
-
-
-/* AUTH STATE */
-
-supabaseClient.auth.onAuthStateChange((event, session) => {
-
-    if (event === "SIGNED_OUT") {
-        window.location.href = "login.html";
-    }
-
-    if (session?.user) {
-
-        currentUser = session.user;
-
-        updateNavigationAvatar();
-
-    }
-
-});
-
-
-/* CREATE STREAM */
 
 function openCreate() {
     modal.classList.add("show");
@@ -2266,19 +2111,14 @@ function closeCreate() {
 }
 
 function outsideClose(event) {
-
     if (event.target === modal) {
         closeCreate();
     }
-
 }
-
 
 function selectSource(source) {
 
-    if (activeStream) {
-        stopPreview();
-    }
+    if (activeStream) stopPreview();
 
     selectedSource = source;
 
@@ -2293,54 +2133,42 @@ function selectSource(source) {
         : "Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
 
     error.style.display = "none";
-
 }
-
 
 async function startPreview() {
 
     error.style.display = "none";
 
-    if (activeStream) {
-        stopPreview();
+    if (!navigator.mediaDevices) {
+        error.textContent = "Media access is unavailable. Open this page using a supported browser and secure connection.";
+        error.style.display = "block";
+        return;
     }
+
+    if (activeStream) stopPreview();
 
     startButton.disabled = true;
     startButton.textContent = "Starting...";
 
     try {
 
-        if (!navigator.mediaDevices) {
-
-            throw new Error(
-                "Camera and screen access require a supported secure browser connection."
-            );
-
-        }
-
         if (selectedSource === "camera") {
 
-            activeStream =
-                await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: true
-                });
+            activeStream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
 
         } else {
 
             if (!navigator.mediaDevices.getDisplayMedia) {
-
-                throw new Error(
-                    "Screen sharing is not supported by this browser."
-                );
-
+                throw new Error("Screen sharing is not supported by this browser.");
             }
 
-            activeStream =
-                await navigator.mediaDevices.getDisplayMedia({
-                    video: true,
-                    audio: true
-                });
+            activeStream = await navigator.mediaDevices.getDisplayMedia({
+                video: true,
+                audio: true
+            });
 
         }
 
@@ -2361,11 +2189,9 @@ async function startPreview() {
         const videoTrack = activeStream.getVideoTracks()[0];
 
         if (videoTrack) {
-
             videoTrack.addEventListener("ended", () => {
                 stopPreview();
             });
-
         }
 
     } catch (err) {
@@ -2376,8 +2202,7 @@ async function startPreview() {
 
         error.style.display = "block";
 
-        status.textContent =
-            "Please check your browser permissions and try again.";
+        status.textContent = "Please check your browser permissions and try again.";
 
     } finally {
 
@@ -2385,25 +2210,17 @@ async function startPreview() {
         startButton.textContent = "Start Preview";
 
     }
-
 }
-
 
 function stopPreview() {
 
     if (activeStream) {
-
-        activeStream.getTracks().forEach(track => {
-            track.stop();
-        });
-
+        activeStream.getTracks().forEach(track => track.stop());
         activeStream = null;
-
     }
 
     video.srcObject = null;
     video.style.display = "none";
-
     placeholder.style.display = "block";
     previewStatus.style.display = "none";
 
@@ -2413,26 +2230,48 @@ function stopPreview() {
 
     stopButton.style.display = "none";
 
-    status.textContent =
-        "Preview stopped. Choose a source to try again.";
-
+    status.textContent = "Preview stopped. Choose a source to try again.";
 }
 
+/* AUTH SESSION */
+
+async function initializeWatcher() {
+
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (session) {
+        currentUser = session.user;
+        await loadOwnProfile();
+    }
+
+    supabase.auth.onAuthStateChange(async (_event, session) => {
+
+        currentUser = session ? session.user : null;
+        ownProfile = null;
+
+        if (currentUser) {
+            await loadOwnProfile();
+        }
+
+    });
+}
 
 /* KEYBOARD */
 
 document.addEventListener("keydown", event => {
 
     if (event.key === "Escape") {
+
         closeCreate();
+        closeEditProfile();
+
     }
 
 });
 
-
 /* START */
 
-checkLogin();
+initializeWatcher();
 
 </script>
 
