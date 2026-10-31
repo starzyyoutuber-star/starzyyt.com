@@ -17,9 +17,8 @@
     --bg: #0e0e10;
     --white: #efeff1;
     --purple: #bf94ff;
-    --blue: #307aae;
-    --muted: #a0a0a5;
     --sidebar: 180px;
+    --muted: #a0a0a5;
 }
 
 html, body {
@@ -39,18 +38,20 @@ body {
 main {
     min-height: 100vh;
     min-height: 100dvh;
-    padding: 12px 16px 85px;
+    padding: 20px 16px 85px;
 }
 
 .header {
-    height: 40px;
+    height: 45px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
-    font-size: 21px;
+    font-size: 23px;
     font-weight: 800;
+    letter-spacing: -1px;
 }
 
 /* HOME */
@@ -70,9 +71,9 @@ main {
 }
 
 .empty-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
     background: #1c1c21;
     display: grid;
     place-items: center;
@@ -81,11 +82,13 @@ main {
 }
 
 .empty-icon svg {
-    width: 29px;
-    height: 29px;
+    width: 31px;
+    height: 31px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .empty-home h2 {
@@ -100,201 +103,136 @@ main {
     line-height: 1.5;
 }
 
-/* BROWSE */
-
-#browsePage {
-    display: none;
-}
-
-.search-box {
-    width: 100%;
-    height: 43px;
-    background: #1b1b20;
-    border: 1px solid #303035;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.search-box svg {
-    width: 19px;
-    height: 19px;
-    fill: none;
-    stroke: #9999a2;
-    stroke-width: 2;
-}
-
-.search-box input {
-    flex: 1;
-    min-width: 0;
-    border: 0;
-    outline: none;
-    background: transparent;
-    color: white;
-    font-size: 14px;
-}
-
-.search-results {
-    margin-top: 12px;
-}
-
-.search-result {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 12px 4px;
-    border: 0;
-    border-bottom: 1px solid #252529;
-    background: transparent;
-    color: white;
-    text-align: left;
-    cursor: pointer;
-}
-
-.search-result-avatar {
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
-    background: #307aae;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    font-size: 21px;
-}
-
-.search-result-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.search-result-name {
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.search-result-bio {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-}
-
-.search-message {
-    color: var(--muted);
-    font-size: 13px;
-    padding: 18px 2px;
-}
-
 /* PROFILE */
 
 #profilePage {
     display: none;
-    padding-bottom: 5px;
+    margin: -20px -16px 0;
+    padding-bottom: 0;
 }
 
+.profile-banner {
+    width: 100%;
+    height: 65px;
+    position: relative;
+    overflow: hidden;
+    background: #307aae;
+}
+
+.banner-pattern {
+    display: none;
+}
+
+.profile-top-actions {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-action {
+    height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 30px;
+    background: rgba(20,20,20,.72);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    backdrop-filter: blur(8px);
+}
+
+.settings-button {
+    width: 40px;
+    padding: 0;
+}
+
+.settings-button svg {
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* PROFILE INFORMATION */
+
 .profile-content {
-    padding: 0 4px;
+    padding: 0 18px;
 }
 
 .profile-identity {
     display: flex;
     align-items: center;
-    gap: 15px;
-    min-height: 105px;
+    gap: 13px;
+    margin-top: -25px;
 }
 
 .profile-avatar {
-    width: 96px;
-    height: 96px;
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
     flex-shrink: 0;
-    border: 0;
     border-radius: 50%;
     background: #307aae;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 68px;
-    font-weight: 500;
     overflow: hidden;
-    cursor: pointer;
+    display: grid;
+    place-items: center;
+    margin-top: 0;
 }
 
-.profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.profile-avatar svg {
     display: none;
+}
+
+.profile-avatar::after {
+    content: attr(data-letter);
+    color: white;
+    font-size: 55px;
+    font-weight: 500;
 }
 
 .profile-name-area {
     min-width: 0;
-    flex: 1;
-}
-
-.profile-name-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.profile-title-group {
-    min-width: 0;
 }
 
 .profile-username {
-    font-size: 26px;
+    font-size: 25px;
     font-weight: 800;
     letter-spacing: -1px;
     overflow-wrap: anywhere;
 }
 
-.inline-followers {
-    font-size: 12px;
-    color: #aaaab2;
-    margin-top: 5px;
-}
-
-.inline-followers strong {
-    color: white;
-    font-size: 14px;
-}
-
 .profile-status {
     font-size: 15px;
     color: #d0d0d5;
-    margin-top: 5px;
-}
-
-.edit-profile-button {
-    flex-shrink: 0;
-    height: 37px;
-    padding: 0 13px;
-    border: none;
-    border-radius: 20px;
-    background: #29292e;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
+    margin-top: 4px;
 }
 
 .profile-bio {
     font-size: 15px;
     color: #aaaab2;
-    margin-top: 13px;
-    margin-bottom: 12px;
-    line-height: 1.5;
+    margin-top: 12px;
+    margin-bottom: 10px;
 }
 
 .profile-followers {
-    display: none;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.profile-followers span {
+    font-weight: 800;
 }
 
 /* PROFILE BUTTONS */
@@ -305,53 +243,40 @@ main {
     gap: 9px;
 }
 
-.profile-main-button,
-.profile-secondary-button {
+.profile-main-button {
     width: 100%;
-    height: 49px;
+    height: 51px;
     border: none;
     border-radius: 9px;
+    background: #9146ff;
     color: white;
     font-size: 16px;
     font-weight: 700;
 }
 
-.profile-main-button {
-    background: #9146ff;
-}
-
 .profile-secondary-button {
+    width: 100%;
+    height: 51px;
+    border: none;
+    border-radius: 9px;
     background: #29292e;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .profile-secondary-button svg {
-    width: 21px;
-    height: 21px;
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.8;
+    stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
-}
-
-.follow-button {
-    display: none;
-    width: 100%;
-    height: 45px;
-    border: 0;
-    border-radius: 8px;
-    background: var(--blue);
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.follow-button.following {
-    background: #29292e;
 }
 
 /* PROFILE TABS */
@@ -360,9 +285,9 @@ main {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    gap: 2px;
-    margin-top: 22px;
-    padding: 0;
+    gap: 4px;
+    margin-top: 12px;
+    padding: 0 8px;
     overflow-x: auto;
     scrollbar-width: none;
 }
@@ -373,13 +298,14 @@ main {
 
 .profile-tab {
     position: relative;
-    flex: 1 0 auto;
-    height: 42px;
+    flex: 0 0 auto;
+    min-width: 0;
+    height: 43px;
     padding: 0 7px 12px;
-    border: none;
+    border: 0;
     background: transparent;
     color: #efeff1;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     white-space: nowrap;
 }
@@ -398,11 +324,11 @@ main {
     background: var(--purple);
 }
 
-/* TAB CONTENT */
+/* PROFILE TAB CONTENT */
 
 .profile-tab-content {
     display: none;
-    padding: 12px 0;
+    padding: 8px 15px;
 }
 
 .profile-tab-content.active {
@@ -410,19 +336,19 @@ main {
 }
 
 .no-clips {
-    min-height: 175px;
+    min-height: 105px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: #a0a0a5;
-    gap: 9px;
+    gap: 7px;
 }
 
 .no-clips svg {
-    width: 34px;
-    height: 34px;
+    width: 29px;
+    height: 29px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.5;
@@ -432,28 +358,28 @@ main {
 
 .no-clips h3 {
     color: #efeff1;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .no-clips p {
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .profile-section-title {
-    font-size: 17px;
-    margin-bottom: 12px;
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .profile-info-card {
-    padding: 14px;
+    padding: 17px;
     background: #19191d;
     border-radius: 9px;
     color: #aaaab2;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.7;
 }
 
-/* BOTTOM NAVIGATION */
+/* NAVIGATION */
 
 .navigation {
     position: fixed;
@@ -461,8 +387,8 @@ main {
     bottom: 0;
     left: 0;
     right: 0;
-    height: calc(61px + env(safe-area-inset-bottom));
-    padding: 3px 6px env(safe-area-inset-bottom);
+    height: calc(55px + env(safe-area-inset-bottom));
+    padding: 2px 6px env(safe-area-inset-bottom);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -487,8 +413,8 @@ main {
 }
 
 .nav-icon {
-    width: 23px;
-    height: 23px;
+    width: 24px;
+    height: 24px;
     fill: none;
     stroke: currentColor;
     stroke-width: 1.8;
@@ -497,7 +423,7 @@ main {
 }
 
 .nav-label {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 14px;
     font-weight: 600;
     white-space: nowrap;
@@ -508,21 +434,22 @@ main {
 }
 
 .create-button {
-    flex: 0 0 43px;
-    width: 43px;
-    height: 43px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: var(--blue);
+    background: #307aae;
     color: white;
+    cursor: pointer;
 }
 
 .plus-icon {
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
@@ -530,8 +457,8 @@ main {
 
 .activity-wrap {
     position: relative;
-    width: 23px;
-    height: 23px;
+    width: 24px;
+    height: 24px;
 }
 
 .notification {
@@ -551,25 +478,18 @@ main {
 }
 
 .avatar {
-    width: 26px;
-    height: 26px;
+    width: 27px;
+    height: 27px;
+    padding: 2px;
     border: 2px solid var(--purple);
     border-radius: 50%;
     background: #307aae;
-    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 17px;
-    font-weight: 500;
-    overflow: hidden;
-}
-
-.avatar img {
-    display: none;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 /* MODALS */
@@ -602,8 +522,14 @@ main {
 }
 
 @keyframes slideUp {
-    from { transform: translateY(25px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(25px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-header {
@@ -649,45 +575,12 @@ main {
 }
 
 .field:focus {
-    border-color: var(--blue);
+    border-color: #307aae;
 }
 
-.field-textarea {
-    height: 90px;
-    resize: vertical;
-    padding: 12px;
-    font-family: inherit;
-}
-
-.upload-picture-button {
-    width: 100%;
-    height: 42px;
-    border: 1px solid #36363c;
-    border-radius: 7px;
-    background: #222226;
+select.field {
     color: white;
-    font-weight: 600;
-    margin-bottom: 17px;
 }
-
-.save-profile-button {
-    width: 100%;
-    height: 44px;
-    border: 0;
-    border-radius: 7px;
-    background: var(--blue);
-    color: white;
-    font-weight: 700;
-}
-
-.modal-message {
-    color: #aaaab2;
-    font-size: 12px;
-    line-height: 1.5;
-    margin-bottom: 12px;
-}
-
-/* CREATE MODAL */
 
 .choice-title {
     font-size: 12px;
@@ -715,7 +608,7 @@ main {
 }
 
 .choice.selected {
-    border: 1.5px solid var(--blue);
+    border: 1.5px solid #307aae;
     background: #1b2a35;
 }
 
@@ -725,6 +618,8 @@ main {
     fill: none;
     stroke: currentColor;
     stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     margin-bottom: 9px;
 }
 
@@ -801,7 +696,7 @@ main {
     height: 44px;
     border: 0;
     border-radius: 7px;
-    background: var(--blue);
+    background: #307aae;
     color: white;
     font-size: 13px;
     font-weight: 700;
@@ -831,30 +726,9 @@ main {
     line-height: 1.5;
 }
 
-/* RESPONSIVE */
+/* SMALL SCREENS */
 
-@media (max-width: 360px) {
-    .profile-avatar {
-        width: 82px;
-        height: 82px;
-        font-size: 58px;
-    }
-
-    .profile-username {
-        font-size: 22px;
-    }
-
-    .edit-profile-button {
-        padding: 0 9px;
-        font-size: 11px;
-    }
-
-    .profile-tab {
-        font-size: 12px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
+@media (max-width: 340px) {
     .nav-label {
         font-size: 10px;
     }
@@ -864,7 +738,59 @@ main {
         width: 38px;
         height: 38px;
     }
+
+    .avatar {
+        width: 24px;
+        height: 24px;
+    }
+
+    .profile-tab {
+        font-size: 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
+
+/* SHORT PHONE SCREENS */
+
+@media (max-height: 750px) {
+    .profile-banner {
+        height: 55px;
+    }
+
+    .profile-identity {
+        margin-top: -23px;
+    }
+
+    .profile-avatar {
+        width: 82px;
+        height: 82px;
+        min-width: 82px;
+    }
+
+    .profile-avatar::after {
+        font-size: 50px;
+    }
+
+    .profile-bio {
+        margin-top: 9px;
+        margin-bottom: 8px;
+    }
+
+    .profile-followers {
+        margin-bottom: 8px;
+    }
+
+    .profile-tabs {
+        margin-top: 9px;
+    }
+
+    .no-clips {
+        min-height: 90px;
+    }
+}
+
+/* DESKTOP */
 
 @media (min-width: 760px) {
     main {
@@ -873,30 +799,31 @@ main {
     }
 
     #profilePage {
-        max-width: 950px;
+        margin: -25px -30px 0;
+    }
+
+    .profile-banner {
+        height: 110px;
     }
 
     .profile-content {
-        padding: 0 20px;
-    }
-
-    .profile-avatar {
-        width: 115px;
-        height: 115px;
-        font-size: 80px;
+        padding-left: 35px;
+        padding-right: 35px;
     }
 
     .profile-buttons {
-        max-width: 650px;
+        max-width: 780px;
     }
 
     .profile-tabs {
         justify-content: flex-start;
-        gap: 35px;
+        gap: 45px;
+        padding-left: 35px;
     }
 
-    .profile-tab {
-        flex: 0 0 auto;
+    .profile-tab-content {
+        padding-left: 35px;
+        padding-right: 35px;
     }
 
     .navigation {
@@ -908,6 +835,7 @@ main {
         height: 100dvh;
         padding: 18px 10px;
         flex-direction: column;
+        align-items: stretch;
         justify-content: flex-start;
         gap: 7px;
         border-right: 1px solid #252529;
@@ -921,6 +849,15 @@ main {
         justify-content: flex-start;
         gap: 11px;
         padding: 0 11px;
+    }
+
+    .nav-icon {
+        width: 21px;
+        height: 21px;
+    }
+
+    .nav-label {
+        font-size: 13px;
     }
 
     .nav-item.active {
@@ -946,7 +883,7 @@ main {
 
 <main>
 
-<!-- HOME -->
+<!-- HOME PAGE -->
 
 <section id="homePage">
 
@@ -974,112 +911,83 @@ main {
 
 </section>
 
-<!-- BROWSE -->
-
-<section id="browsePage">
-
-    <header class="header">
-        <div class="logo">Browse</div>
-    </header>
-
-    <div class="search-box">
-        <svg viewBox="0 0 24 24">
-            <circle cx="10.5" cy="10.5" r="7.5"/>
-            <path d="m16 16 5 5"/>
-        </svg>
-
-        <input
-            id="peopleSearch"
-            type="search"
-            placeholder="Search people..."
-            autocomplete="off"
-        >
-    </div>
-
-    <div class="search-results" id="searchResults">
-        <div class="search-message">Search for a username to find people.</div>
-    </div>
-
-</section>
-
-<!-- PROFILE -->
+<!-- PROFILE PAGE -->
 
 <section id="profilePage">
+
+    <div class="profile-banner">
+
+        <div class="banner-pattern">
+            <span class="banner-symbol">⌘</span>
+            <span class="banner-symbol">⊕</span>
+        </div>
+
+        <div class="profile-top-actions">
+
+            <button class="profile-action settings-button"
+                aria-label="Settings"
+                onclick="showProfileMessage('Settings')">
+
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>
+                    <path d="m19.4 15 .1.1 1.4 1.1-1.5 2.6-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-3l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.5-2.6 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.5-2.6 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h3l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.5 2.6-1.4 1.1a8 8 0 0 1 0 2z" transform="translate(-1 -1)"/>
+                </svg>
+
+            </button>
+
+            <button class="profile-action"
+                onclick="openEditProfile()">
+                Edit Profile
+            </button>
+
+        </div>
+
+    </div>
 
     <div class="profile-content">
 
         <div class="profile-identity">
 
-            <button class="profile-avatar" id="profileAvatarButton"
-                onclick="openAvatarUpload()" aria-label="Change profile picture">
-                <span id="profileAvatarInitial">U</span>
-                <img id="profileAvatarImage" alt="Profile picture">
-            </button>
+            <div class="profile-avatar" data-letter="U"></div>
 
             <div class="profile-name-area">
-
-                <div class="profile-name-row">
-
-                    <div class="profile-title-group">
-                        <h1 class="profile-username" id="profileUsername">unknown</h1>
-                        <div class="inline-followers">
-                            <strong id="followersCountInline">0</strong> followers
-                        </div>
-                    </div>
-
-                    <button class="edit-profile-button"
-                        id="editProfileButton"
-                        onclick="openEditProfile()">
-                        Edit Profile
-                    </button>
-
-                </div>
-
+                <h1 class="profile-username">unknown</h1>
                 <div class="profile-status">Offline</div>
-
             </div>
 
         </div>
 
-        <div class="profile-bio" id="profileBio">
-            No bio yet
-        </div>
+        <div class="profile-bio">No bio yet</div>
 
-        <div class="profile-followers" id="profileFollowers">
-            0 followers
+        <div class="profile-followers">
+            <span>0</span> followers
         </div>
 
         <div class="profile-buttons">
 
-            <button class="follow-button" id="followActionButton"
-                onclick="toggleFollow()">
-                Follow
+            <button class="profile-main-button"
+                onclick="showProfileMessage('Stream Manager')">
+                Stream Manager
             </button>
 
-            <div id="ownProfileButtons">
+            <button class="profile-secondary-button"
+                onclick="showProfileMessage('Try Ad-Free')">
 
-                <button class="profile-main-button"
-                    onclick="showProfileMessage('Stream Manager')">
-                    Stream Manager
-                </button>
+                <svg viewBox="0 0 24 24">
+                    <rect x="2" y="6" width="17" height="12" rx="1"/>
+                    <path d="m13 8-4 5h4l-2 4 6-6h-4z"/>
+                    <path d="M19 10h3v4h-3"/>
+                </svg>
 
-                <button class="profile-secondary-button"
-                    onclick="showProfileMessage('Reminders')">
+                Try Ad-Free
 
-                    <svg viewBox="0 0 24 24">
-                        <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                        <path d="M10 21h4"/>
-                    </svg>
-
-                    Reminders
-
-                </button>
-
-            </div>
+            </button>
 
         </div>
 
     </div>
+
+    <!-- PROFILE TABS -->
 
     <div class="profile-tabs">
 
@@ -1113,22 +1021,25 @@ main {
     <div class="profile-tab-content active" id="profileHome">
 
         <div class="no-clips">
+
             <svg viewBox="0 0 24 24">
                 <rect x="3" y="5" width="18" height="14" rx="2"/>
                 <path d="m10 9 5 3-5 3z"/>
             </svg>
 
             <h3>No clips yet</h3>
+
             <p>This creator hasn't posted anything yet.</p>
+
         </div>
 
     </div>
 
     <div class="profile-tab-content" id="profileAbout">
 
-        <h2 class="profile-section-title" id="aboutTitle">About unknown</h2>
+        <h2 class="profile-section-title">About unknown</h2>
 
-        <div class="profile-info-card" id="aboutBio">
+        <div class="profile-info-card">
             This creator hasn't added a bio yet.
         </div>
 
@@ -1197,7 +1108,7 @@ main {
     </button>
 
     <button class="nav-item" id="browseNav"
-        onclick="showPage('browse')">
+        onclick="showProfileMessage('Browse')">
 
         <svg class="nav-icon" viewBox="0 0 24 24">
             <circle cx="10.5" cy="10.5" r="7.5"/>
@@ -1237,12 +1148,9 @@ main {
     </button>
 
     <button class="nav-item" id="profileNav"
-        onclick="showOwnProfile()">
+        onclick="showPage('profile')">
 
-        <span class="avatar" id="navAvatar">
-            <span id="navAvatarInitial">U</span>
-            <img id="navAvatarImage" alt="">
-        </span>
+        <span class="avatar">U</span>
 
         <span class="nav-label">Profile</span>
 
@@ -1252,47 +1160,38 @@ main {
 
 <!-- EDIT PROFILE MODAL -->
 
-<div class="modal-overlay" id="editProfileModal">
+<div class="modal-overlay" id="editProfileModal"
+    onclick="closeEditProfileOutside(event)">
 
     <div class="modal">
 
         <div class="modal-header">
             <h2>Edit Profile</h2>
-            <button class="close-button" onclick="closeEditProfile()">×</button>
+
+            <button class="close-button"
+                onclick="closeEditProfile()">×</button>
         </div>
 
-        <label class="field-label" for="editUsername">Username</label>
+        <label class="field-label" for="editUsername">
+            Username
+        </label>
 
         <input class="field" id="editUsername"
             maxlength="24"
-            minlength="3"
-            placeholder="Your username">
+            placeholder="Enter username">
 
-        <label class="field-label" for="editBio">Bio</label>
+        <label class="field-label" for="editBio">
+            Bio
+        </label>
 
-        <textarea class="field field-textarea"
-            id="editBio"
+        <textarea class="field" id="editBio"
             maxlength="160"
-            placeholder="Tell people about yourself"></textarea>
+            placeholder="Tell people about yourself"
+            style="height:90px;padding:12px;resize:none;"></textarea>
 
-        <label class="field-label">Profile picture</label>
+        <div class="error" id="profileEditError"></div>
 
-        <input type="file" id="avatarFile"
-            accept="image/png,image/jpeg,image/webp,image/gif"
-            hidden>
-
-        <button class="upload-picture-button"
-            onclick="document.getElementById('avatarFile').click()">
-            Choose profile picture
-        </button>
-
-        <p class="modal-message" id="editMessage">
-            Images must be 3 MB or smaller.
-        </p>
-
-        <button class="save-profile-button"
-            id="saveProfileButton"
-            onclick="saveProfile()">
+        <button class="start-button" onclick="saveProfile()">
             Save Changes
         </button>
 
@@ -1309,6 +1208,7 @@ main {
 
         <div class="modal-header">
             <h2>Create a stream</h2>
+
             <button class="close-button"
                 onclick="closeCreate()">×</button>
         </div>
@@ -1352,10 +1252,7 @@ main {
                 </svg>
 
                 <strong>Camera</strong>
-
-                <span>
-                    Stream using your camera and microphone.
-                </span>
+                <span>Stream using your camera and microphone.</span>
 
             </button>
 
@@ -1369,10 +1266,7 @@ main {
                 </svg>
 
                 <strong>Screen</strong>
-
-                <span>
-                    Share your screen, gameplay or apps.
-                </span>
+                <span>Share your screen, gameplay or apps.</span>
 
             </button>
 
@@ -1397,8 +1291,7 @@ main {
 
             </div>
 
-            <div class="preview-status"
-                id="previewStatus">
+            <div class="preview-status" id="previewStatus">
                 PREVIEW ACTIVE
             </div>
 
@@ -1407,17 +1300,16 @@ main {
         <div class="error" id="errorMessage"></div>
 
         <p class="status-message" id="statusMessage">
-            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
+            Choose a source and start your preview. Your camera or
+            screen will only be accessed after you give permission.
         </p>
 
-        <button class="start-button"
-            id="startButton"
+        <button class="start-button" id="startButton"
             onclick="startPreview()">
             Start Preview
         </button>
 
-        <button class="stop-button"
-            id="stopButton"
+        <button class="stop-button" id="stopButton"
             onclick="stopPreview()">
             Stop Preview
         </button>
@@ -1426,60 +1318,33 @@ main {
 
 </div>
 
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
 
-/* SUPABASE CONNECTION */
-
-const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
-
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-let currentUser = null;
-let ownProfile = null;
-let viewedProfile = null;
-let viewingOwnProfile = true;
-let searchTimer = null;
-
-/* PAGE NAVIGATION */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 function showPage(page) {
+    const home = document.getElementById("homePage");
+    const profile = document.getElementById("profilePage");
 
-    document.getElementById("homePage").style.display =
-        page === "home" ? "block" : "none";
+    home.style.display = page === "home" ? "block" : "none";
+    profile.style.display = page === "profile" ? "block" : "none";
 
-    document.getElementById("browsePage").style.display =
-        page === "browse" ? "block" : "none";
+    document.getElementById("homeNav")
+        .classList.toggle("active", page === "home");
 
-    document.getElementById("profilePage").style.display =
-        page === "profile" ? "block" : "none";
-
-    document.getElementById("homeNav").classList.toggle(
-        "active", page === "home"
-    );
-
-    document.getElementById("browseNav").classList.toggle(
-        "active", page === "browse"
-    );
-
-    document.getElementById("profileNav").classList.toggle(
-        "active", page === "profile"
-    );
+    document.getElementById("profileNav")
+        .classList.toggle("active", page === "profile");
 
     window.scrollTo(0, 0);
 }
 
-/* PROFILE TABS */
+/* =========================
+   PROFILE TABS
+========================= */
 
 function switchProfileTab(tabId, button) {
-
     document.querySelectorAll(".profile-tab").forEach(tab => {
         tab.classList.remove("active");
     });
@@ -1490,173 +1355,27 @@ function switchProfileTab(tabId, button) {
 
     button.classList.add("active");
 
-    document.getElementById(tabId).classList.add("active");
-}
+    const target = document.getElementById(tabId);
 
-/* PROFILE DISPLAY */
-
-function setProfilePicture(url, username) {
-
-    const initial = (username || "U").charAt(0).toUpperCase();
-
-    const profileImage = document.getElementById("profileAvatarImage");
-    const profileInitial = document.getElementById("profileAvatarInitial");
-
-    const navImage = document.getElementById("navAvatarImage");
-    const navInitial = document.getElementById("navAvatarInitial");
-
-    if (url) {
-        profileImage.src = url;
-        profileImage.style.display = "block";
-        profileInitial.style.display = "none";
-
-        navImage.src = url;
-        navImage.style.display = "block";
-        navInitial.style.display = "none";
-    } else {
-        profileImage.removeAttribute("src");
-        profileImage.style.display = "none";
-        profileInitial.style.display = "block";
-        profileInitial.textContent = initial;
-
-        navImage.removeAttribute("src");
-        navImage.style.display = "none";
-        navInitial.style.display = "block";
-        navInitial.textContent = initial;
+    if (target) {
+        target.classList.add("active");
     }
 }
 
-function updateProfileDisplay(profile) {
-
-    const username = profile.username || "unknown";
-    const bio = profile.bio || "";
-
-    document.getElementById("profileUsername").textContent = username;
-    document.getElementById("profileBio").textContent =
-        bio || "No bio yet";
-
-    document.getElementById("aboutTitle").textContent =
-        "About " + username;
-
-    document.getElementById("aboutBio").textContent =
-        bio || "This creator hasn't added a bio yet.";
-
-    setProfilePicture(profile.avatar_url, username);
-}
-
-/* LOAD OWN PROFILE */
-
-async function loadOwnProfile() {
-
-    const { data: { session }, error: sessionError } =
-        await supabase.auth.getSession();
-
-    if (sessionError) {
-        console.error(sessionError);
-        return;
-    }
-
-    if (!session) {
-        document.getElementById("profileUsername").textContent =
-            "Not signed in";
-        return;
-    }
-
-    currentUser = session.user;
-
-    const { data, error } = await supabase
-        .from("profiles")
-        .select("id, username, bio, avatar_url")
-        .eq("id", currentUser.id)
-        .maybeSingle();
-
-    if (error) {
-        console.error("Profile loading error:", error);
-        alert("Couldn't load your profile: " + error.message);
-        return;
-    }
-
-    if (!data) {
-        document.getElementById("profileUsername").textContent =
-            "Profile not found";
-        return;
-    }
-
-    ownProfile = data;
-
-    viewingOwnProfile = true;
-    viewedProfile = data;
-
-    updateProfileDisplay(data);
-
-    document.getElementById("editProfileButton").style.display = "";
-    document.getElementById("ownProfileButtons").style.display = "block";
-    document.getElementById("followActionButton").style.display = "none";
-
-    await loadFollowerCount(data.id);
-}
-
-/* OWN PROFILE BUTTON */
-
-async function showOwnProfile() {
-
-    if (!currentUser || !ownProfile) {
-        await loadOwnProfile();
-    }
-
-    if (ownProfile) {
-        viewingOwnProfile = true;
-        viewedProfile = ownProfile;
-
-        updateProfileDisplay(ownProfile);
-
-        document.getElementById("editProfileButton").style.display = "";
-        document.getElementById("ownProfileButtons").style.display = "block";
-        document.getElementById("followActionButton").style.display = "none";
-
-        await loadFollowerCount(ownProfile.id);
-    }
-
-    showPage("profile");
-}
-
-/* FOLLOWER COUNT */
-
-async function loadFollowerCount(profileId) {
-
-    const { count, error } = await supabase
-        .from("followers")
-        .select("follower_id", {
-            count: "exact",
-            head: true
-        })
-        .eq("following_id", profileId);
-
-    if (error) {
-        console.error("Follower count error:", error);
-        return;
-    }
-
-    document.getElementById("followersCountInline").textContent =
-        Number(count || 0).toLocaleString();
-}
-
-/* EDIT PROFILE */
+/* =========================
+   PROFILE EDITING
+========================= */
 
 function openEditProfile() {
-
-    if (!ownProfile) return;
-
     document.getElementById("editUsername").value =
-        ownProfile.username || "";
+        document.querySelector(".profile-username").textContent;
+
+    const bio = document.querySelector(".profile-bio").textContent;
 
     document.getElementById("editBio").value =
-        ownProfile.bio || "";
+        bio === "No bio yet" ? "" : bio;
 
-    document.getElementById("editMessage").textContent =
-        "Images must be 3 MB or smaller.";
-
-    document.getElementById("avatarFile").value = "";
+    document.getElementById("profileEditError").style.display = "none";
 
     document.getElementById("editProfileModal")
         .classList.add("show");
@@ -1667,426 +1386,109 @@ function closeEditProfile() {
         .classList.remove("show");
 }
 
-/* PROFILE PICTURE UPLOAD */
-
-function openAvatarUpload() {
-
-    if (!viewingOwnProfile) return;
-
-    openEditProfile();
-
-    setTimeout(() => {
-        document.getElementById("avatarFile").click();
-    }, 150);
-}
-
-async function uploadAvatar(file) {
-
-    if (!currentUser) {
-        throw new Error("You must be signed in.");
-    }
-
-    const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/webp",
-        "image/gif"
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-        throw new Error("Choose a JPG, PNG, WEBP or GIF image.");
-    }
-
-    if (file.size > 3 * 1024 * 1024) {
-        throw new Error("Your image must be 3 MB or smaller.");
-    }
-
-    const extension = file.type.split("/")[1].replace("jpeg", "jpg");
-
-    const filePath =
-        currentUser.id + "/" + crypto.randomUUID() + "." + extension;
-
-    const { error: uploadError } = await supabase
-        .storage
-        .from("watcher-profile-images")
-        .upload(filePath, file, {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: file.type
-        });
-
-    if (uploadError) {
-        throw uploadError;
-    }
-
-    const { data } = supabase
-        .storage
-        .from("watcher-profile-images")
-        .getPublicUrl(filePath);
-
-    return data.publicUrl;
-}
-
-document.getElementById("avatarFile")
-    .addEventListener("change", async event => {
-
-        const file = event.target.files[0];
-
-        if (!file) return;
-
-        const message = document.getElementById("editMessage");
-
-        message.textContent = "Uploading picture...";
-
-        try {
-
-            const avatarUrl = await uploadAvatar(file);
-
-            const { error } = await supabase
-                .from("profiles")
-                .update({
-                    avatar_url: avatarUrl
-                })
-                .eq("id", currentUser.id);
-
-            if (error) throw error;
-
-            ownProfile.avatar_url = avatarUrl;
-            viewedProfile.avatar_url = avatarUrl;
-
-            updateProfileDisplay(ownProfile);
-
-            message.textContent = "Profile picture updated.";
-
-        } catch (err) {
-
-            console.error(err);
-
-            message.textContent =
-                err.message || "Unable to upload your picture.";
-
-        }
-    });
-
-/* SAVE PROFILE */
-
-async function saveProfile() {
-
-    if (!currentUser || !ownProfile) {
-        alert("You must be signed in.");
-        return;
-    }
-
-    const username = document.getElementById("editUsername")
-        .value.trim();
-
-    const bio = document.getElementById("editBio")
-        .value.trim();
-
-    const button = document.getElementById("saveProfileButton");
-
-    if (!/^[A-Za-z0-9_]{3,24}$/.test(username)) {
-        alert("Username must be 3–24 characters and use only letters, numbers or underscores.");
-        return;
-    }
-
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    try {
-
-        const { data, error } = await supabase
-            .from("profiles")
-            .update({
-                username: username,
-                bio: bio
-            })
-            .eq("id", currentUser.id)
-            .select("id, username, bio, avatar_url")
-            .single();
-
-        if (error) throw error;
-
-        ownProfile = data;
-        viewedProfile = data;
-
-        updateProfileDisplay(data);
-
+function closeEditProfileOutside(event) {
+    if (event.target.id === "editProfileModal") {
         closeEditProfile();
+    }
+}
 
+function saveProfile() {
+    const usernameInput = document.getElementById("editUsername");
+    const bioInput = document.getElementById("editBio");
+    const error = document.getElementById("profileEditError");
+
+    const username = usernameInput.value.trim();
+    const bio = bioInput.value.trim();
+
+    if (!username) {
+        error.textContent = "Please enter a username.";
+        error.style.display = "block";
+        return;
+    }
+
+    if (username.length < 3) {
+        error.textContent = "Username must be at least 3 characters.";
+        error.style.display = "block";
+        return;
+    }
+
+    // Update username and bio
+    document.querySelector(".profile-username").textContent = username;
+
+    document.querySelector(".profile-bio").textContent =
+        bio || "No bio yet";
+
+    // Update About tab
+    document.querySelector("#profileAbout .profile-section-title")
+        .textContent = "About " + username;
+
+    document.querySelector("#profileAbout .profile-info-card")
+        .textContent = bio || "This creator hasn't added a bio yet.";
+
+    // Update avatar initials
+    const letter = username.charAt(0).toUpperCase();
+
+    document.querySelector(".profile-avatar")
+        .setAttribute("data-letter", letter);
+
+    document.querySelector(".navigation .avatar").textContent = letter;
+
+    // Save locally
+    try {
+        localStorage.setItem("watcher_username", username);
+        localStorage.setItem("watcher_bio", bio);
     } catch (err) {
-
-        console.error(err);
-
-        alert(
-            err.code === "23505"
-                ? "That username is already taken."
-                : err.message || "Unable to save your profile."
-        );
-
-    } finally {
-
-        button.disabled = false;
-        button.textContent = "Save Changes";
-
+        console.warn("Could not save profile locally:", err);
     }
+
+    closeEditProfile();
 }
 
-/* SEARCH PEOPLE */
-
-function showSearchMessage(message) {
-
-    const results = document.getElementById("searchResults");
-
-    results.replaceChildren();
-
-    const text = document.createElement("div");
-    text.className = "search-message";
-    text.textContent = message;
-
-    results.appendChild(text);
-}
-
-document.getElementById("peopleSearch")
-    .addEventListener("input", event => {
-
-        clearTimeout(searchTimer);
-
-        const query = event.target.value.trim();
-
-        if (!query) {
-            showSearchMessage("Search for a username to find people.");
-            return;
-        }
-
-        if (query.length < 2) {
-            showSearchMessage("Type at least 2 characters.");
-            return;
-        }
-
-        searchTimer = setTimeout(() => {
-            searchPeople(query);
-        }, 300);
-    });
-
-async function searchPeople(query) {
-
-    if (!currentUser) {
-        showSearchMessage("Sign in to search for people.");
-        return;
-    }
-
-    const results = document.getElementById("searchResults");
-
-    showSearchMessage("Searching...");
-
-    const { data, error } = await supabase
-        .from("profiles")
-        .select("id, username, bio, avatar_url")
-        .ilike("username", "%" + query + "%")
-        .neq("id", currentUser.id)
-        .limit(20);
-
-    if (error) {
-        console.error(error);
-        showSearchMessage("Unable to search right now.");
-        return;
-    }
-
-    results.replaceChildren();
-
-    if (!data || data.length === 0) {
-        showSearchMessage("No users found.");
-        return;
-    }
-
-    data.forEach(profile => {
-
-        const result = document.createElement("button");
-        result.className = "search-result";
-
-        const avatar = document.createElement("div");
-        avatar.className = "search-result-avatar";
-
-        if (profile.avatar_url) {
-
-            const image = document.createElement("img");
-            image.src = profile.avatar_url;
-            image.alt = "";
-
-            avatar.appendChild(image);
-
-        } else {
-
-            avatar.textContent =
-                (profile.username || "U").charAt(0).toUpperCase();
-
-        }
-
-        const details = document.createElement("div");
-
-        const name = document.createElement("div");
-        name.className = "search-result-name";
-        name.textContent = profile.username;
-
-        const bio = document.createElement("div");
-        bio.className = "search-result-bio";
-        bio.textContent = profile.bio || "No bio yet";
-
-        details.appendChild(name);
-        details.appendChild(bio);
-
-        result.appendChild(avatar);
-        result.appendChild(details);
-
-        result.addEventListener("click", () => {
-            openPublicProfile(profile.id);
-        });
-
-        results.appendChild(result);
-
-    });
-}
-
-/* OPEN ANOTHER USER'S PROFILE */
-
-async function openPublicProfile(profileId) {
-
-    const { data, error } = await supabase
-        .from("profiles")
-        .select("id, username, bio, avatar_url")
-        .eq("id", profileId)
-        .maybeSingle();
-
-    if (error || !data) {
-        alert("Couldn't open this profile.");
-        return;
-    }
-
-    viewedProfile = data;
-    viewingOwnProfile = false;
-
-    updateProfileDisplay(data);
-
-    document.getElementById("editProfileButton").style.display = "none";
-    document.getElementById("ownProfileButtons").style.display = "none";
-    document.getElementById("followActionButton").style.display = "block";
-
-    await loadFollowerCount(data.id);
-    await updateFollowButton(data.id);
-
-    showPage("profile");
-
-    document.querySelectorAll(".profile-tab").forEach(tab => {
-        tab.classList.remove("active");
-    });
-
-    document.querySelectorAll(".profile-tab-content").forEach(tab => {
-        tab.classList.remove("active");
-    });
-
-    document.querySelector('.profile-tab[onclick*="profileHome"]')
-        .classList.add("active");
-
-    document.getElementById("profileHome").classList.add("active");
-}
-
-/* FOLLOW / UNFOLLOW */
-
-async function updateFollowButton(profileId) {
-
-    const button = document.getElementById("followActionButton");
-
-    if (!currentUser || profileId === currentUser.id) {
-        button.style.display = "none";
-        return;
-    }
-
-    const { data, error } = await supabase
-        .from("followers")
-        .select("follower_id")
-        .eq("follower_id", currentUser.id)
-        .eq("following_id", profileId)
-        .maybeSingle();
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-
-    const following = !!data;
-
-    button.textContent = following ? "Following" : "Follow";
-    button.classList.toggle("following", following);
-}
-
-async function toggleFollow() {
-
-    if (!currentUser || !viewedProfile) {
-        alert("Sign in to follow people.");
-        return;
-    }
-
-    const button = document.getElementById("followActionButton");
-
-    button.disabled = true;
+function loadProfile() {
+    let username = null;
+    let bio = null;
 
     try {
-
-        const { data: existing, error: checkError } = await supabase
-            .from("followers")
-            .select("follower_id")
-            .eq("follower_id", currentUser.id)
-            .eq("following_id", viewedProfile.id)
-            .maybeSingle();
-
-        if (checkError) throw checkError;
-
-        if (existing) {
-
-            const { error } = await supabase
-                .from("followers")
-                .delete()
-                .eq("follower_id", currentUser.id)
-                .eq("following_id", viewedProfile.id);
-
-            if (error) throw error;
-
-        } else {
-
-            const { error } = await supabase
-                .from("followers")
-                .insert({
-                    follower_id: currentUser.id,
-                    following_id: viewedProfile.id
-                });
-
-            if (error) throw error;
-
-        }
-
-        await updateFollowButton(viewedProfile.id);
-        await loadFollowerCount(viewedProfile.id);
-
+        username = localStorage.getItem("watcher_username");
+        bio = localStorage.getItem("watcher_bio");
     } catch (err) {
+        console.warn("Could not load saved profile:", err);
+    }
 
-        console.error(err);
-        alert(err.message || "Unable to update follow status.");
+    if (username) {
+        document.querySelector(".profile-username").textContent = username;
 
-    } finally {
+        const letter = username.charAt(0).toUpperCase();
 
-        button.disabled = false;
+        document.querySelector(".profile-avatar")
+            .setAttribute("data-letter", letter);
 
+        document.querySelector(".navigation .avatar").textContent = letter;
+
+        document.querySelector("#profileAbout .profile-section-title")
+            .textContent = "About " + username;
+    }
+
+    if (bio !== null) {
+        document.querySelector(".profile-bio").textContent =
+            bio || "No bio yet";
+
+        document.querySelector("#profileAbout .profile-info-card")
+            .textContent = bio || "This creator hasn't added a bio yet.";
     }
 }
 
-/* TEMPORARY PAGE MESSAGE */
+/* =========================
+   TEMPORARY PAGE MESSAGES
+========================= */
 
 function showProfileMessage(name) {
     alert(name + " is not available yet.");
 }
 
-/* STREAM PREVIEW */
+/* =========================
+   STREAM PREVIEW
+========================= */
 
 let selectedSource = "camera";
 let activeStream = null;
@@ -2116,8 +1518,9 @@ function outsideClose(event) {
 }
 
 function selectSource(source) {
-
-    if (activeStream) stopPreview();
+    if (activeStream) {
+        stopPreview();
+    }
 
     selectedSource = source;
 
@@ -2135,31 +1538,26 @@ function selectSource(source) {
 }
 
 async function startPreview() {
-
     error.style.display = "none";
 
-    if (!navigator.mediaDevices) {
-        error.textContent = "Media access is unavailable. Open this page using a supported browser and secure connection.";
-        error.style.display = "block";
-        return;
+    if (activeStream) {
+        stopPreview();
     }
-
-    if (activeStream) stopPreview();
 
     startButton.disabled = true;
     startButton.textContent = "Starting...";
 
     try {
+        if (!navigator.mediaDevices) {
+            throw new Error("Media access is unavailable. Open this page using HTTPS.");
+        }
 
         if (selectedSource === "camera") {
-
             activeStream = await navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: true
             });
-
         } else {
-
             if (!navigator.mediaDevices.getDisplayMedia) {
                 throw new Error("Screen sharing is not supported by this browser.");
             }
@@ -2168,7 +1566,6 @@ async function startPreview() {
                 video: true,
                 audio: true
             });
-
         }
 
         video.srcObject = activeStream;
@@ -2188,31 +1585,28 @@ async function startPreview() {
         const videoTrack = activeStream.getVideoTracks()[0];
 
         if (videoTrack) {
-            videoTrack.addEventListener("ended", () => {
+            videoTrack.addEventListener("ended", function() {
                 stopPreview();
             });
         }
 
     } catch (err) {
-
         error.textContent = err.name === "NotAllowedError"
             ? "Permission was denied or sharing was cancelled."
             : err.message || "Unable to start preview.";
 
         error.style.display = "block";
 
-        status.textContent = "Please check your browser permissions and try again.";
+        status.textContent =
+            "Please check your browser permissions and try again.";
 
     } finally {
-
         startButton.disabled = false;
         startButton.textContent = "Start Preview";
-
     }
 }
 
 function stopPreview() {
-
     if (activeStream) {
         activeStream.getTracks().forEach(track => track.stop());
         activeStream = null;
@@ -2232,47 +1626,40 @@ function stopPreview() {
     status.textContent = "Preview stopped. Choose a source to try again.";
 }
 
-/* AUTH SESSION */
+/* =========================
+   BUTTON CONNECTIONS
+========================= */
 
-async function initializeWatcher() {
+window.showPage = showPage;
+window.switchProfileTab = switchProfileTab;
+window.showProfileMessage = showProfileMessage;
 
-    const { data: { session } } = await supabase.auth.getSession();
+window.openCreate = openCreate;
+window.closeCreate = closeCreate;
+window.outsideClose = outsideClose;
+window.selectSource = selectSource;
+window.startPreview = startPreview;
+window.stopPreview = stopPreview;
 
-    if (session) {
-        currentUser = session.user;
-        await loadOwnProfile();
-    }
+window.openEditProfile = openEditProfile;
+window.closeEditProfile = closeEditProfile;
+window.closeEditProfileOutside = closeEditProfileOutside;
+window.saveProfile = saveProfile;
 
-    supabase.auth.onAuthStateChange(async (_event, session) => {
+/* =========================
+   INITIALIZATION
+========================= */
 
-        currentUser = session ? session.user : null;
-        ownProfile = null;
+loadProfile();
 
-        if (currentUser) {
-            await loadOwnProfile();
-        }
-
-    });
-}
-
-/* KEYBOARD */
-
-document.addEventListener("keydown", event => {
-
+document.addEventListener("keydown", function(event) {
     if (event.key === "Escape") {
-
         closeCreate();
         closeEditProfile();
-
     }
-
 });
-
-/* START */
-
-initializeWatcher();
 
 </script>
 
 </body>
-</html>
+    </html>
