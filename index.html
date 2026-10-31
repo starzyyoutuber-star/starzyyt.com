@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,1527 +9,742 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --bg: #0e0e10;
-    --white: #efeff1;
-    --purple: #bf94ff;
-    --blue: #307aae;
-    --muted: #a0a0a5;
-    --sidebar: 180px;
-}
-
-html, body {
-    width: 100%;
-    min-height: 100%;
-    background: var(--bg);
-    color: var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow-x: hidden;
-}
-
-main {
-    min-height: 100vh;
-    min-height: 100dvh;
-    padding: 12px 16px 85px;
-}
-
-.header {
-    height: 40px;
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    font-size: 21px;
-    font-weight: 800;
-}
-
-/* HOME */
-
-#homePage {
-    display: block;
-}
-
-.empty-home {
-    min-height: 65vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 25px;
-}
-
-.empty-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 15px;
-    background: #1c1c21;
-    display: grid;
-    place-items: center;
-    margin-bottom: 18px;
-    color: #a6a6ac;
-}
-
-.empty-icon svg {
-    width: 29px;
-    height: 29px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.6;
-}
-
-.empty-home h2 {
-    font-size: 20px;
-    margin-bottom: 8px;
-}
-
-.empty-home p {
-    font-size: 13px;
-    color: var(--muted);
-    max-width: 260px;
-    line-height: 1.5;
-}
-
-/* PROFILE */
-
-#profilePage {
-    display: none;
-    padding-bottom: 5px;
-}
-
-.profile-content {
-    padding: 0 4px;
-}
-
-.profile-identity {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    min-height: 105px;
-}
-
-.profile-avatar {
-    width: 96px;
-    height: 96px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #307aae;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 68px;
-    font-weight: 500;
-}
-
-.profile-name-area {
-    min-width: 0;
-    flex: 1;
-}
-
-.profile-name-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-}
-
-.profile-username {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -1px;
-    overflow-wrap: anywhere;
-}
-
-.profile-status {
-    font-size: 15px;
-    color: #d0d0d5;
-    margin-top: 5px;
-}
-
-.edit-profile-button {
-    flex-shrink: 0;
-    height: 37px;
-    padding: 0 13px;
-    border: none;
-    border-radius: 20px;
-    background: #29292e;
-    color: white;
-    font-size: 12px;
-    font-weight: 700;
-}
-
-.profile-bio {
-    font-size: 15px;
-    color: #aaaab2;
-    margin-top: 13px;
-    margin-bottom: 12px;
-}
-
-.profile-followers {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.profile-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-}
-
-.profile-main-button,
-.profile-secondary-button {
-    width: 100%;
-    height: 49px;
-    border: none;
-    border-radius: 9px;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.profile-main-button {
-    background: #9146ff;
-}
-
-.profile-secondary-button {
-    background: #29292e;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.profile-secondary-button svg {
-    width: 21px;
-    height: 21px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* PROFILE TABS */
-
-.profile-tabs {
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: 2px;
-    margin-top: 22px;
-    padding: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-
-.profile-tabs::-webkit-scrollbar {
-    display: none;
-}
-
-.profile-tab {
-    position: relative;
-    flex: 1 0 auto;
-    height: 42px;
-    padding: 0 7px 12px;
-    border: none;
-    background: transparent;
-    color: #efeff1;
-    font-size: 14px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
-.profile-tab.active {
-    color: var(--purple);
-}
-
-.profile-tab.active::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--purple);
-}
-
-/* TAB CONTENT */
-
-.profile-tab-content {
-    display: none;
-    padding: 12px 0;
-}
-
-.profile-tab-content.active {
-    display: block;
-}
-
-.no-clips {
-    min-height: 175px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #a0a0a5;
-    gap: 9px;
-}
-
-.no-clips svg {
-    width: 34px;
-    height: 34px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.no-clips h3 {
-    color: #efeff1;
-    font-size: 16px;
-}
-
-.no-clips p {
-    font-size: 12px;
-}
-
-.profile-section-title {
-    font-size: 17px;
-    margin-bottom: 12px;
-}
-
-.profile-info-card {
-    padding: 14px;
-    background: #19191d;
-    border-radius: 9px;
-    color: #aaaab2;
-    font-size: 13px;
-    line-height: 1.7;
-}
-
-/* BOTTOM NAVIGATION */
-
-.navigation {
-    position: fixed;
-    z-index: 10;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: calc(61px + env(safe-area-inset-bottom));
-    padding: 3px 6px env(safe-area-inset-bottom);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    gap: 2px;
-    background: var(--bg);
-}
-
-.nav-item {
-    flex: 1;
-    min-width: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    color: var(--white);
-    background: transparent;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-}
-
-.nav-icon {
-    width: 23px;
-    height: 23px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.nav-label {
-    font-size: 11px;
-    line-height: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.nav-item.active {
-    color: var(--purple);
-}
-
-.create-button {
-    flex: 0 0 43px;
-    width: 43px;
-    height: 43px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
-    background: var(--blue);
-    color: white;
-}
-
-.plus-icon {
-    width: 24px;
-    height: 24px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-}
-
-.activity-wrap {
-    position: relative;
-    width: 23px;
-    height: 23px;
-}
-
-.notification {
-    position: absolute;
-    top: -5px;
-    right: -9px;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #e91916;
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.avatar {
-    width: 26px;
-    height: 26px;
-    border: 2px solid var(--purple);
-    border-radius: 50%;
-    background: #307aae;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 17px;
-    font-weight: 500;
-}
-
-/* CREATE MODAL */
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 30;
-    background: rgba(0,0,0,.75);
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 12px;
-}
-
-.modal-overlay.show {
-    display: flex;
-}
-
-.modal {
-    width: 100%;
-    max-width: 470px;
-    max-height: 92dvh;
-    overflow-y: auto;
-    background: #18181b;
-    border: 1px solid #303035;
-    border-radius: 15px;
-    padding: 19px;
-    animation: slideUp .2s ease;
-}
-
-@keyframes slideUp {
-    from { transform: translateY(25px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.modal-header h2 {
-    font-size: 19px;
-}
-
-.close-button {
-    width: 30px;
-    height: 30px;
-    border: 0;
-    background: #29292e;
-    border-radius: 7px;
-    color: white;
-    font-size: 19px;
-}
-
-.field-label {
-    display: block;
-    font-size: 12px;
-    color: #c5c5cb;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.field {
-    width: 100%;
-    height: 43px;
-    border: 1px solid #36363c;
-    border-radius: 7px;
-    background: #101012;
-    color: white;
-    padding: 0 12px;
-    outline: none;
-    font-size: 13px;
-    margin-bottom: 17px;
-}
-
-.field:focus {
-    border-color: var(--blue);
-}
-
-.choice-title {
-    font-size: 12px;
-    color: #c5c5cb;
-    font-weight: 600;
-    margin-bottom: 9px;
-}
-
-.choices {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 18px;
-}
-
-.choice {
-    min-height: 100px;
-    background: #222226;
-    border: 1px solid #36363c;
-    border-radius: 9px;
-    color: white;
-    padding: 13px;
-    text-align: left;
-    cursor: pointer;
-}
-
-.choice.selected {
-    border: 1.5px solid var(--blue);
-    background: #1b2a35;
-}
-
-.choice svg {
-    width: 25px;
-    height: 25px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.7;
-    margin-bottom: 9px;
-}
-
-.choice strong {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 4px;
-}
-
-.choice span {
-    font-size: 10px;
-    color: #a5a5ad;
-    line-height: 1.4;
-}
-
-.preview {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    border-radius: 9px;
-    background: #09090b;
-    overflow: hidden;
-    margin-bottom: 13px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.preview video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: none;
-    background: black;
-}
-
-.preview-placeholder {
-    color: #777780;
-    text-align: center;
-    font-size: 12px;
-}
-
-.preview-placeholder svg {
-    display: block;
-    width: 30px;
-    height: 30px;
-    margin: 0 auto 9px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-}
-
-.preview-status {
-    position: absolute;
-    top: 9px;
-    left: 9px;
-    display: none;
-    background: #d92222;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 5px 7px;
-}
-
-.status-message {
-    font-size: 11px;
-    color: #a5a5ad;
-    line-height: 1.5;
-    margin-bottom: 13px;
-}
-
-.start-button {
-    width: 100%;
-    height: 44px;
-    border: 0;
-    border-radius: 7px;
-    background: var(--blue);
-    color: white;
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.start-button:disabled {
-    opacity: .5;
-}
-
-.stop-button {
-    display: none;
-    width: 100%;
-    height: 44px;
-    border: 1px solid #a83232;
-    border-radius: 7px;
-    background: #321a1a;
-    color: #ff7777;
-    font-weight: 700;
-    margin-top: 9px;
-}
-
-.error {
-    display: none;
-    color: #ff8585;
-    font-size: 12px;
-    margin-bottom: 12px;
-    line-height: 1.5;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 360px) {
-    .profile-avatar {
-        width: 82px;
-        height: 82px;
-        font-size: 58px;
-    }
-
-    .profile-username {
-        font-size: 22px;
-    }
-
-    .edit-profile-button {
-        padding: 0 9px;
-        font-size: 11px;
-    }
-
-    .profile-tab {
-        font-size: 12px;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
-    .nav-label {
-        font-size: 10px;
-    }
-
-    .create-button {
-        flex-basis: 38px;
-        width: 38px;
-        height: 38px;
-    }
-}
-
-@media (min-width: 760px) {
-    main {
-        margin-left: var(--sidebar);
-        padding: 25px 30px;
-    }
-
-    #profilePage {
-        max-width: 950px;
-    }
-
-    .profile-content {
-        padding: 0 20px;
-    }
-
-    .profile-avatar {
-        width: 115px;
-        height: 115px;
-        font-size: 80px;
-    }
-
-    .profile-buttons {
-        max-width: 650px;
-    }
-
-    .profile-tabs {
-        justify-content: flex-start;
-        gap: 35px;
-    }
-
-    .profile-tab {
-        flex: 0 0 auto;
-    }
-
-    .navigation {
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: auto;
-        width: var(--sidebar);
-        height: 100dvh;
-        padding: 18px 10px;
-        flex-direction: column;
-        justify-content: flex-start;
-        gap: 7px;
-        border-right: 1px solid #252529;
-    }
-
-    .nav-item {
-        flex: 0 0 42px;
-        width: 100%;
-        height: 42px;
-        flex-direction: row;
-        justify-content: flex-start;
-        gap: 11px;
-        padding: 0 11px;
-    }
-
-    .nav-item.active {
-        background: #242127;
-        border-radius: 6px;
-    }
-
-    .create-button {
-        flex: 0 0 40px;
-        width: 100%;
-        height: 40px;
-        border-radius: 8px;
-    }
-
-    .modal-overlay {
-        align-items: center;
-    }
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0e0e10;--white:#efeff1;--purple:#bf94ff;--blue:#307aae;--muted:#a0a0a5;--sidebar:180px}
+html,body{width:100%;min-height:100%;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100vh;min-height:100dvh;overflow-x:hidden}
+main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
+.header{height:40px;display:flex;align-items:center}
+.logo{font-size:21px;font-weight:800}
+#homePage{display:block}
+.empty-home{min-height:65vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:25px}
+.empty-icon{width:60px;height:60px;border-radius:15px;background:#1c1c21;display:grid;place-items:center;margin-bottom:18px;color:#a6a6ac}
+.empty-icon svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.6}
+.empty-home h2{font-size:20px;margin-bottom:8px}
+.empty-home p{font-size:13px;color:var(--muted);max-width:260px;line-height:1.5}
+#profilePage{display:none;padding-bottom:5px}
+.profile-content{padding:0 4px}
+.profile-identity{display:flex;align-items:center;gap:15px;min-height:105px}
+.profile-avatar{width:96px;height:96px;flex-shrink:0;border-radius:50%;background:#307aae;color:white;display:flex;align-items:center;justify-content:center;font-size:68px;font-weight:500}
+.profile-name-area{min-width:0;flex:1}
+.profile-name-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.profile-username{font-size:26px;font-weight:800;letter-spacing:-1px;overflow-wrap:anywhere}
+.profile-status{font-size:15px;color:#d0d0d5;margin-top:5px}
+.edit-profile-button{flex-shrink:0;height:37px;padding:0 13px;border:none;border-radius:20px;background:#29292e;color:white;font-size:12px;font-weight:700}
+.profile-bio{font-size:15px;color:#aaaab2;margin-top:13px;margin-bottom:12px}
+.profile-followers{font-size:15px;font-weight:700;margin-bottom:15px}
+.profile-buttons{display:flex;flex-direction:column;gap:9px}
+.profile-main-button,.profile-secondary-button{width:100%;height:49px;border:none;border-radius:9px;color:white;font-size:16px;font-weight:700}
+.profile-main-button{background:#9146ff}
+.profile-secondary-button{background:#29292e;display:flex;align-items:center;justify-content:center;gap:10px}
+.profile-secondary-button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.profile-tabs{display:flex;align-items:stretch;justify-content:space-between;gap:2px;margin-top:22px;padding:0;overflow-x:auto;scrollbar-width:none}
+.profile-tabs::-webkit-scrollbar{display:none}
+.profile-tab{position:relative;flex:1 0 auto;height:42px;padding:0 7px 12px;border:none;background:transparent;color:#efeff1;font-size:14px;font-weight:700;white-space:nowrap}
+.profile-tab.active{color:var(--purple)}
+.profile-tab.active::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple)}
+.profile-tab-content{display:none;padding:12px 0}
+.profile-tab-content.active{display:block}
+.no-clips{min-height:175px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#a0a0a5;gap:9px}
+.no-clips svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.no-clips h3{color:#efeff1;font-size:16px}
+.no-clips p{font-size:12px}
+.profile-section-title{font-size:17px;margin-bottom:12px}
+.profile-info-card{padding:14px;background:#19191d;border-radius:9px;color:#aaaab2;font-size:13px;line-height:1.7}
+.navigation{position:fixed;z-index:10;bottom:0;left:0;right:0;height:calc(61px + env(safe-area-inset-bottom));padding:3px 6px env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:space-around;gap:2px;background:var(--bg)}
+.nav-item{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--white);background:transparent;border:none;font:inherit;cursor:pointer}
+.nav-icon{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-label{font-size:11px;line-height:14px;font-weight:600;white-space:nowrap}
+.nav-item.active{color:var(--purple)}
+.create-button{flex:0 0 43px;width:43px;height:43px;display:flex;align-items:center;justify-content:center;border:none;border-radius:50%;background:var(--blue);color:white}
+.plus-icon{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2}
+.activity-wrap{position:relative;width:23px;height:23px}
+.notification{position:absolute;top:-5px;right:-9px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e91916;color:white;font-size:11px;font-weight:700}
+.avatar{width:26px;height:26px;border:2px solid var(--purple);border-radius:50%;background:#307aae;color:white;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:500}
+.modal-overlay{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.75);display:none;align-items:flex-end;justify-content:center;padding:12px}
+.modal-overlay.show{display:flex}
+.modal{width:100%;max-width:470px;max-height:92dvh;overflow-y:auto;background:#18181b;border:1px solid #303035;border-radius:15px;padding:19px;animation:slideUp .2s ease}
+@keyframes slideUp{from{transform:translateY(25px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-header h2{font-size:19px}
+.close-button{width:30px;height:30px;border:0;background:#29292e;border-radius:7px;color:white;font-size:19px}
+.field-label{display:block;font-size:12px;color:#c5c5cb;font-weight:600;margin-bottom:8px}
+.field{width:100%;height:43px;border:1px solid #36363c;border-radius:7px;background:#101012;color:white;padding:0 12px;outline:none;font-size:13px;margin-bottom:17px}
+.field:focus{border-color:var(--blue)}
+.choice-title{font-size:12px;color:#c5c5cb;font-weight:600;margin-bottom:9px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.choice{min-height:100px;background:#222226;border:1px solid #36363c;border-radius:9px;color:white;padding:13px;text-align:left;cursor:pointer}
+.choice.selected{border:1.5px solid var(--blue);background:#1b2a35}
+.choice svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;margin-bottom:9px}
+.choice strong{display:block;font-size:13px;margin-bottom:4px}
+.choice span{font-size:10px;color:#a5a5ad;line-height:1.4}
+.preview{position:relative;width:100%;aspect-ratio:16/9;border-radius:9px;background:#09090b;overflow:hidden;margin-bottom:13px;display:flex;align-items:center;justify-content:center}
+.preview video{width:100%;height:100%;object-fit:contain;display:none;background:black}
+.preview-placeholder{color:#777780;text-align:center;font-size:12px}
+.preview-placeholder svg{display:block;width:30px;height:30px;margin:0 auto 9px;fill:none;stroke:currentColor;stroke-width:1.5}
+.preview-status{position:absolute;top:9px;left:9px;display:none;background:#d92222;border-radius:4px;font-size:10px;font-weight:700;padding:5px 7px}
+.status-message{font-size:11px;color:#a5a5ad;line-height:1.5;margin-bottom:13px}
+.start-button{width:100%;height:44px;border:0;border-radius:7px;background:var(--blue);color:white;font-size:13px;font-weight:700}
+.start-button:disabled{opacity:.5}
+.stop-button{display:none;width:100%;height:44px;border:1px solid #a83232;border-radius:7px;background:#321a1a;color:#ff7777;font-weight:700;margin-top:9px}
+.error{display:none;color:#ff8585;font-size:12px;margin-bottom:12px;line-height:1.5}
+
+/* LIVE STREAM LIST */
+.stream-list{width:100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;padding:18px 0}
+.stream-card{background:#19191d;border:1px solid #303035;border-radius:10px;overflow:hidden;text-align:left;color:white;cursor:pointer}
+.stream-card-preview{height:135px;background:#080809;display:grid;place-items:center;color:#777}
+.stream-card-preview svg{width:35px;height:35px;stroke:currentColor;fill:none;stroke-width:1.5}
+.stream-card-info{padding:12px}
+.stream-card-title{font-size:14px;font-weight:700;overflow-wrap:anywhere}
+.stream-card-meta{font-size:12px;color:#aaa;margin-top:6px}
+.live-tag{display:inline-block;background:#d92222;color:white;font-size:10px;font-weight:800;padding:4px 6px;border-radius:4px;margin-bottom:8px}
+
+/* VIEWER */
+.viewer-overlay{position:fixed;inset:0;z-index:50;background:#0e0e10;display:none;overflow-y:auto;padding:14px}
+.viewer-overlay.show{display:block}
+.viewer-inner{max-width:1000px;margin:0 auto}
+.viewer-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.viewer-header h2{font-size:17px;overflow-wrap:anywhere;padding-right:10px}
+.viewer-close{background:#29292e;color:white;border:0;border-radius:7px;width:35px;height:35px;font-size:20px}
+.viewer-stage{width:100%;aspect-ratio:16/9;background:#050505;border-radius:9px;overflow:hidden;display:grid;place-items:center}
+.viewer-stage video{width:100%;height:100%;object-fit:contain}
+.viewer-meta{padding:12px 0;color:#aaa;font-size:12px}
+.viewer-chat{background:#19191d;border:1px solid #303035;border-radius:9px;padding:12px;margin-top:10px}
+.viewer-chat h3{font-size:14px;margin-bottom:10px}
+.chat-messages{height:180px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:5px 0 12px}
+.chat-message{font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+.chat-message strong{color:#bf94ff;margin-right:5px}
+.chat-form{display:flex;gap:7px}
+.chat-input{min-width:0;flex:1;height:40px;background:#101012;border:1px solid #36363c;border-radius:6px;color:white;padding:0 10px;outline:none}
+.chat-send{height:40px;padding:0 14px;border:0;border-radius:6px;background:#307aae;color:white;font-weight:700}
+.viewer-error{font-size:12px;color:#ff8585;margin-top:9px}
+
+@media(max-width:360px){
+.profile-avatar{width:82px;height:82px;font-size:58px}
+.profile-username{font-size:22px}
+.edit-profile-button{padding:0 9px;font-size:11px}
+.profile-tab{font-size:12px;padding-left:5px;padding-right:5px}
+.nav-label{font-size:10px}
+.create-button{flex-basis:38px;width:38px;height:38px}
+}
+@media(min-width:760px){
+main{margin-left:var(--sidebar);padding:25px 30px}
+#profilePage{max-width:950px}
+.profile-content{padding:0 20px}
+.profile-avatar{width:115px;height:115px;font-size:80px}
+.profile-buttons{max-width:650px}
+.profile-tabs{justify-content:flex-start;gap:35px}
+.profile-tab{flex:0 0 auto}
+.navigation{top:0;bottom:0;left:0;right:auto;width:var(--sidebar);height:100dvh;padding:18px 10px;flex-direction:column;justify-content:flex-start;gap:7px;border-right:1px solid #252529}
+.nav-item{flex:0 0 42px;width:100%;height:42px;flex-direction:row;justify-content:flex-start;gap:11px;padding:0 11px}
+.nav-item.active{background:#242127;border-radius:6px}
+.create-button{flex:0 0 40px;width:100%;height:40px;border-radius:8px}
+.modal-overlay{align-items:center}
 }
 </style>
 </head>
 
 <body>
-
 <main>
-
-<!-- HOME -->
-
 <section id="homePage">
+<header class="header"><div class="logo">Watcher</div></header>
 
-    <header class="header">
-        <div class="logo">Watcher</div>
-    </header>
-
-    <section class="empty-home">
-
-        <div class="empty-icon">
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                <path d="m10 9 5 3-5 3z"/>
-            </svg>
-        </div>
-
-        <h2>No streams yet</h2>
-
-        <p>
-            When creators go live, their streams will appear here.
-            Be the first to start streaming.
-        </p>
-
-    </section>
-
-</section>
-
-<!-- PROFILE -->
-
-<section id="profilePage">
-
-    <div class="profile-content">
-
-        <div class="profile-identity">
-
-            <div class="profile-avatar" id="profileAvatar">U</div>
-
-            <div class="profile-name-area">
-
-                <div class="profile-name-row">
-
-                    <h1 class="profile-username" id="profileUsername">Loading...</h1>
-
-                    <button class="edit-profile-button"
-                        onclick="showProfileMessage('Edit Profile')">
-                        Edit Profile
-                    </button>
-
-                </div>
-
-                <div class="profile-status">Offline</div>
-
-            </div>
-
-        </div>
-
-        <div class="profile-bio" id="profileBio">
-            No bio yet
-        </div>
-
-        <div class="profile-followers">
-            0 followers
-        </div>
-
-        <div class="profile-buttons">
-
-            <button class="profile-main-button"
-                onclick="showProfileMessage('Stream Manager')">
-                Stream Manager
-            </button>
-
-            <button class="profile-secondary-button"
-                onclick="showProfileMessage('Reminders')">
-
-                <svg viewBox="0 0 24 24">
-                    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                    <path d="M10 21h4"/>
-                </svg>
-
-                Reminders
-
-            </button>
-
-        </div>
-
+<div class="empty-home" id="emptyHome">
+    <div class="empty-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
     </div>
-
-    <!-- PROFILE TABS -->
-
-    <div class="profile-tabs">
-
-        <button class="profile-tab active"
-            onclick="switchProfileTab('profileHome', this)">
-            Home
-        </button>
-
-        <button class="profile-tab"
-            onclick="switchProfileTab('profileAbout', this)">
-            About
-        </button>
-
-        <button class="profile-tab"
-            onclick="switchProfileTab('profileClips', this)">
-            Clips
-        </button>
-
-        <button class="profile-tab"
-            onclick="switchProfileTab('profileVideos', this)">
-            Videos
-        </button>
-
-        <button class="profile-tab"
-            onclick="switchProfileTab('profileSchedule', this)">
-            Schedule
-        </button>
-
-    </div>
-
-    <!-- HOME TAB -->
-
-    <div class="profile-tab-content active" id="profileHome">
-
-        <div class="no-clips">
-
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                <path d="m10 9 5 3-5 3z"/>
-            </svg>
-
-            <h3>No clips yet</h3>
-
-            <p>This creator hasn't posted anything yet.</p>
-
-        </div>
-
-    </div>
-
-    <!-- ABOUT -->
-
-    <div class="profile-tab-content" id="profileAbout">
-
-        <h2 class="profile-section-title" id="aboutUsername">
-            About
-        </h2>
-
-        <div class="profile-info-card" id="aboutInfo">
-            Loading account information...
-        </div>
-
-    </div>
-
-    <!-- CLIPS -->
-
-    <div class="profile-tab-content" id="profileClips">
-
-        <div class="no-clips">
-
-            <svg viewBox="0 0 24 24">
-                <path d="M4 5h16v14H4z"/>
-                <path d="m10 9 5 3-5 3z"/>
-            </svg>
-
-            <h3>No clips yet</h3>
-
-            <p>Clips created by this user will appear here.</p>
-
-        </div>
-
-    </div>
-
-    <!-- VIDEOS -->
-
-    <div class="profile-tab-content" id="profileVideos">
-
-        <div class="no-clips">
-
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="5" width="18" height="14" rx="2"/>
-                <path d="m10 9 5 3-5 3z"/>
-            </svg>
-
-            <h3>No videos yet</h3>
-
-            <p>Uploaded videos will appear here.</p>
-
-        </div>
-
-    </div>
-
-    <!-- SCHEDULE -->
-
-    <div class="profile-tab-content" id="profileSchedule">
-
-        <div class="no-clips">
-
-            <svg viewBox="0 0 24 24">
-                <rect x="3" y="5" width="18" height="16" rx="2"/>
-                <path d="M7 3v4M17 3v4M3 10h18"/>
-            </svg>
-
-            <h3>No schedule yet</h3>
-
-            <p>This creator hasn't added a streaming schedule.</p>
-
-        </div>
-
-    </div>
-
-</section>
-
-</main>
-
-<!-- BOTTOM NAVIGATION -->
-
-<nav class="navigation" aria-label="Main navigation">
-
-    <button class="nav-item active" id="homeNav"
-        onclick="showPage('home')">
-
-        <svg class="nav-icon" viewBox="0 0 24 24">
-            <path d="M3.5 10.5 12 3.5l8.5 7V21h-17z"/>
-            <path d="M9 21v-7h6v7"/>
-        </svg>
-
-        <span class="nav-label">Home</span>
-
-    </button>
-
-    <button class="nav-item" id="browseNav"
-        onclick="showProfileMessage('Browse')">
-
-        <svg class="nav-icon" viewBox="0 0 24 24">
-            <circle cx="10.5" cy="10.5" r="7.5"/>
-            <path d="m16 16 5 5"/>
-        </svg>
-
-        <span class="nav-label">Browse</span>
-
-    </button>
-
-    <button class="create-button"
-        onclick="openCreate()"
-        aria-label="Create stream">
-
-        <svg class="plus-icon" viewBox="0 0 24 24">
-            <path d="M12 4v16M4 12h16"/>
-        </svg>
-
-    </button>
-
-    <button class="nav-item" id="activityNav"
-        onclick="showProfileMessage('Activity')">
-
-        <span class="activity-wrap">
-
-            <svg class="nav-icon" viewBox="0 0 24 24">
-                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-                <path d="M10 21h4"/>
-            </svg>
-
-            <span class="notification">1</span>
-
-        </span>
-
-        <span class="nav-label">Activity</span>
-
-    </button>
-
-    <button class="nav-item" id="profileNav"
-        onclick="showPage('profile')">
-
-        <span class="avatar" id="navAvatar">U</span>
-
-        <span class="nav-label">Profile</span>
-
-    </button>
-
-</nav>
-
-<!-- CREATE STREAM MODAL -->
-
-<div class="modal-overlay" id="createModal"
-    onclick="outsideClose(event)">
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <h2>Create a stream</h2>
-
-            <button class="close-button"
-                onclick="closeCreate()">×</button>
-
-        </div>
-
-        <label class="field-label" for="streamTitle">
-            Stream title
-        </label>
-
-        <input class="field" id="streamTitle"
-            maxlength="100"
-            placeholder="What are you streaming?">
-
-        <label class="field-label" for="streamCategory">
-            Category
-        </label>
-
-        <select class="field" id="streamCategory">
-            <option value="">Select a category</option>
-            <option>Gaming</option>
-            <option>Roblox</option>
-            <option>Minecraft</option>
-            <option>Just Chatting</option>
-            <option>Music</option>
-            <option>Technology</option>
-            <option>Other</option>
-        </select>
-
-        <div class="choice-title">
-            Choose your streaming source
-        </div>
-
-        <div class="choices">
-
-            <button class="choice selected"
-                id="cameraChoice"
-                onclick="selectSource('camera')">
-
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="6" width="13" height="12" rx="2"/>
-                    <path d="m16 10 5-3v10l-5-3z"/>
-                </svg>
-
-                <strong>Camera</strong>
-
-                <span>
-                    Stream using your camera and microphone.
-                </span>
-
-            </button>
-
-            <button class="choice"
-                id="screenChoice"
-                onclick="selectSource('screen')">
-
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="3" width="18" height="14" rx="2"/>
-                    <path d="M8 21h8M12 17v4"/>
-                </svg>
-
-                <strong>Screen</strong>
-
-                <span>
-                    Share your screen, gameplay or apps.
-                </span>
-
-            </button>
-
-        </div>
-
-        <div class="field-label">Preview</div>
-
-        <div class="preview">
-
-            <video id="previewVideo"
-                autoplay muted playsinline></video>
-
-            <div class="preview-placeholder"
-                id="previewPlaceholder">
-
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="5" width="18" height="14" rx="2"/>
-                    <path d="m10 9 5 3-5 3z"/>
-                </svg>
-
-                Your preview will appear here
-
-            </div>
-
-            <div class="preview-status"
-                id="previewStatus">
-                PREVIEW ACTIVE
-            </div>
-
-        </div>
-
-        <div class="error" id="errorMessage"></div>
-
-        <p class="status-message" id="statusMessage">
-            Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.
-        </p>
-
-        <button class="start-button"
-            id="startButton"
-            onclick="startPreview()">
-            Start Preview
-        </button>
-
-        <button class="stop-button"
-            id="stopButton"
-            onclick="stopPreview()">
-            Stop Preview
-        </button>
-
-    </div>
-
+    <h2>No streams yet</h2>
+    <p>When creators go live, their streams will appear here. Be the first to start streaming.</p>
 </div>
 
-<script>
+<div class="stream-list" id="streamList"></div>
+</section>
 
-/* SUPABASE CONFIGURATION */
+<section id="profilePage">
+<div class="profile-content">
+    <div class="profile-identity">
+        <div class="profile-avatar" id="profileAvatar">U</div>
+        <div class="profile-name-area">
+            <div class="profile-name-row">
+                <h1 class="profile-username" id="profileUsername">Loading...</h1>
+                <button class="edit-profile-button" onclick="showProfileMessage('Edit Profile')">Edit Profile</button>
+            </div>
+            <div class="profile-status">Offline</div>
+        </div>
+    </div>
+    <div class="profile-bio" id="profileBio">No bio yet</div>
+    <div class="profile-followers">0 followers</div>
+    <div class="profile-buttons">
+        <button class="profile-main-button" onclick="showProfileMessage('Stream Manager')">Stream Manager</button>
+        <button class="profile-secondary-button" onclick="showProfileMessage('Reminders')">
+            <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+            Reminders
+        </button>
+    </div>
+</div>
 
-const SUPABASE_URL = "https://sjtaagrvncysbrpwqdzf.supabase.co";
+<div class="profile-tabs">
+<button class="profile-tab active" onclick="switchProfileTab('profileHome',this)">Home</button>
+<button class="profile-tab" onclick="switchProfileTab('profileAbout',this)">About</button>
+<button class="profile-tab" onclick="switchProfileTab('profileClips',this)">Clips</button>
+<button class="profile-tab" onclick="switchProfileTab('profileVideos',this)">Videos</button>
+<button class="profile-tab" onclick="switchProfileTab('profileSchedule',this)">Schedule</button>
+</div>
 
-const SUPABASE_KEY = "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
+<div class="profile-tab-content active" id="profileHome">
+<div class="no-clips">
+<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
+<h3>No clips yet</h3><p>This creator hasn't posted anything yet.</p>
+</div>
+</div>
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+<div class="profile-tab-content" id="profileAbout">
+<h2 class="profile-section-title" id="aboutUsername">About</h2>
+<div class="profile-info-card" id="aboutInfo">Loading account information...</div>
+</div>
 
-let currentUser = null;
-let currentProfile = null;
+<div class="profile-tab-content" id="profileClips">
+<div class="no-clips"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="m10 9 5 3-5 3z"/></svg><h3>No clips yet</h3><p>Clips created by this user will appear here.</p></div>
+</div>
 
+<div class="profile-tab-content" id="profileVideos">
+<div class="no-clips"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg><h3>No videos yet</h3><p>Uploaded videos will appear here.</p></div>
+</div>
 
-/* SAFE HTML */
+<div class="profile-tab-content" id="profileSchedule">
+<div class="no-clips"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></svg><h3>No schedule yet</h3><p>This creator hasn't added a streaming schedule.</p></div>
+</div>
+</section>
+</main>
 
-function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    })[character]);
+<nav class="navigation" aria-label="Main navigation">
+<button class="nav-item active" id="homeNav" onclick="showPage('home')">
+<svg class="nav-icon" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.5l8.5 7V21h-17z"/><path d="M9 21v-7h6v7"/></svg>
+<span class="nav-label">Home</span>
+</button>
+<button class="nav-item" id="browseNav" onclick="showProfileMessage('Browse')">
+<svg class="nav-icon" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg>
+<span class="nav-label">Browse</span>
+</button>
+<button class="create-button" onclick="openCreate()" aria-label="Create stream">
+<svg class="plus-icon" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg>
+</button>
+<button class="nav-item" id="activityNav" onclick="showProfileMessage('Activity')">
+<span class="activity-wrap">
+<svg class="nav-icon" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>
+<span class="notification">1</span>
+</span>
+<span class="nav-label">Activity</span>
+</button>
+<button class="nav-item" id="profileNav" onclick="showPage('profile')">
+<span class="avatar" id="navAvatar">U</span>
+<span class="nav-label">Profile</span>
+</button>
+</nav>
+
+<!-- CREATE STREAM -->
+<div class="modal-overlay" id="createModal" onclick="outsideClose(event)">
+<div class="modal">
+<div class="modal-header">
+<h2>Create a stream</h2>
+<button class="close-button" onclick="closeCreate()">×</button>
+</div>
+
+<label class="field-label" for="streamTitle">Stream title</label>
+<input class="field" id="streamTitle" maxlength="100" placeholder="What are you streaming?">
+
+<label class="field-label" for="streamCategory">Category</label>
+<select class="field" id="streamCategory">
+<option value="">Select a category</option>
+<option>Gaming</option><option>Roblox</option><option>Minecraft</option>
+<option>Just Chatting</option><option>Music</option><option>Technology</option><option>Other</option>
+</select>
+
+<div class="choice-title">Choose your streaming source</div>
+<div class="choices">
+<button class="choice selected" id="cameraChoice" onclick="selectSource('camera')">
+<svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3z"/></svg>
+<strong>Camera</strong><span>Stream using your camera and microphone.</span>
+</button>
+<button class="choice" id="screenChoice" onclick="selectSource('screen')">
+<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+<strong>Screen</strong><span>Share your screen, gameplay or apps.</span>
+</button>
+</div>
+
+<div class="field-label">Preview</div>
+<div class="preview">
+<video id="previewVideo" autoplay muted playsinline></video>
+<div class="preview-placeholder" id="previewPlaceholder">
+<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
+Your preview will appear here
+</div>
+<div class="preview-status" id="previewStatus">PREVIEW ACTIVE</div>
+</div>
+
+<div class="error" id="errorMessage"></div>
+<p class="status-message" id="statusMessage">Choose a source and start your preview. Your camera or screen will only be accessed after you give permission.</p>
+
+<button class="start-button" id="startButton" onclick="startPreview()">Start Preview</button>
+<button class="start-button" id="goLiveButton" onclick="goLive()" style="display:none;margin-top:8px">Go Live</button>
+<button class="stop-button" id="stopButton" onclick="stopPreview()">Stop Preview</button>
+</div>
+</div>
+
+<!-- VIEW STREAM -->
+<div class="viewer-overlay" id="viewerOverlay">
+<div class="viewer-inner">
+<div class="viewer-header">
+<h2 id="viewerTitle">Live stream</h2>
+<button class="viewer-close" onclick="closeViewer()">×</button>
+</div>
+<div class="viewer-stage" id="viewerStage">
+<div style="color:#777;font-size:13px">Connecting to stream...</div>
+</div>
+<div class="viewer-meta" id="viewerMeta"></div>
+<div class="viewer-error" id="viewerError"></div>
+<div class="viewer-chat">
+<h3>Live Chat</h3>
+<div class="chat-messages" id="chatMessages"></div>
+<form class="chat-form" onsubmit="sendChatMessage(event)">
+<input class="chat-input" id="chatInput" maxlength="500" placeholder="Send a message..." autocomplete="off">
+<button class="chat-send" type="submit">Send</button>
+</form>
+</div>
+</div>
+</div>
+
+<script type="module">
+import { Room, RoomEvent } from "https://cdn.jsdelivr.net/npm/livekit-client@2.15.6/dist/livekit-client.esm.mjs";
+
+/* SUPABASE */
+const SUPABASE_URL="https://sjtaagrvncysbrpwqdzf.supabase.co";
+const SUPABASE_KEY="sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let currentUser=null;
+let currentProfile=null;
+let selectedSource="camera";
+let activeStream=null;
+let broadcasterRoom=null;
+let viewerRoom=null;
+let currentLiveStream=null;
+let currentViewerStreamId=null;
+let streamsChannel=null;
+let messagesChannel=null;
+let isLive=false;
+let isStarting=false;
+
+const $=id=>document.getElementById(id);
+const modal=$("createModal");
+const video=$("previewVideo");
+const placeholder=$("previewPlaceholder");
+const status=$("statusMessage");
+const error=$("errorMessage");
+const startButton=$("startButton");
+const goLiveButton=$("goLiveButton");
+const stopButton=$("stopButton");
+const previewStatus=$("previewStatus");
+
+function escapeHTML(value){
+return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 }
 
-
-/* LOAD ACCOUNT INFORMATION */
-
-async function loadUserProfile(user) {
-
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
-
-    currentUser = user;
-
-    const { data: profile, error: profileError } =
-        await supabaseClient
-            .from("profiles")
-            .select("username, created_at")
-            .eq("id", user.id)
-            .maybeSingle();
-
-    if (profileError) {
-        console.error("Profile loading error:", profileError);
-    }
-
-    currentProfile = profile;
-
-    const username =
-        profile?.username ||
-        user.user_metadata?.username ||
-        user.email?.split("@")[0] ||
-        "User";
-
-    const initial = username.charAt(0).toUpperCase();
-
-    /* UPDATE PROFILE */
-
-    document.getElementById("profileUsername").textContent = username;
-
-    document.getElementById("profileAvatar").textContent = initial;
-
-    document.getElementById("navAvatar").textContent = initial;
-
-    document.getElementById("aboutUsername").textContent =
-        "About " + username;
-
-    /* EMAIL */
-
-    const email = user.email || "Not available";
-
-    /* ACCOUNT CREATION DATE */
-
-    let memberSince = "Unknown";
-
-    const creationDate = profile?.created_at || user.created_at;
-
-    if (creationDate) {
-        memberSince = new Date(creationDate).toLocaleDateString(
-            undefined,
-            {
-                month: "long",
-                day: "numeric",
-                year: "numeric"
-            }
-        );
-    }
-
-    /* ABOUT INFORMATION */
-
-    document.getElementById("aboutInfo").innerHTML = `
-        <strong>Username:</strong> ${escapeHTML(username)}<br>
-        <strong>Email:</strong> ${escapeHTML(email)}<br>
-        <strong>Member since:</strong> ${escapeHTML(memberSince)}<br>
-        <strong>Status:</strong> Offline
-    `;
-
+/* ACCOUNT */
+async function loadUserProfile(user){
+if(!user){location.href="login.html";return}
+currentUser=user;
+const {data:profile,error:profileError}=await supabaseClient.from("profiles").select("username,created_at,bio").eq("id",user.id).maybeSingle();
+if(profileError)console.error(profileError);
+currentProfile=profile;
+const username=profile?.username||user.user_metadata?.username||user.email?.split("@")[0]||"User";
+const initial=username.charAt(0).toUpperCase();
+$("profileUsername").textContent=username;
+$("profileAvatar").textContent=initial;
+$("navAvatar").textContent=initial;
+$("profileBio").textContent=profile?.bio||"No bio yet";
+$("aboutUsername").textContent="About "+username;
+let memberSince="Unknown";
+const creationDate=profile?.created_at||user.created_at;
+if(creationDate)memberSince=new Date(creationDate).toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"});
+$("aboutInfo").innerHTML=`<strong>Username:</strong> ${escapeHTML(username)}<br><strong>Email:</strong> ${escapeHTML(user.email||"Not available")}<br><strong>Member since:</strong> ${escapeHTML(memberSince)}<br><strong>Status:</strong> Offline`;
 }
 
-
-/* INITIALIZE ACCOUNT */
-
-async function initializeWatcher() {
-
-    const {
-        data: { session },
-        error
-    } = await supabaseClient.auth.getSession();
-
-    if (error) {
-        console.error("Session error:", error);
-    }
-
-    if (!session) {
-        window.location.replace("login.html");
-        return;
-    }
-
-    await loadUserProfile(session.user);
+async function initializeWatcher(){
+const {data:{session},error:sessionError}=await supabaseClient.auth.getSession();
+if(sessionError)console.error(sessionError);
+if(!session){location.replace("login.html");return}
+await loadUserProfile(session.user);
+await loadLiveStreams();
+subscribeToStreams();
 }
 
-
-/* AUTHENTICATION CHANGES */
-
-supabaseClient.auth.onAuthStateChange((event, session) => {
-
-    if (event === "SIGNED_OUT" || !session) {
-        window.location.replace("login.html");
-    }
-
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+if(event==="SIGNED_OUT"||!session)location.replace("login.html");
 });
-
-
-/* START ACCOUNT CHECK */
-
 initializeWatcher();
 
+/* NAVIGATION */
+function showPage(page){
+$("homePage").style.display=page==="home"?"block":"none";
+$("profilePage").style.display=page==="profile"?"block":"none";
+$("homeNav").classList.toggle("active",page==="home");
+$("profileNav").classList.toggle("active",page==="profile");
+window.scrollTo(0,0);
+}
+function switchProfileTab(tabId,button){
+document.querySelectorAll(".profile-tab").forEach(t=>t.classList.remove("active"));
+document.querySelectorAll(".profile-tab-content").forEach(c=>c.classList.remove("active"));
+button.classList.add("active");
+$(tabId).classList.add("active");
+}
+function showProfileMessage(name){alert(name+" is not available yet.")}
 
-/* PAGE NAVIGATION */
+/* STREAM LIST */
+async function loadLiveStreams(){
+const {data:streams,error:streamError}=await supabaseClient.from("watcher_streams").select("id,owner_id,title,category,is_live,created_at").eq("is_live",true).order("created_at",{ascending:false});
+if(streamError){console.error("Stream list error:",streamError);return}
+const list=$("streamList");
+list.innerHTML="";
+$("emptyHome").style.display=streams?.length?"none":"flex";
+if(!streams||!streams.length)return;
 
-function showPage(page) {
-
-    const home = document.getElementById("homePage");
-    const profile = document.getElementById("profilePage");
-
-    home.style.display = page === "home" ? "block" : "none";
-    profile.style.display = page === "profile" ? "block" : "none";
-
-    document.getElementById("homeNav")
-        .classList.toggle("active", page === "home");
-
-    document.getElementById("profileNav")
-        .classList.toggle("active", page === "profile");
-
-    window.scrollTo(0, 0);
+const ownerIds=[...new Set(streams.map(s=>s.owner_id))];
+const {data:profiles}=await supabaseClient.from("profiles").select("id,username").in("id",ownerIds);
+const names={};
+(profiles||[]).forEach(p=>names[p.id]=p.username);
+streams.forEach(stream=>{
+const card=document.createElement("button");
+card.className="stream-card";
+card.innerHTML=`
+<div class="stream-card-preview">
+<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m10 9 5 3-5 3z"/></svg>
+</div>
+<div class="stream-card-info">
+<span class="live-tag">LIVE</span>
+<div class="stream-card-title">${escapeHTML(stream.title)}</div>
+<div class="stream-card-meta">${escapeHTML(names[stream.owner_id]||"Watcher creator")} · ${escapeHTML(stream.category)}</div>
+</div>`;
+card.addEventListener("click",()=>joinStream(stream));
+list.appendChild(card);
+});
 }
 
-
-/* PROFILE TABS */
-
-function switchProfileTab(tabId, button) {
-
-    document.querySelectorAll(".profile-tab").forEach(tab => {
-        tab.classList.remove("active");
-    });
-
-    document.querySelectorAll(".profile-tab-content").forEach(content => {
-        content.classList.remove("active");
-    });
-
-    button.classList.add("active");
-
-    document.getElementById(tabId).classList.add("active");
+function subscribeToStreams(){
+if(streamsChannel)supabaseClient.removeChannel(streamsChannel);
+streamsChannel=supabaseClient.channel("watcher-live-streams")
+.on("postgres_changes",{event:"*",schema:"public",table:"watcher_streams"},()=>loadLiveStreams())
+.subscribe();
 }
 
+/* CREATE MODAL */
+function openCreate(){modal.classList.add("show")}
+function closeCreate(){
+if(!isLive)stopPreview();
+modal.classList.remove("show");
+}
+function outsideClose(event){if(event.target===modal)closeCreate()}
 
-/* TEMPORARY PAGE MESSAGE */
-
-function showProfileMessage(name) {
-    alert(name + " is not available yet.");
+function selectSource(source){
+if(activeStream)stopPreview();
+selectedSource=source;
+$("cameraChoice").classList.toggle("selected",source==="camera");
+$("screenChoice").classList.toggle("selected",source==="screen");
+status.textContent=source==="camera"?"Camera mode selected. Your camera and microphone will be requested when you start the preview.":"Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
+error.style.display="none";
 }
 
-
-/* STREAM PREVIEW */
-
-let selectedSource = "camera";
-let activeStream = null;
-
-const modal = document.getElementById("createModal");
-const video = document.getElementById("previewVideo");
-const placeholder = document.getElementById("previewPlaceholder");
-const status = document.getElementById("statusMessage");
-const error = document.getElementById("errorMessage");
-const startButton = document.getElementById("startButton");
-const stopButton = document.getElementById("stopButton");
-const previewStatus = document.getElementById("previewStatus");
-
-
-function openCreate() {
-    modal.classList.add("show");
+async function startPreview(){
+error.style.display="none";
+if(!navigator.mediaDevices){showCreateError("Media access is unavailable. Open this page using a supported browser and secure connection.");return}
+if(activeStream)stopPreview();
+startButton.disabled=true;
+startButton.textContent="Starting...";
+try{
+if(selectedSource==="camera"){
+activeStream=await navigator.mediaDevices.getUserMedia({video:true,audio:true});
+}else{
+if(!navigator.mediaDevices.getDisplayMedia)throw new Error("Screen sharing is not supported by this browser.");
+activeStream=await navigator.mediaDevices.getDisplayMedia({video:true,audio:true});
+}
+video.srcObject=activeStream;
+video.style.display="block";
+placeholder.style.display="none";
+previewStatus.style.display="block";
+await video.play();
+status.textContent="Preview is active. Press Go Live when you're ready to broadcast.";
+startButton.style.display="none";
+goLiveButton.style.display="block";
+stopButton.style.display="block";
+stopButton.textContent="Stop Preview";
+const track=activeStream.getVideoTracks()[0];
+if(track)track.addEventListener("ended",()=>{if(isLive)endLiveStream();else stopPreview()});
+}catch(err){
+showCreateError(err.name==="NotAllowedError"?"Permission was denied or sharing was cancelled.":err.message||"Unable to start preview.");
+status.textContent="Please check your browser permissions and try again.";
+}finally{
+startButton.disabled=false;
+startButton.textContent="Start Preview";
+}
 }
 
-
-function closeCreate() {
-    stopPreview();
-    modal.classList.remove("show");
+function showCreateError(message){
+error.textContent=message;
+error.style.display="block";
 }
 
+/* START ACTUAL BROADCAST */
+async function goLive(){
+if(!currentUser){showCreateError("Please sign in again.");return}
+if(!activeStream){showCreateError("Start your preview first.");return}
+const title=$("streamTitle").value.trim();
+const category=$("streamCategory").value;
+if(!title){showCreateError("Enter a stream title.");return}
+if(!category){showCreateError("Select a category.");return}
+if(isStarting)return;
+isStarting=true;
+goLiveButton.disabled=true;
+goLiveButton.textContent="Connecting...";
+try{
+const {data,error:invokeError}=await supabaseClient.functions.invoke("watcher-live-token",{body:{action:"start",title,category}});
+if(invokeError)throw new Error(await getFunctionError(invokeError));
+if(data?.error)throw new Error(data.error);
+if(!data?.token||!data?.serverUrl||!data?.stream?.id)throw new Error("The streaming server returned an incomplete response.");
 
-function outsideClose(event) {
-    if (event.target === modal) {
-        closeCreate();
-    }
+broadcasterRoom=new Room();
+await broadcasterRoom.connect(data.serverUrl,data.token);
+
+for(const track of activeStream.getTracks()){
+await broadcasterRoom.localParticipant.publishTrack(track);
 }
 
+currentLiveStream=data.stream;
+isLive=true;
+goLiveButton.style.display="none";
+stopButton.textContent="End Stream";
+previewStatus.textContent="LIVE";
+status.textContent="You are now live. Keep this page open while streaming.";
+await loadLiveStreams();
 
-function selectSource(source) {
-
-    if (activeStream) stopPreview();
-
-    selectedSource = source;
-
-    document.getElementById("cameraChoice")
-        .classList.toggle("selected", source === "camera");
-
-    document.getElementById("screenChoice")
-        .classList.toggle("selected", source === "screen");
-
-    status.textContent = source === "camera"
-        ? "Camera mode selected. Your camera and microphone will be requested when you start the preview."
-        : "Screen mode selected. Your browser will let you choose which screen, window or tab to share.";
-
-    error.style.display = "none";
+broadcasterRoom.on(RoomEvent.Disconnected,()=>{
+if(isLive){
+status.textContent="Connection lost. Your stream may have ended.";
+endLiveStream(false);
+}
+});
+}catch(err){
+console.error(err);
+showCreateError(err.message||"Unable to start your stream.");
+if(broadcasterRoom){
+try{await broadcasterRoom.disconnect()}catch(e){}
+broadcasterRoom=null;
+}
+}finally{
+isStarting=false;
+goLiveButton.disabled=false;
+goLiveButton.textContent="Go Live";
+}
 }
 
-
-async function startPreview() {
-
-    error.style.display = "none";
-
-    if (!navigator.mediaDevices) {
-        error.textContent = "Media access is unavailable. Open this page using a supported browser and secure connection.";
-        error.style.display = "block";
-        return;
-    }
-
-    if (activeStream) stopPreview();
-
-    startButton.disabled = true;
-    startButton.textContent = "Starting...";
-
-    try {
-
-        if (selectedSource === "camera") {
-
-            activeStream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-                audio: true
-            });
-
-        } else {
-
-            if (!navigator.mediaDevices.getDisplayMedia) {
-                throw new Error("Screen sharing is not supported by this browser.");
-            }
-
-            activeStream = await navigator.mediaDevices.getDisplayMedia({
-                video: true,
-                audio: true
-            });
-
-        }
-
-        video.srcObject = activeStream;
-        video.style.display = "block";
-        placeholder.style.display = "none";
-        previewStatus.style.display = "block";
-
-        await video.play();
-
-        status.textContent = selectedSource === "camera"
-            ? "Camera preview is active. Only you can see this preview."
-            : "Screen preview is active. Only you can see this preview.";
-
-        startButton.style.display = "none";
-        stopButton.style.display = "block";
-
-        const videoTrack = activeStream.getVideoTracks()[0];
-
-        if (videoTrack) {
-            videoTrack.addEventListener("ended", () => {
-                stopPreview();
-            });
-        }
-
-    } catch (err) {
-
-        error.textContent = err.name === "NotAllowedError"
-            ? "Permission was denied or sharing was cancelled."
-            : err.message || "Unable to start preview.";
-
-        error.style.display = "block";
-
-        status.textContent = "Please check your browser permissions and try again.";
-
-    } finally {
-
-        startButton.disabled = false;
-        startButton.textContent = "Start Preview";
-
-    }
+async function getFunctionError(err){
+try{
+if(err.context&&typeof err.context.json==="function"){
+const body=await err.context.json();
+return body.error||err.message;
+}
+}catch(e){}
+return err.message||"Streaming request failed.";
 }
 
-
-function stopPreview() {
-
-    if (activeStream) {
-        activeStream.getTracks().forEach(track => track.stop());
-        activeStream = null;
-    }
-
-    video.srcObject = null;
-    video.style.display = "none";
-    placeholder.style.display = "block";
-    previewStatus.style.display = "none";
-
-    startButton.style.display = "block";
-    startButton.disabled = false;
-    startButton.textContent = "Start Preview";
-
-    stopButton.style.display = "none";
-
-    status.textContent = "Preview stopped. Choose a source to try again.";
+/* END / STOP */
+async function endLiveStream(notify=true){
+if(currentLiveStream){
+try{
+const {data,error:endError}=await supabaseClient.functions.invoke("watcher-live-token",{body:{action:"end",streamId:currentLiveStream.id}});
+if(endError)console.error("End stream error:",endError);
+if(data?.error)console.error(data.error);
+}catch(err){console.error("Could not end stream:",err)}
+}
+isLive=false;
+currentLiveStream=null;
+if(broadcasterRoom){
+try{await broadcasterRoom.disconnect()}catch(e){}
+broadcasterRoom=null;
+}
+if(activeStream){
+activeStream.getTracks().forEach(t=>t.stop());
+activeStream=null;
+}
+resetPreviewUI();
+await loadLiveStreams();
+if(notify)status.textContent="Your stream has ended.";
 }
 
+function resetPreviewUI(){
+video.srcObject=null;
+video.style.display="none";
+placeholder.style.display="block";
+previewStatus.style.display="none";
+startButton.style.display="block";
+startButton.disabled=false;
+startButton.textContent="Start Preview";
+goLiveButton.style.display="none";
+goLiveButton.disabled=false;
+stopButton.style.display="none";
+stopButton.textContent="Stop Preview";
+}
+
+async function stopPreview(){
+if(isLive){await endLiveStream();return}
+if(activeStream){
+activeStream.getTracks().forEach(t=>t.stop());
+activeStream=null;
+}
+resetPreviewUI();
+status.textContent="Preview stopped. Choose a source to try again.";
+}
+
+/* JOIN A LIVE STREAM */
+async function joinStream(stream){
+if(!currentUser){alert("Please sign in to watch streams.");return}
+if(isLive&&currentLiveStream?.id===stream.id){
+alert("You are already streaming this broadcast.");
+return;
+}
+await closeViewer();
+currentViewerStreamId=stream.id;
+$("viewerOverlay").classList.add("show");
+$("viewerTitle").textContent=stream.title;
+$("viewerMeta").textContent=stream.category+" · Live";
+$("viewerStage").innerHTML='<div style="color:#777;font-size:13px">Connecting to stream...</div>';
+$("viewerError").textContent="";
+$("chatMessages").innerHTML="";
+try{
+const {data,error:joinError}=await supabaseClient.functions.invoke("watcher-live-token",{body:{action:"join",streamId:stream.id}});
+if(joinError)throw new Error(await getFunctionError(joinError));
+if(data?.error)throw new Error(data.error);
+if(!data?.token||!data?.serverUrl)throw new Error("The streaming server returned an incomplete response.");
+
+viewerRoom=new Room();
+viewerRoom.on(RoomEvent.TrackSubscribed,(track,publication,participant)=>{
+const element=track.attach();
+if(track.kind==="video"){
+$("viewerStage").innerHTML="";
+element.style.width="100%";
+element.style.height="100%";
+element.style.objectFit="contain";
+$("viewerStage").appendChild(element);
+}else{
+element.autoplay=true;
+element.style.display="none";
+$("viewerStage").appendChild(element);
+}
+});
+viewerRoom.on(RoomEvent.TrackUnsubscribed,track=>{
+track.detach().forEach(el=>el.remove());
+});
+viewerRoom.on(RoomEvent.Disconnected,()=>{
+if(currentViewerStreamId)$("viewerError").textContent="The stream connection ended.";
+});
+await viewerRoom.connect(data.serverUrl,data.token);
+await loadChatMessages(stream.id);
+subscribeToMessages(stream.id);
+}catch(err){
+console.error(err);
+$("viewerError").textContent=err.message||"Unable to join this stream.";
+}
+}
+
+async function closeViewer(){
+if(viewerRoom){
+try{await viewerRoom.disconnect()}catch(e){}
+viewerRoom=null;
+}
+if(messagesChannel){
+await supabaseClient.removeChannel(messagesChannel);
+messagesChannel=null;
+}
+currentViewerStreamId=null;
+$("viewerOverlay").classList.remove("show");
+$("viewerStage").innerHTML='<div style="color:#777;font-size:13px">Stream ended.</div>';
+$("chatMessages").innerHTML="";
+}
+
+async function loadChatMessages(streamId){
+const {data,error:chatError}=await supabaseClient.from("watcher_messages").select("id,sender_id,message,created_at").eq("stream_id",streamId).order("created_at",{ascending:true}).limit(100);
+if(chatError){console.error(chatError);return}
+const ids=[...new Set((data||[]).map(m=>m.sender_id))];
+let profiles={};
+if(ids.length){
+const {data:users}=await supabaseClient.from("profiles").select("id,username").in("id",ids);
+(users||[]).forEach(u=>profiles[u.id]=u.username);
+}
+(data||[]).forEach(m=>appendChatMessage(profiles[m.sender_id]||"Viewer",m.message));
+}
+
+function subscribeToMessages(streamId){
+if(messagesChannel)supabaseClient.removeChannel(messagesChannel);
+messagesChannel=supabaseClient.channel("watcher-chat-"+streamId)
+.on("postgres_changes",{event:"INSERT",schema:"public",table:"watcher_messages",filter:"stream_id=eq."+streamId},async payload=>{
+const message=payload.new;
+let username="Viewer";
+if(message.sender_id===currentUser?.id){
+username=currentProfile?.username||currentUser.email?.split("@")[0]||"You";
+}else{
+const {data}=await supabaseClient.from("profiles").select("username").eq("id",message.sender_id).maybeSingle();
+if(data?.username)username=data.username;
+}
+appendChatMessage(username,message.message);
+})
+.subscribe();
+}
+
+function appendChatMessage(username,message){
+const row=document.createElement("div");
+row.className="chat-message";
+const name=document.createElement("strong");
+name.textContent=username;
+const text=document.createElement("span");
+text.textContent=message;
+row.append(name,text);
+$("chatMessages").appendChild(row);
+$("chatMessages").scrollTop=$("chatMessages").scrollHeight;
+}
+
+async function sendChatMessage(event){
+event.preventDefault();
+const input=$("chatInput");
+const message=input.value.trim();
+if(!message||!currentViewerStreamId||!currentUser)return;
+input.disabled=true;
+const {error:sendError}=await supabaseClient.from("watcher_messages").insert({
+stream_id:currentViewerStreamId,
+sender_id:currentUser.id,
+message
+});
+input.disabled=false;
+if(sendError){
+$("viewerError").textContent="Your message could not be sent.";
+console.error(sendError);
+return;
+}
+input.value="";
+}
 
 /* KEYBOARD */
-
-document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-        closeCreate();
-    }
+document.addEventListener("keydown",event=>{
+if(event.key==="Escape"){
+if($("viewerOverlay").classList.contains("show"))closeViewer();
+else closeCreate();
+}
 });
 
+/* INLINE HTML BUTTON HANDLERS */
+Object.assign(window,{
+showPage,switchProfileTab,showProfileMessage,
+openCreate,closeCreate,outsideClose,selectSource,
+startPreview,stopPreview,goLive,closeViewer,sendChatMessage
+});
 </script>
-
 </body>
-</html>
+    </html>
