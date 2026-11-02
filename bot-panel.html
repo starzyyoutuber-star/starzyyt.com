@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0e0e10">
+<title>Watcher Bot Lab</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#0e0e10;color:#efeff1;
+  font-family:Arial,sans-serif
+}
+header{
+  height:62px;background:#18181b;border-bottom:1px solid #29292d;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px
+}
+.logo{font-size:21px;font-weight:bold}
+.logo span{color:#307aae}
+.status{font-size:12px;color:#a0a0a5}
+main{max-width:850px;margin:auto;padding:18px}
+.card{
+  background:#18181b;border:1px solid #29292d;
+  border-radius:10px;padding:17px;margin-bottom:16px
+}
+h2{font-size:17px;margin:0 0 15px}
+label{display:block;color:#a0a0a5;font-size:12px;margin:12px 0 6px}
+input,select{
+  width:100%;padding:12px;background:#101012;color:white;
+  border:1px solid #303035;border-radius:6px;font-size:14px
+}
+button{
+  width:100%;padding:12px;background:#307aae;color:white;
+  border:0;border-radius:6px;font-weight:bold;margin-top:10px;
+  cursor:pointer
+}
+button.secondary{background:#303035}
+button:disabled{opacity:.5}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:14px;background:#101012;border-radius:7px}
+.stat small{color:#999;font-size:12px}
+.stat strong{display:block;font-size:25px;margin-top:7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.feed{
+  height:290px;overflow:auto;background:#101012;
+  border-radius:7px;padding:10px
+}
+.feed-item{
+  display:flex;gap:10px;padding:11px 5px;
+  border-bottom:1px solid #29292d;font-size:13px
+}
+.avatar{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  background:#307aae;display:flex;align-items:center;
+  justify-content:center;font-weight:bold
+}
+.feed-item b{color:#8ebde0}
+.feed-item p{margin:5px 0;color:#ddd;overflow-wrap:anywhere}
+.note{font-size:12px;color:#888;line-height:1.5}
+#message{font-size:13px;line-height:1.5;color:#a0a0a5}
+.video-option{padding:5px}
+@media(max-width:500px){
+  main{padding:12px}
+  .card{padding:14px}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">WATCHER<span>.</span></div>
+  <div class="status" id="status">Connecting...</div>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>Private Bot Lab</h2>
+  <p class="note">
+    Watcher internal test environment. Bot profiles use the default
+    Watcher avatar. All activity is isolated from production engagement.
+  </p>
+
+  <p id="message">Checking your Watcher session...</p>
+
+  <button class="secondary" onclick="loadVideos()">Refresh Videos</button>
+</div>
+
+<div class="card">
+  <h2>Video Selector</h2>
+
+  <label>Choose a public Watcher video</label>
+  <select id="video">
+    <option value="">Loading videos...</option>
+  </select>
+
+  <label>Selected video</label>
+  <input id="selectedTitle" readonly placeholder="No video selected">
+</div>
+
+<div class="card">
+  <h2>Bot Configuration</h2>
+
+  <label>Number of bots (1–50)</label>
+  <input id="botCount" type="number" min="1" max="50" value="10">
+
+  <label>Username prefix</label>
+  <input id="prefix" maxlength="20" value="WatcherTest">
+
+  <label>Activity type</label>
+  <select id="mode">
+    <option value="comments">Comment on selected video</option>
+    <option value="follows">Follow the video creator (test)</option>
+    <option value="both">Comments + test follows</option>
+  </select>
+
+  <label>Comment messages (up to 22)</label>
+  <div class="grid" id="commentGrid"></div>
+
+  <button id="run" onclick="runBots()">Create Bots & Run Batch</button>
+</div>
+
+<div class="card">
+  <h2>Batch Statistics</h2>
+
+  <div class="stats">
+    <div class="stat">
+      <small>Test Profiles Created</small>
+      <strong id="profiles">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Test Comments</small>
+      <strong id="comments">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Test Follower Links</small>
+      <strong id="follows">0</strong>
+    </div>
+
+    <div class="stat">
+      <small>Completed Batches</small>
+      <strong id="batches">0</strong>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Bot Activity</h2>
+
+  <div class="feed" id="feed">
+    <p class="note">No activity yet.</p>
+  </div>
+
+  <button class="secondary" onclick="clearFeed()">Clear Feed</button>
+</div>
+
+</main>
+
+<script>
+const SUPABASE_URL =
+  "https://sjtaagrvncysbrpwqdzf.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_gl-4fo7fyf5_roAfbTXOCA_1tp68ewn";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const FUNCTION_NAME = "watcher-bot-lab";
+
+let session = null;
+let videos = [];
+let profileTotal = 0;
+let commentTotal = 0;
+let followTotal = 0;
+let batchTotal = 0;
+
+const commentGrid = document.getElementById("commentGrid");
+
+for(let i=1;i<=22;i++){
+  const input = document.createElement("input");
+
+  input.id = "comment"+i;
+  input.placeholder = "Comment "+i;
+  input.value = i===1 ? "Nice video!" : "";
+
+  commentGrid.appendChild(input);
+}
+
+async function initialize(){
+
+  const {data,error} =
+    await supabaseClient.auth.getSession();
+
+  if(error){
+    setMessage(error.message);
+    return;
+  }
+
+  session = data.session;
+
+  if(!session){
+    document.getElementById("status").textContent =
+      "Not signed in";
+
+    setMessage("Sign in to Watcher before opening the Bot Lab.");
+
+    return;
+  }
+
+  document.getElementById("status").textContent =
+    "Session active";
+
+  setMessage("Watcher session detected.");
+
+  await loadVideos();
+}
+
+function setMessage(text){
+  document.getElementById("message").textContent=text;
+}
+
+async function invoke(action,body={}){
+
+  const {data,error} =
+    await supabaseClient.functions.invoke(FUNCTION_NAME,{
+      body:{action,...body}
+    });
+
+  if(error){
+    throw new Error(error.message);
+  }
+
+  if(data && data.error){
+    throw new Error(data.error);
+  }
+
+  return data;
+}
+
+async function loadVideos(){
+
+  try{
+    if(!session){
+      const {data}=await supabaseClient.auth.getSession();
+      session=data.session;
+    }
+
+    if(!session){
+      setMessage("Please sign into Watcher first.");
+      return;
+    }
+
+    setMessage("Loading Watcher videos...");
+
+    const result=await invoke("list_videos");
+
+    videos=result.videos||[];
+
+    const select=document.getElementById("video");
+
+    select.replaceChildren();
+
+    if(videos.length===0){
+      const option=document.createElement("option");
+      option.textContent="No public videos found";
+      option.value="";
+      select.appendChild(option);
+
+      setMessage("No public videos were found.");
+      return;
+    }
+
+    videos.forEach(video=>{
+
+      const option=document.createElement("option");
+
+      option.value=video.id;
+      option.textContent=video.title;
+
+      select.appendChild(option);
+    });
+
+    updateSelectedVideo();
+
+    setMessage(videos.length+" public videos loaded.");
+
+  }catch(error){
+    setMessage("Video loading failed: "+error.message);
+  }
+}
+
+document.getElementById("video").addEventListener(
+  "change",updateSelectedVideo
+);
+
+function updateSelectedVideo(){
+
+  const id=document.getElementById("video").value;
+
+  const video=videos.find(v=>v.id===id);
+
+  document.getElementById("selectedTitle").value=
+    video ? video.title : "";
+}
+
+function getComments(){
+
+  const messages=[];
+
+  for(let i=1;i<=22;i++){
+
+    const input=document.getElementById("comment"+i);
+
+    const value=input.value.trim();
+
+    if(value){
+      messages.push(value);
+    }
+  }
+
+  return messages;
+}
+
+async function runBots(){
+
+  const button=document.getElementById("run");
+
+  button.disabled=true;
+  button.textContent="Running Batch...";
+
+  try{
+
+    const videoId=document.getElementById("video").value;
+
+    const count=Math.max(
+      1,
+      Math.min(50,
+      Number(document.getElementById("botCount").value)||1)
+    );
+
+    const prefix=document.getElementById("prefix").value.trim()
+      ||"WatcherTest";
+
+    const mode=document.getElementById("mode").value;
+
+    const messages=getComments();
+
+    if(!videoId){
+      throw new Error("Select a video first.");
+    }
+
+    if(mode!=="follows" && messages.length===0){
+      throw new Error("Add at least one comment.");
+    }
+
+    setMessage("Creating "+count+" test profiles...");
+
+    const result=await invoke("run_batch",{
+      video_id:videoId,
+      count:count,
+      prefix:prefix,
+      mode:mode,
+      comments:messages
+    });
+
+    profileTotal+=result.profiles||0;
+    commentTotal+=result.test_comments||0;
+    followTotal+=result.test_follows||0;
+    batchTotal++;
+
+    updateStats();
+
+    displayBatch(result);
+
+    setMessage(
+      "Batch completed. "+
+      result.profiles+" test profiles created."
+    );
+
+  }catch(error){
+
+    setMessage("Batch failed: "+error.message);
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Create Bots & Run Batch";
+  }
+}
+
+function updateStats(){
+
+  document.getElementById("profiles").textContent=
+    profileTotal.toLocaleString();
+
+  document.getElementById("comments").textContent=
+    commentTotal.toLocaleString();
+
+  document.getElementById("follows").textContent=
+    followTotal.toLocaleString();
+
+  document.getElementById("batches").textContent=
+    batchTotal.toLocaleString();
+}
+
+function displayBatch(result){
+
+  const feed=document.getElementById("feed");
+
+  const item=document.createElement("div");
+  item.className="feed-item";
+
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+  avatar.textContent="U";
+
+  const content=document.createElement("div");
+
+  const heading=document.createElement("b");
+  heading.textContent="Watcher Test Batch";
+
+  const paragraph=document.createElement("p");
+
+  paragraph.textContent=
+    result.profiles+" test profiles created. "+
+    result.test_comments+" test comments. "+
+    result.test_follows+" test follower links.";
+
+  const small=document.createElement("small");
+  small.className="note";
+  small.textContent=
+    "Batch ID: "+result.batch_id;
+
+  content.appendChild(heading);
+  content.appendChild(paragraph);
+  content.appendChild(small);
+
+  item.appendChild(avatar);
+  item.appendChild(content);
+
+  feed.prepend(item);
+}
+
+function clearFeed(){
+
+  document.getElementById("feed").replaceChildren();
+}
+
+initialize();
+</script>
+
+</body>
+</html>
