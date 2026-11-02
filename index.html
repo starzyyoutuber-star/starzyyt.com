@@ -10,7 +10,17 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0e0e10;--white:#efeff1;--purple:#bf94ff;--blue:#307aae;--muted:#a0a0a5;--sidebar:180px}
+
+/* COMPACT WATCHER PROFILE */
+:root {
+    --bg: #0e0e10;
+    --white: #efeff1;
+    --purple: #307aae;
+    --blue: #307aae;
+    --muted: #a0a0a5;
+    --sidebar: 180px;
+}
+
 html,body{width:100%;min-height:100%;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
 body{min-height:100vh;min-height:100dvh;overflow-x:hidden}
 main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
@@ -24,38 +34,189 @@ main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
 .empty-home p{font-size:13px;color:var(--muted);max-width:260px;line-height:1.5}
 #profilePage{display:none;padding-bottom:5px}
 .profile-content{padding:0 4px}
-.profile-identity{display:flex;align-items:center;gap:15px;min-height:105px}
-.profile-avatar{width:96px;height:96px;flex-shrink:0;border-radius:50%;background:#307aae;color:white;display:flex;align-items:center;justify-content:center;font-size:68px;font-weight:500}
+
+.profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 72px;
+}
+
+.profile-avatar {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #307aae;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 43px;
+    font-weight: 500;
+}
+
 .profile-name-area{min-width:0;flex:1}
 .profile-name-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.profile-username{font-size:26px;font-weight:800;letter-spacing:-1px;overflow-wrap:anywhere}
-.profile-status{font-size:15px;color:#d0d0d5;margin-top:5px}
-.edit-profile-button{flex-shrink:0;height:37px;padding:0 13px;border:none;border-radius:20px;background:#29292e;color:white;font-size:12px;font-weight:700}
-.profile-bio{font-size:15px;color:#aaaab2;margin-top:13px;margin-bottom:12px}
-.profile-followers{font-size:15px;font-weight:700;margin-bottom:15px}
-.profile-buttons{display:flex;flex-direction:column;gap:9px}
-.profile-main-button,.profile-secondary-button{width:100%;height:49px;border:none;border-radius:9px;color:white;font-size:16px;font-weight:700}
-.profile-main-button{background:#9146ff}
-.profile-secondary-button{background:#29292e;display:flex;align-items:center;justify-content:center;gap:10px}
-.profile-secondary-button svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.profile-tabs{display:flex;align-items:stretch;justify-content:space-between;gap:2px;margin-top:22px;padding:0;overflow-x:auto;scrollbar-width:none}
+
+.profile-username {
+    font-size: 20px;
+    font-weight: 750;
+    letter-spacing: -.4px;
+    overflow-wrap:anywhere;
+}
+
+.profile-status {
+    font-size: 12px;
+    color: #d0d0d5;
+    margin-top: 3px;
+}
+
+.edit-profile-button {
+    flex-shrink: 0;
+    height: 30px;
+    padding: 0 10px;
+    border: none;
+    border-radius: 6px;
+    background: #29292e;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.profile-bio {
+    font-size: 13px;
+    color: #aaaab2;
+    margin: 10px 0;
+}
+
+.profile-followers {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.profile-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.profile-main-button,
+.profile-secondary-button {
+    width: auto;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 0 12px;
+}
+
+.profile-main-button {
+    background: var(--blue);
+}
+
+.profile-secondary-button {
+    background: #29292e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.profile-secondary-button svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.profile-tabs {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 15px;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
 .profile-tabs::-webkit-scrollbar{display:none}
-.profile-tab{position:relative;flex:1 0 auto;height:42px;padding:0 7px 12px;border:none;background:transparent;color:#efeff1;font-size:14px;font-weight:700;white-space:nowrap}
-.profile-tab.active{color:var(--purple)}
-.profile-tab.active::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--purple)}
-.profile-tab-content{display:none;padding:12px 0}
+
+.profile-tab {
+    position: relative;
+    flex: 1 0 auto;
+    height: 36px;
+    padding: 0 9px 9px;
+    border: none;
+    background: transparent;
+    color: #efeff1;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.profile-tab.active {
+    color: var(--blue);
+}
+
+.profile-tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--blue);
+}
+
+.profile-tab-content{display:none;padding:9px 0}
 .profile-tab-content.active{display:block}
-.no-clips{min-height:175px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#a0a0a5;gap:9px}
+
+.no-clips {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #a0a0a5;
+    gap: 7px;
+}
+
 .no-clips svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.no-clips h3{color:#efeff1;font-size:16px}
-.no-clips p{font-size:12px}
+
+.no-clips h3 {
+    color: #efeff1;
+    font-size: 14px;
+}
+
+.no-clips p {
+    font-size: 11px;
+}
+
 .profile-section-title{font-size:17px;margin-bottom:12px}
 .profile-info-card{padding:14px;background:#19191d;border-radius:9px;color:#aaaab2;font-size:13px;line-height:1.7}
+
+/* BLUE ACTIVE STATES */
+.profile-tab.active,
+.nav-item.active {
+    color: var(--blue);
+}
+
+.avatar {
+    border-color: var(--blue);
+}
+
 .navigation{position:fixed;z-index:10;bottom:0;left:0;right:0;height:calc(61px + env(safe-area-inset-bottom));padding:3px 6px env(safe-area-inset-bottom);display:flex;align-items:center;justify-content:space-around;gap:2px;background:var(--bg)}
 .nav-item{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--white);background:transparent;border:none;font:inherit;cursor:pointer}
 .nav-icon{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .nav-label{font-size:11px;line-height:14px;font-weight:600;white-space:nowrap}
-.nav-item.active{color:var(--purple)}
 .create-button{flex:0 0 43px;width:43px;height:43px;display:flex;align-items:center;justify-content:center;border:none;border-radius:50%;background:var(--blue);color:white}
 .plus-icon{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2}
 .activity-wrap{position:relative;width:23px;height:23px}
@@ -145,19 +306,95 @@ main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
 .video-player-shell{width:100%;max-width:1050px;margin:0 auto;padding:12px}
 .custom-player{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:hidden;border-radius:9px;user-select:none}
 .custom-player video{width:100%;height:100%;object-fit:contain;background:#000}
-.player-center-button{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border:0;border-radius:50%;background:rgba(20,20,20,.75);color:white;font-size:23px}
-.player-controls{position:absolute;bottom:0;left:0;right:0;padding:35px 10px 10px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
-.player-timeline{width:100%;height:5px;accent-color:#bf94ff;cursor:pointer;display:block;margin-bottom:11px}
+
+/* SMALLER PLAYER CONTROLS */
+.player-center-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 46px;
+    height: 46px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(25, 25, 25, .85);
+    color: white;
+    display: grid;
+    place-items: center;
+}
+
+.player-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px 10px 8px;
+    background: linear-gradient(transparent,rgba(0,0,0,.9));
+}
+
+.player-timeline {
+    width: 100%;
+    height: 3px;
+    accent-color: var(--blue);
+    cursor: pointer;
+    display: block;
+    margin-bottom: 11px;
+}
+
 .player-control-row{display:flex;align-items:center;gap:9px}
-.player-control{border:0;background:transparent;color:white;min-width:27px;height:30px;font-size:17px}
+
+.player-control {
+    border: 0;
+    background: transparent;
+    color: white;
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+}
+
 .player-time{font-size:11px;color:#ddd;white-space:nowrap}
 .player-spacer{flex:1}
-.player-speed{background:#222;color:white;border:1px solid #555;border-radius:5px;padding:5px;font-size:11px}
-.player-volume{width:65px;accent-color:#bf94ff}
-.player-title{font-size:18px;font-weight:700;margin:14px 0 7px;overflow-wrap:anywhere}
+
+.player-speed {
+    background: #222;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 4px 6px;
+    font-size: 11px;
+}
+
+.player-volume {
+    width: 65px;
+    accent-color: var(--blue);
+}
+
+.player-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 10px 0 5px;
+    overflow-wrap:anywhere;
+}
+
 .player-description{font-size:13px;line-height:1.6;color:#aaa}
 .player-actions{display:flex;gap:9px;flex-wrap:wrap;margin:13px 0}
-.player-action{border:1px solid #38383e;border-radius:7px;background:#202024;color:white;padding:9px 13px;font-size:12px}
+
+.player-action {
+    border: 1px solid #38383e;
+    border-radius: 6px;
+    background: #202024;
+    color: white;
+    padding: 7px 10px;
+    font-size: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
 .player-comments{margin-top:22px;background:#19191d;border-radius:9px;padding:13px}
 .player-comments h3{font-size:15px;margin-bottom:12px}
 .player-comment-list{display:flex;flex-direction:column;gap:12px;max-height:250px;overflow-y:auto}
@@ -171,12 +408,32 @@ main{min-height:100vh;min-height:100dvh;padding:12px 16px 85px}
 .video-player-close{width:36px;height:36px;border:0;border-radius:7px;background:#29292e;color:white;font-size:21px;float:right}
 
 @media(max-width:500px){
-.video-grid{grid-template-columns:1fr 1fr;gap:9px}
-.video-card-info{padding:8px}
-.video-card-title{font-size:12px}
-.video-card-meta{font-size:10px}
-.player-volume{display:none}
-.video-player-shell{padding:7px}
+    .profile-avatar {
+        width: 58px;
+        height: 58px;
+        font-size: 39px;
+    }
+
+    .profile-username {
+        font-size: 18px;
+    }
+
+    .profile-buttons {
+        flex-direction: row;
+    }
+
+    .profile-main-button,
+    .profile-secondary-button {
+        height: 32px;
+        padding: 0 9px;
+    }
+
+    .video-grid{grid-template-columns:1fr 1fr;gap:9px}
+    .video-card-info{padding:8px}
+    .video-card-title{font-size:12px}
+    .video-card-meta{font-size:10px}
+    .player-volume{display:none}
+    .video-player-shell{padding:7px}
 }
 
 @media(max-width:360px){
@@ -474,20 +731,75 @@ Your preview will appear here
         <div class="custom-player" id="customPlayer">
             <video id="watcherVideo" playsinline preload="metadata"></video>
 
-            <button class="player-center-button" id="centerPlayButton" onclick="toggleVideoPlay()">▶</button>
+            <button class="player-center-button" id="centerPlayButton" onclick="toggleVideoPlay()" aria-label="Play">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
 
             <div class="player-controls">
                 <input class="player-timeline" id="playerTimeline" type="range" min="0" max="100" value="0" step=".1">
 
                 <div class="player-control-row">
-                    <button class="player-control" onclick="toggleVideoPlay()" id="playPauseButton">▶</button>
-                    <button class="player-control" onclick="skipVideo(-10)">↶</button>
-                    <button class="player-control" onclick="skipVideo(10)">↷</button>
+
+                    <button class="player-control"
+                        onclick="toggleVideoPlay()" id="playPauseButton"
+                        aria-label="Play or pause">
+                        <svg viewBox="0 0 24 24" width="19" height="19"
+                            fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+
+                    <button class="player-control" onclick="skipVideo(-10)"
+                        aria-label="Back 10 seconds">
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                            fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M3 12a9 9 0 1 0 3-6.7"/>
+                            <path d="M3 4v4h4"/>
+                            <path d="M12 8v8"/>
+                            <path d="M9 10l3-2 3 2"/>
+                        </svg>
+                    </button>
+
+                    <button class="player-control" onclick="skipVideo(10)"
+                        aria-label="Forward 10 seconds">
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                            fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M21 12a9 9 0 1 1-3-6.7"/>
+                            <path d="M21 4v4h-4"/>
+                            <path d="M12 8v8"/>
+                            <path d="M9 10l3-2 3 2"/>
+                        </svg>
+                    </button>
+
                     <span class="player-time" id="playerTime">0:00 / 0:00</span>
+
                     <span class="player-spacer"></span>
-                    <button class="player-control" onclick="toggleVideoMute()" id="muteButton">🔊</button>
-                    <input class="player-volume" id="playerVolume" type="range" min="0" max="1" step=".05" value="1">
-                    <select class="player-speed" id="playerSpeed" onchange="changeVideoSpeed(this.value)">
+
+                    <button class="player-control" onclick="toggleVideoMute()"
+                        id="muteButton" aria-label="Mute">
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                            fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M11 5 6 9H3v6h3l5 4z"/>
+                            <path d="M15 9a5 5 0 0 1 0 6"/>
+                            <path d="M18 6a9 9 0 0 1 0 12"/>
+                        </svg>
+                    </button>
+
+                    <input class="player-volume" id="playerVolume"
+                        type="range" min="0" max="1" step=".05" value="1">
+
+                    <select class="player-speed" id="playerSpeed"
+                        onchange="changeVideoSpeed(this.value)">
                         <option value=".5">0.5x</option>
                         <option value=".75">0.75x</option>
                         <option value="1" selected>1x</option>
@@ -496,8 +808,26 @@ Your preview will appear here
                         <option value="1.75">1.75x</option>
                         <option value="2">2x</option>
                     </select>
-                    <button class="player-control" onclick="togglePiP()" title="Picture in picture">▣</button>
-                    <button class="player-control" onclick="toggleFullscreen()" title="Fullscreen">⛶</button>
+
+                    <button class="player-control" onclick="togglePiP()"
+                        aria-label="Picture in picture">
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                            fill="none" stroke="currentColor"
+                            stroke-width="1.8">
+                            <rect x="3" y="4" width="18" height="16" rx="2"/>
+                            <rect x="11" y="11" width="7" height="5" rx="1"/>
+                        </svg>
+                    </button>
+
+                    <button class="player-control" onclick="toggleFullscreen()"
+                        aria-label="Fullscreen">
+                        <svg viewBox="0 0 24 24" width="20" height="20"
+                            fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round">
+                            <path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5"/>
+                        </svg>
+                    </button>
+
                 </div>
             </div>
         </div>
@@ -506,7 +836,15 @@ Your preview will appear here
         <p class="player-description" id="playerVideoDescription"></p>
 
         <div class="player-actions">
-            <button class="player-action" id="videoLikeButton" onclick="toggleVideoLike()">♡ Like</button>
+            <button class="player-action" id="videoLikeButton" onclick="toggleVideoLike()">
+                <svg viewBox="0 0 24 24" width="15" height="15"
+                    fill="none" stroke="currentColor" stroke-width="1.8"
+                    style="vertical-align:middle">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8z"/>
+                </svg>
+                <span id="videoLikeLabel">Like</span>
+                <span id="videoLikeCount">0</span>
+            </button>
             <button class="player-action" onclick="shareCurrentVideo()">Share</button>
         </div>
 
@@ -994,7 +1332,7 @@ function getVideoUrl(path){
 async function loadVideos(){
     const {data,error}=await supabaseClient
         .from("watcher_videos")
-        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,is_short,visibility")
+        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,likes_count,is_short,visibility")
         .eq("visibility","public")
         .order("created_at",{ascending:false})
         .limit(60);
@@ -1290,11 +1628,6 @@ function skipVideo(amount){
     watcherVideo.currentTime=Math.max(0,Math.min(watcherVideo.duration,watcherVideo.currentTime+amount));
 }
 
-function toggleVideoMute(){
-    watcherVideo.muted=!watcherVideo.muted;
-    $("muteButton").textContent=watcherVideo.muted?"Muted":"🔊";
-}
-
 function changeVideoSpeed(speed){
     watcherVideo.playbackRate=Number(speed);
 }
@@ -1330,14 +1663,51 @@ async function togglePiP(){
     }
 }
 
-watcherVideo.addEventListener("play",()=>{
-    $("playPauseButton").textContent="Ⅱ";
-    $("centerPlayButton").style.display="none";
+function setPlayerIcon(button, type) {
+    const icons = {
+        play: '<path d="M8 5v14l11-7z"/>',
+        pause: '<path d="M7 5h4v14H7zM15 5h4v14h-4z"/>',
+        volume: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15 9a5 5 0 0 1 0 6M18 6a9 9 0 0 1 0 12"/>',
+        muted: '<path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 5 6m0-6-5 6"/>'
+    };
+
+    button.innerHTML = `
+        <svg viewBox="0 0 24 24" width="20" height="20"
+            fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
+            ${icons[type]}
+        </svg>
+    `;
+}
+
+watcherVideo.addEventListener("play", () => {
+    setPlayerIcon($("playPauseButton"), "pause");
+    $("centerPlayButton").style.display = "none";
 });
 
-watcherVideo.addEventListener("pause",()=>{
-    $("playPauseButton").textContent="▶";
-    $("centerPlayButton").style.display="block";
+watcherVideo.addEventListener("pause", () => {
+    setPlayerIcon($("playPauseButton"), "play");
+    $("centerPlayButton").style.display = "block";
+});
+
+function toggleVideoMute() {
+    watcherVideo.muted = !watcherVideo.muted;
+
+    setPlayerIcon(
+        $("muteButton"),
+        watcherVideo.muted ? "muted" : "volume"
+    );
+}
+
+playerVolume.addEventListener("input", () => {
+    watcherVideo.volume = Number(playerVolume.value);
+    watcherVideo.muted = watcherVideo.volume === 0;
+
+    setPlayerIcon(
+        $("muteButton"),
+        watcherVideo.muted ? "muted" : "volume"
+    );
 });
 
 watcherVideo.addEventListener("timeupdate",()=>{
@@ -1361,54 +1731,90 @@ playerTimeline.addEventListener("input",()=>{
     }
 });
 
-playerVolume.addEventListener("input",()=>{
-    watcherVideo.volume=Number(playerVolume.value);
-    watcherVideo.muted=watcherVideo.volume===0;
-});
-
-async function checkVideoLike(videoId){
-    if(!currentUser){
-        $("videoLikeButton").textContent="♡ Like";
+async function checkVideoLike(videoId) {
+    if (!currentUser) {
+        currentVideoLiked = false;
+        updateLikeButton();
         return;
     }
 
-    const {data,error}=await supabaseClient
+    const { data, error } = await supabaseClient
         .from("watcher_video_likes")
         .select("video_id")
-        .eq("video_id",videoId)
-        .eq("user_id",currentUser.id)
+        .eq("video_id", videoId)
+        .eq("user_id", currentUser.id)
         .maybeSingle();
 
-    if(error)console.error(error);
-    currentVideoLiked=!!data;
-    $("videoLikeButton").textContent=currentVideoLiked?"♥ Liked":"♡ Like";
+    if (error) console.error(error);
+
+    currentVideoLiked = !!data;
+    updateLikeButton();
 }
 
-async function toggleVideoLike(){
-    if(!currentUser||!currentVideo){
+function updateLikeButton() {
+    $("videoLikeLabel").textContent =
+        currentVideoLiked ? "Liked" : "Like";
+
+    $("videoLikeCount").textContent =
+        Number(currentVideo?.likes_count || 0).toLocaleString();
+
+    $("videoLikeButton").style.color =
+        currentVideoLiked ? "#307aae" : "white";
+}
+
+async function toggleVideoLike() {
+    if (!currentUser || !currentVideo) {
         alert("Sign in to like videos.");
         return;
     }
 
-    if(currentVideoLiked){
-        const {error}=await supabaseClient
-            .from("watcher_video_likes")
-            .delete()
-            .eq("video_id",currentVideo.id)
-            .eq("user_id",currentUser.id);
+    const button = $("videoLikeButton");
+    button.disabled = true;
 
-        if(error){alert(error.message);return}
-        currentVideoLiked=false;
-    }else{
-        const {error}=await supabaseClient
-            .from("watcher_video_likes")
-            .insert({video_id:currentVideo.id,user_id:currentUser.id});
+    try {
+        if (currentVideoLiked) {
+            const { error } = await supabaseClient
+                .from("watcher_video_likes")
+                .delete()
+                .eq("video_id", currentVideo.id)
+                .eq("user_id", currentUser.id);
 
-        if(error){alert(error.message);return}
-        currentVideoLiked=true;
+            if (error) throw error;
+
+            currentVideoLiked = false;
+            currentVideo.likes_count = Math.max(
+                0, Number(currentVideo.likes_count || 0) - 1
+            );
+        } else {
+            const { error } = await supabaseClient
+                .from("watcher_video_likes")
+                .insert({
+                    video_id: currentVideo.id,
+                    user_id: currentUser.id
+                });
+
+            if (error) {
+                if (error.code === "23505") {
+                    currentVideoLiked = true;
+                    await checkVideoLike(currentVideo.id);
+                    return;
+                }
+                throw error;
+            }
+
+            currentVideoLiked = true;
+            currentVideo.likes_count =
+                Number(currentVideo.likes_count || 0) + 1;
+        }
+
+        updateLikeButton();
+
+    } catch (error) {
+        console.error("Like operation failed:", error);
+        alert("Unable to update your like.");
+    } finally {
+        button.disabled = false;
     }
-
-    $("videoLikeButton").textContent=currentVideoLiked?"♥ Liked":"♡ Like";
 }
 
 async function loadVideoComments(videoId){
@@ -1510,7 +1916,7 @@ async function loadProfileVideos(){
 
     const {data,error}=await supabaseClient
         .from("watcher_videos")
-        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,is_short,visibility")
+        .select("id,owner_id,title,description,category,video_path,thumbnail_path,mime_type,size_bytes,created_at,views_count,likes_count,is_short,visibility")
         .eq("owner_id",currentUser.id)
         .order("created_at",{ascending:false});
 
