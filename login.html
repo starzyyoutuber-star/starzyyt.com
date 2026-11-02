@@ -88,6 +88,55 @@ cursor:pointer;
 }
 .login-button:active{background:#28648e}
 .login-button:disabled{opacity:.6;cursor:wait}
+
+.divider{
+display:flex;
+align-items:center;
+gap:12px;
+margin:20px 0;
+color:#777780;
+font-size:11px;
+}
+.divider:before,
+.divider:after{
+content:"";
+flex:1;
+height:1px;
+background:#303036;
+}
+
+.yapin-button{
+width:100%;
+height:44px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+border:1px solid #36363c;
+border-radius:7px;
+background:#19191c;
+color:#efeff1;
+font-size:13px;
+font-weight:700;
+text-decoration:none;
+cursor:pointer;
+transition:background .15s;
+}
+.yapin-button:hover{background:#252529}
+.yapin-button:active{background:#303036}
+.yapin-icon{
+width:19px;
+height:19px;
+border-radius:50%;
+background:#e64a24;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:11px;
+font-weight:800;
+color:white;
+}
+
 .message{
 display:none;
 padding:11px;
@@ -125,7 +174,7 @@ text-decoration:none;
 <body>
 
 <header class="header">
-<div class="logo">Watcher</div>
+<div class="logo"></div>
 </header>
 
 <main>
@@ -145,6 +194,7 @@ placeholder="Enter your email"
 autocomplete="email" required>
 
 <label class="field-label" for="password">Password</label>
+
 <div class="password-wrap">
 <input class="field" id="password"
 type="password"
@@ -162,6 +212,13 @@ Sign in
 <div class="message" id="message"></div>
 
 </form>
+
+<div class="divider">OR</div>
+
+<a href="#" class="yapin-button" id="yapinLogin">
+<span class="yapin-icon">Y</span>
+Continue with Yapin
+</a>
 
 <div class="signup-text">
 Don't have an account? <a href="signup.html">Create account</a>
@@ -182,6 +239,36 @@ const supabase = createClient(SUPABASE_URL,SUPABASE_KEY);
 const form = document.getElementById('loginForm');
 const message = document.getElementById('message');
 const button = document.getElementById('loginButton');
+
+// Yapin OAuth configuration
+const YAPIN_CLIENT_ID = 'd8ace359-75ab-4aab-b0ef-5c582ad4aac';
+const YAPIN_REDIRECT_URI = 'https://starzyyt.com/yapin-callback.html';
+
+const yapinButton = document.getElementById('yapinLogin');
+
+yapinButton.addEventListener('click', (e) => {
+e.preventDefault();
+
+const randomBytes = new Uint8Array(32);
+crypto.getRandomValues(randomBytes);
+
+const state = Array.from(randomBytes)
+.map(byte => byte.toString(16).padStart(2,'0'))
+.join('');
+
+sessionStorage.setItem('yapin_oauth_state',state);
+
+const params = new URLSearchParams({
+client_id: YAPIN_CLIENT_ID,
+redirect_uri: YAPIN_REDIRECT_URI,
+response_type: 'code',
+scope: 'identify',
+state: state
+});
+
+window.location.href =
+'https://www.yapin.gg/oauth/authorize?' + params.toString();
+});
 
 function showMessage(text,type){
 message.textContent = text;
