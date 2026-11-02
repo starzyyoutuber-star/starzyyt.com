@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0e0e10">
+<title>Signing in | Watcher</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0e0e10;
+    color: #efeff1;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+    padding: 32px 24px;
+    background: #18181b;
+    border: 1px solid #303034;
+    border-radius: 16px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+}
+
+.logo span {
+    color: #bf94ff;
+}
+
+.loader {
+    width: 35px;
+    height: 35px;
+    border: 3px solid #343438;
+    border-top-color: #bf94ff;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+h2 {
+    font-size: 20px;
+    margin: 0 0 10px;
+}
+
+p {
+    color: #a0a0a5;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+#error {
+    color: #ff7777;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <div class="logo">WATCHER<span>.</span></div>
+
+    <div class="loader" id="loader"></div>
+
+    <h2 id="title">Completing login...</h2>
+
+    <p id="message">
+        Please wait while we securely connect your Yapin account.
+    </p>
+
+    <p id="error"></p>
+</div>
+
+<script>
+(async function () {
+
+    const CLIENT_ID =
+        "d8ace359-75ab-4aab-b0ef-5c582ad4aacc";
+
+    const REDIRECT_URI =
+        "https://starzyyt.com/yapin-callback.html";
+
+    const TOKEN_ENDPOINT =
+        "/api/oauth/token";
+
+    const PROFILE_ENDPOINT =
+        "/api/oauth/me";
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    const code = params.get("code");
+    const returnedState = params.get("state");
+    const oauthError = params.get("error");
+
+    const title = document.getElementById("title");
+    const message = document.getElementById("message");
+    const loader = document.getElementById("loader");
+    const errorBox = document.getElementById("error");
+
+    function showError(text) {
+        loader.style.display = "none";
+        title.textContent = "Login failed";
+        message.style.display = "none";
+        errorBox.style.display = "block";
+        errorBox.textContent = text;
+    }
+
+    try {
+
+        if (oauthError) {
+            throw new Error(
+                params.get("error_description") ||
+                oauthError
+            );
+        }
+
+        if (!code) {
+            throw new Error(
+                "No authorization code was received."
+            );
+        }
+
+        const savedState =
+            sessionStorage.getItem("yapin_oauth_state");
+
+        if (!savedState || savedState !== returnedState) {
+            throw new Error(
+                "Invalid OAuth state. Please try logging in again."
+            );
+        }
+
+        const codeVerifier =
+            sessionStorage.getItem("yapin_code_verifier");
+
+        if (!codeVerifier) {
+            throw new Error(
+                "PKCE code verifier is missing. Please restart login."
+            );
+        }
+
+        // Exchange authorization code with your backend.
+        const tokenResponse = await fetch(TOKEN_ENDPOINT, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                code: code,
+                client_id: CLIENT_ID,
+                redirect_uri: REDIRECT_URI,
+                code_verifier: codeVerifier,
+                state: returnedState
+            })
+        });
+
+        const tokenData = await tokenResponse.json();
+
+        if (!tokenResponse.ok) {
+            throw new Error(
+                tokenData.error ||
+                tokenData.message ||
+                "Token exchange failed."
+            );
+        }
+
+        const accessToken = tokenData.access_token;
+
+        if (!accessToken) {
+            throw new Error(
+                "The backend did not return an access token."
+            );
+        }
+
+        // Retrieve the Yapin account profile.
+        const profileResponse = await fetch(
+            PROFILE_ENDPOINT,
+            {
+                method: "GET",
+
+                headers: {
+                    "Authorization":
+                        "Bearer " + accessToken,
+
+                    "Content-Type":
+                        "application/json"
+                }
+            }
+        );
+
+        const profile = await profileResponse.json();
+
+        if (!profileResponse.ok) {
+            throw new Error(
+                profile.message ||
+                "Could not retrieve your Yapin profile."
+            );
+        }
+
+        // Save session information.
+        sessionStorage.setItem(
+            "yapin_access_token",
+            accessToken
+        );
+
+        sessionStorage.setItem(
+            "yapin_user",
+            JSON.stringify(profile)
+        );
+
+        sessionStorage.removeItem("yapin_oauth_state");
+        sessionStorage.removeItem("yapin_code_verifier");
+
+        title.textContent = "Login successful!";
+        message.textContent =
+            "Welcome! Redirecting you to Watcher...";
+
+        // Return to Watcher.
+        setTimeout(function () {
+            window.location.replace("/index.html");
+        }, 1000);
+
+    } catch (err) {
+
+        console.error("Yapin OAuth:", err);
+
+        showError(
+            err.message ||
+            "An unexpected login error occurred."
+        );
+
+    }
+
+})();
+</script>
+
+</body>
+</html>
